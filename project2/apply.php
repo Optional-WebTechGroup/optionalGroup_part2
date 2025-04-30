@@ -1,30 +1,12 @@
-<!-- 
-============================================================
-  File Name: apply.html
-  Description: [Brief description of the file's purpose and functionality]
-  Author: The Optional Group
-  Page Manager: Aldrin Filbert Maano
-  Created On: 3/28/2025
-  Last Updated: 3/28/2025
-  Version: 0.0.1
-  ============================================================
-  Project: Project Part 1
-  Dependencies: styles.css
-  Changelog:
-    - Latest Chnage: [Date]: [Change description]
-    - What needs to be done: [Date]: [Change description]
-============================================================
--->
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head> <!-- Adds web browser support meta tags for format and search algorithm-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="keywords" content="The Optional Group">
-    <meta name="author" content="">
+    <meta name="description" content="Job application form at The Optional Group.">
+    <meta name="keywords" content="The Optional Group, Job Application Form, Reference Number, Personal Information, Resume">
+    <meta name="author" content="Aldrin Filbert Maano">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="shortcut icon" href="images/OptionalGroup_Tab_Icon.png">
     <!-- ChatGPT GenAI Image Prompt: Create an image for a company logo for It company called The Optional Group. It’s a company which supplies remote it support and environmental impact. The group colours are blues, greens, and shades-->
@@ -110,14 +92,14 @@
                     <p class="question"><label for="state">State*: </label>
                         <select name="state" id="state" required>
                             <option value="">Please Select</option>
-                            <option value="VIC">Victoria</option>
-                            <option value="NSW">New South Wales</option>
-                            <option value="QLD">Queensland</option>
-                            <option value="NT">Northern Territory</option>
-                            <option value="WA">South Australia</option>
-                            <option value="SA">Western Australia</option>
-                            <option value="TAS">Tasmania</option>
                             <option value="ACT">Australian Capital Territory</option>
+                            <option value="NSW">New South Wales</option>
+                            <option value="NT">Northern Territory</option>
+                            <option value="QLD">Queensland</option>
+                            <option value="WA">South Australia</option>
+                            <option value="TAS">Tasmania</option>
+                            <option value="VIC">Victoria</option>
+                            <option value="SA">Western Australia</option>
                         </select>
                     </p>
                     <div class="question">
