@@ -36,8 +36,8 @@
             <p class="center"><label for="reference_number">Job Reference Number: </label>
                 <select name="reference_number" id="reference_number" required>
                     <option value="">Please Select</option>
-                    <option value="PXUB6">PXUB6</option>
                     <option value="5KC3U">5KC3U</option>
+                    <option value="PXUB6">PXUB6</option>
                 </select>
             </p>
             <hr>
