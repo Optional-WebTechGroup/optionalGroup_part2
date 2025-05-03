@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="shortcut icon" href="images/OptionalGroup_Tab_Icon.png">
     <!-- ChatGPT GenAI Image Prompt: Create an image for a company logo for It company called The Optional Group. It’s a company which supplies remote it support and environmental impact. The group colours are blues, greens, and shades-->
-    <title>The Optional Group</title>
+    <title>The Optional Group: Apply Page</title>
 </head>
 
 <body>
