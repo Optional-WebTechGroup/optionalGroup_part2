@@ -18,7 +18,7 @@
     <main id="apply_main">
         <!-- title section with the reference dropdown below -->
         <h1>Apply to your <span class="text_gradient">Dream Job</span></h1>
-        <form action="https://mercury.swin.edu.au/it000000/formtest.php" method="post">
+        <form action="process_eoi.php" method="post">
             <p class="center"><label for="reference_number">Job Reference Number: </label>
                 <select name="reference_number" id="reference_number" required>
                     <option value="">Please Select</option>
