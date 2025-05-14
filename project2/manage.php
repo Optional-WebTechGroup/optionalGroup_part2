@@ -1,5 +1,3 @@
-basic html structure 
-
 <!DOCTYPE html> <!-- derfines program langauge file as html-->
 <html lang="en"> <!-- defines actual language as English 'en' -->
 <head>
