@@ -5,7 +5,7 @@
     <nav class="nav">
         <ul class="nav_links">
             <li><a href="index.php">Home</a></li>
-            <li><a href="about.php">About</a></li>
+            <li><a href="about.html">About</a></li>
             <li><a href="jobs.php">Jobs</a></li>
             <li><a href="apply.php" class="active">Apply</a></li>
         </ul>
