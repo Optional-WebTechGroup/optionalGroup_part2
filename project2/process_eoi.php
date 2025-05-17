@@ -31,6 +31,13 @@ if (empty($first_name)) {
    $errors['first_name'] = "First name must not exceed 20 characters."; 
 }
 
+$last_name = sanitize_input($_POST['last_name'] ?? '');
+if (empty($last_name)) {
+    $errors['last_name'] = "Last name is required.";
+} elseif (strlen($last_name) > 20) {
+   $errors['last_name'] = "Last name must not exceed 20 characters."; 
+}
+
 session_start();
 $_SESSION['errors'] = $errors;
 ?>
@@ -38,6 +45,7 @@ $_SESSION['errors'] = $errors;
 <form action="apply.php" method="post">
     <input type="hidden" name="job_reference_number" value="<?php echo htmlspecialchars($job_reference_number); ?>">
     <input type="hidden" name="first_name" value="<?php echo htmlspecialchars($first_name); ?>">
+    <input type="hidden" name="last_name" value="<?php echo htmlspecialchars($last_name); ?>">
     
 </form>
 <script>
