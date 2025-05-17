@@ -1,3 +1,10 @@
+<?php
+session_start();
+$errors = $_SESSION['errors'] ?? [];
+
+unset($_SESSION['errors']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,18 +21,28 @@
 </head>
 
 <body>
-    <?php include("header.inc") ?>
+    <?php include("header.inc"); ?>
+    
     <main id="apply_main">
         <!-- title section with the reference dropdown below -->
         <h1>Apply to your <span class="text_gradient">Dream Job</span></h1>
         <form action="process_eoi.php" method="post" novalidate>
-            <p class="center"><label for="job_reference_number">Job Reference Number: </label>
+            <p class="center" id="reference_number"><label for="job_reference_number">Job Reference Number: </label>
                 <select name="job_reference_number" id="job_reference_number" required>
                     <option value="">Please Select</option>
-                    <option value="5KC3U">5KC3U</option>
-                    <option value="PXUB6">PXUB6</option>
+                    <?php 
+                    echo $errors['job_reference_number']; 
+                        $selected_job_reference_number = $_POST['job_reference_number'] ?? '';
+                        $job_reference_numbers = ['5KC3U', 'PXUB6'];
+                        foreach ($job_reference_numbers as $job_reference_number) {
+                            echo "<option value='$job_reference_number'" . ($selected_job_reference_number === $job_reference_number ? "selected" : "") . ">$job_reference_number</option>";
+                        }
+                    ?>
                 </select>
             </p>
+            <?php if((!empty($errors['job_reference_number']))): ?>
+                <span class="center error"><?php echo htmlspecialchars($errors['job_reference_number']); ?></span>
+            <?php endif; ?>
             <hr>
             <!-- Section to add personal informations -->
             <section>

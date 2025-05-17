@@ -17,12 +17,22 @@ function sanitize_input($data) {
 $errors = [];
 
 $job_reference_numbers = ['5KC3U', 'PXUB6'];
-echo $_POST['job_reference_number'];
 $job_reference_number = sanitize_input($_POST['job_reference_number'] ?? '');
 if (empty($job_reference_number)) {
     $errors['job_reference_number'] = 'Please select a job reference number.';
 } elseif (!in_array($job_reference_number, $job_reference_numbers)) {
-    $erros['job_reference_number'] = 'Invalid job reference number selected.';
+    $errors['job_reference_number'] = 'Invalid job reference number selected.';
 }
 
+session_start();
+$_SESSION['errors'] = $errors;
 ?>
+
+<form action="apply.php" method="post">
+    <input type="hidden" name="job_reference_number" value="<?php echo htmlspecialchars($job_reference_number); ?>">
+</form>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('form').submit();
+});
+</script>
