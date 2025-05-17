@@ -230,21 +230,21 @@
                 <div class="row">
                     <div class="question">
                         <label for="linkedin">LinkedIn</label>
-                        <input type="text" name="linkedin" id="linkedin">
+                        <input type="url" name="linkedin" id="linkedin">
                     </div>
                     <div class="question">
                         <label for="twitter">X (Twitter)</label>
-                        <input type="text" name="twitter" id="twitter">
+                        <input type="url" name="twitter" id="twitter">
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
                         <label for="github">Github</label>
-                        <input type="text" name="github" id="github">
+                        <input type="url" name="github" id="github">
                     </div>
                     <div class="question">
                         <label for="personal_website">Personal Website</label>
-                        <input type="text" name="personal_website" id="personal_website">
+                        <input type="url" name="personal_website" id="personal_website">
                     </div>
                 </div>
             </section>
