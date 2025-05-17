@@ -145,12 +145,12 @@
                 <h2>Experience</h2>
                 <div class="row">
                     <div class="question">
-                        <label for="title">Title</label>
-                        <input type="text" name="title" id="title">
+                        <label for="experience_title">Title</label>
+                        <input type="text" name="experience_title" id="experience_title">
                     </div>
                     <div class="question">
-                        <label for="company">Company</label>
-                        <input type="text" name="company" id="company">
+                        <label for="experience_company">Company</label>
+                        <input type="text" name="experience_company" id="experience_company">
                     </div>
                 </div>
                 <div class="row">
@@ -184,18 +184,18 @@
                 <h2>Education</h2>
                 <div class="row">
                     <div class="question">
-                        <label for="institution">Institution</label>
-                        <input type="text" name="institution" id="institution">
+                        <label for="education_institution">Institution</label>
+                        <input type="text" name="education_institution" id="education_institution">
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
-                        <label for="degree">Degree</label>
-                        <input type="text" name="degree" id="degree">
+                        <label for="education_degree">Degree</label>
+                        <input type="text" name="education_degree" id="education_degree">
                     </div>
                     <div class="question">
-                        <label for="major">Major</label>
-                        <input type="text" name="major" id="major">
+                        <label for="education_major">Major</label>
+                        <input type="text" name="education_major" id="education_major">
                     </div>
                 </div>
                 <div class="row">
