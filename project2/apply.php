@@ -18,9 +18,9 @@
     <main id="apply_main">
         <!-- title section with the reference dropdown below -->
         <h1>Apply to your <span class="text_gradient">Dream Job</span></h1>
-        <form action="process_eoi.php" method="post">
-            <p class="center"><label for="reference_number">Job Reference Number: </label>
-                <select name="reference_number" id="reference_number" required>
+        <form action="process_eoi.php" method="post" novalidate>
+            <p class="center"><label for="job_reference_number">Job Reference Number: </label>
+                <select name="job_reference_number" id="job_reference_number" required>
                     <option value="">Please Select</option>
                     <option value="5KC3U">5KC3U</option>
                     <option value="PXUB6">PXUB6</option>
