@@ -1,5 +1,3 @@
-basic html structure 
-
 <!DOCTYPE html> <!-- derfines program langauge file as html-->
 <html lang="en"> <!-- defines actual language as English 'en' -->
 <head>
@@ -18,15 +16,27 @@ basic html structure
 	<?php include_once 'header.inc'; ?>
     
     <main>
+        
         <h1>Manager Profile</h1>
 
         <form method="post" action="">
             <section>
+                <label for="JobReference">EOI: Job Reference Number</label>
+                <br>
                 <input type="text" name="EOI_reference" id="EOI_reference" required maxlength="20">
-                <input id="submit_button" type="submit" value="Apply">
+                <input id="submit_button" type="submit" value="Search">
+                <input id="submit_button" type="submit" value="Delete EOI References">
             </section>
         </form>
-        <input id="submit_button" type="submit" value="Apply">
+        <input id="submit_button" type="submit" value="Search All">
+        <Form method="post" action="">
+            <section>
+                <label for="ApplicantSurname">Find Applicant (Surname)</label>
+                <br>
+                <input type="text" name="Applicant" id="Applicant" required maxlength="20">
+                <input id="submit_button" type="submit" value="Find Applicant">
+            </section>
+        </Form>
 
     </main>
 	
