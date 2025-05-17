@@ -71,7 +71,10 @@ unset($_SESSION['errors']);
                         <!-- input for birthdate, follows the patter of DD/MM/YYYY -->
                         <label for="birthdate">Birthdate*</label>
                         <input type="text" name="birthdate" id="birthdate" required placeholder="DD/MM/YYYY"
-                            pattern="(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[12])\/(\d){4}">
+                            pattern="(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[12])\/(\d){4}" value="<?php echo htmlspecialchars($_POST['birthdate'] ?? ''); ?>">
+                        <?php if((!empty($errors['last_name']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['birthdate']); ?></span>
+                        <?php endif; ?>
                     </div>
 
                     <fieldset class="question">
