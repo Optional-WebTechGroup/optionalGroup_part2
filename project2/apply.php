@@ -52,11 +52,15 @@ unset($_SESSION['errors']);
                 <div class="row">
                     <div class="question">
                         <label for="first_name">First name*</label>
-                        <input type="text" name="first_name" id="first_name" required maxlength="20">
+                        <input type="text" name="first_name" id="first_name" required maxlength="20" value="<?php echo htmlspecialchars($_POST['first_name'] ?? ''); ?>">
+                        <?php if((!empty($errors['first_name']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['first_name']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="last_name">Last name*</label>
                         <input type="text" name="last_name" id="last_name" required maxlength="20">
+                        
                     </div>
                 </div>
 

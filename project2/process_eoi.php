@@ -24,12 +24,21 @@ if (empty($job_reference_number)) {
     $errors['job_reference_number'] = 'Invalid job reference number selected.';
 }
 
+$first_name = sanitize_input($_POST['first_name'] ?? '');
+if (empty($first_name)) {
+    $errors['first_name'] = "First name is required.";
+} elseif (strlen($first_name) > 20) {
+   $errors['first_name'] = "First name must not exceed 20 characters."; 
+}
+
 session_start();
 $_SESSION['errors'] = $errors;
 ?>
 
 <form action="apply.php" method="post">
     <input type="hidden" name="job_reference_number" value="<?php echo htmlspecialchars($job_reference_number); ?>">
+    <input type="hidden" name="first_name" value="<?php echo htmlspecialchars($first_name); ?>">
+    
 </form>
 <script>
 document.addEventListener('DOMContentLoaded', function() {

@@ -30,6 +30,7 @@
 .error {
   color: red;
   font-size: 0.75em;
+  margin-top: 1%;
 }
 
 /* General body styles */
@@ -572,7 +573,7 @@ form {
 }
 
 #reference_number {
-  padding: 1% 0;
+  padding-top: 1%;
 }
 
 /* css styling for the flexibility of content */
