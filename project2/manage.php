@@ -52,10 +52,19 @@
 
         <?php 
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['EOI_reference']) && !empty(trim($_POST['EOI_reference']))) {
+                //$eoi_reference = trim($_POST['EOI_reference'] ?? '');
                 if (isset($_POST['search'])) { 
-                    //content
+                    //if $eoi_reference is in database
+                        //SELECT * FROM Jobs WHERE $eoi_reference;
+                        //echo "<p>Found '$eoi_reference'</p>"
+                    // if $eoi_reference not in database
+                        // echo "<p>No data found for '$eoi_reference'</p>"
                 } elseif (isset($_POST['delete'])) { 
-                //cotent
+                    //if $eoi_reference is in database
+                        //DELETE * FROM Jobs WHERE $eoi_reference;
+                        //echo "<p>Deleted all '$eoi_reference' EOIs</p>"
+                    // if $eoi_reference not in database
+                        // echo "<p>No data found for '$eoi_reference'</p>"
                 } //if nothing then don't react
             }
         ?>
