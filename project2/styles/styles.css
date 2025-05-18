@@ -27,6 +27,12 @@
   padding: 0;
 }
 
+.error {
+  color: red;
+  font-size: 0.75em;
+  margin-top: 1%;
+}
+
 /* General body styles */
 body {
   background-color: #eaedf1;
@@ -164,7 +170,8 @@ header {
 .Class_Details {
   display: flex;
   justify-content: space-around;
-  flex-direction: row-reverse; /* reveresed html order on page*/
+  flex-direction: row-reverse;
+  /* reveresed html order on page*/
   margin-bottom: 50px;
 }
 
@@ -176,7 +183,8 @@ header {
 .Member_Details {
   display: flex;
   justify-content: space-around;
-  flex-direction: row-reverse; /* reveresed html order on page*/
+  flex-direction: row-reverse;
+  /* reveresed html order on page*/
   margin-bottom: 50px;
 }
 
@@ -559,8 +567,13 @@ form {
 }
 
 .center {
+  display: block;
   text-align: center;
-  padding: 2% 0;
+
+}
+
+#reference_number {
+  padding-top: 1%;
 }
 
 /* css styling for the flexibility of content */

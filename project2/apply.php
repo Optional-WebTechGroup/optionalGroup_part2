@@ -1,3 +1,10 @@
+<?php
+session_start();
+$errors = $_SESSION['errors'] ?? [];
+
+unset($_SESSION['errors']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,18 +21,28 @@
 </head>
 
 <body>
-    <?php include("header.inc") ?>
+    <?php include("header.inc"); ?>
+    
     <main id="apply_main">
         <!-- title section with the reference dropdown below -->
         <h1>Apply to your <span class="text_gradient">Dream Job</span></h1>
-        <form action="https://mercury.swin.edu.au/it000000/formtest.php" method="post">
-            <p class="center"><label for="reference_number">Job Reference Number: </label>
-                <select name="reference_number" id="reference_number" required>
+        <form action="process_eoi.php" method="post" novalidate>
+            <p class="center" id="reference_number"><label for="job_reference_number">Job Reference Number: </label>
+                <select name="job_reference_number" id="job_reference_number" required>
                     <option value="">Please Select</option>
-                    <option value="5KC3U">5KC3U</option>
-                    <option value="PXUB6">PXUB6</option>
+                    <?php 
+                    echo $errors['job_reference_number']; 
+                        $selected_job_reference_number = $_POST['job_reference_number'] ?? '';
+                        $job_reference_numbers = ['5KC3U', 'PXUB6'];
+                        foreach ($job_reference_numbers as $job_reference_number) {
+                            echo "<option value='$job_reference_number'" . ($selected_job_reference_number === $job_reference_number ? "selected" : "") . ">$job_reference_number</option>";
+                        }
+                    ?>
                 </select>
             </p>
+            <?php if((!empty($errors['job_reference_number']))): ?>
+                <span class="center error"><?php echo htmlspecialchars($errors['job_reference_number']); ?></span>
+            <?php endif; ?>
             <hr>
             <!-- Section to add personal informations -->
             <section>
@@ -35,11 +52,17 @@
                 <div class="row">
                     <div class="question">
                         <label for="first_name">First name*</label>
-                        <input type="text" name="first_name" id="first_name" required maxlength="20">
+                        <input type="text" name="first_name" id="first_name" required maxlength="20" value="<?php echo htmlspecialchars($_POST['first_name'] ?? ''); ?>">
+                        <?php if((!empty($errors['first_name']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['first_name']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="last_name">Last name*</label>
-                        <input type="text" name="last_name" id="last_name" required maxlength="20">
+                        <input type="text" name="last_name" id="last_name" required maxlength="20" value="<?php echo htmlspecialchars($_POST['last_name'] ?? ''); ?>">
+                        <?php if((!empty($errors['last_name']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['last_name']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -48,7 +71,10 @@
                         <!-- input for birthdate, follows the patter of DD/MM/YYYY -->
                         <label for="birthdate">Birthdate*</label>
                         <input type="text" name="birthdate" id="birthdate" required placeholder="DD/MM/YYYY"
-                            pattern="(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[12])\/(\d){4}">
+                            pattern="(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[12])\/(\d){4}" value="<?php echo htmlspecialchars($_POST['birthdate'] ?? ''); ?>">
+                        <?php if((!empty($errors['last_name']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['birthdate']); ?></span>
+                        <?php endif; ?>
                     </div>
 
                     <fieldset class="question">
@@ -145,12 +171,12 @@
                 <h2>Experience</h2>
                 <div class="row">
                     <div class="question">
-                        <label for="title">Title</label>
-                        <input type="text" name="title" id="title">
+                        <label for="experience_title">Title</label>
+                        <input type="text" name="experience_title" id="experience_title">
                     </div>
                     <div class="question">
-                        <label for="company">Company</label>
-                        <input type="text" name="company" id="company">
+                        <label for="experience_company">Company</label>
+                        <input type="text" name="experience_company" id="experience_company">
                     </div>
                 </div>
                 <div class="row">
@@ -184,18 +210,18 @@
                 <h2>Education</h2>
                 <div class="row">
                     <div class="question">
-                        <label for="institution">Institution</label>
-                        <input type="text" name="institution" id="institution">
+                        <label for="education_institution">Institution</label>
+                        <input type="text" name="education_institution" id="education_institution">
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
-                        <label for="degree">Degree</label>
-                        <input type="text" name="degree" id="degree">
+                        <label for="education_degree">Degree</label>
+                        <input type="text" name="education_degree" id="education_degree">
                     </div>
                     <div class="question">
-                        <label for="major">Major</label>
-                        <input type="text" name="major" id="major">
+                        <label for="education_major">Major</label>
+                        <input type="text" name="education_major" id="education_major">
                     </div>
                 </div>
                 <div class="row">
@@ -230,21 +256,21 @@
                 <div class="row">
                     <div class="question">
                         <label for="linkedin">LinkedIn</label>
-                        <input type="text" name="linkedin" id="linkedin">
+                        <input type="url" name="linkedin" id="linkedin">
                     </div>
                     <div class="question">
                         <label for="twitter">X (Twitter)</label>
-                        <input type="text" name="twitter" id="twitter">
+                        <input type="url" name="twitter" id="twitter">
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
                         <label for="github">Github</label>
-                        <input type="text" name="github" id="github">
+                        <input type="url" name="github" id="github">
                     </div>
                     <div class="question">
                         <label for="personal_website">Personal Website</label>
-                        <input type="text" name="personal_website" id="personal_website">
+                        <input type="url" name="personal_website" id="personal_website">
                     </div>
                 </div>
             </section>
