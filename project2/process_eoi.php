@@ -53,6 +53,14 @@ if (empty($birthdate)) {
     $errors['birthdate'] = "Date must be in the format DD/MM/YYYY."; 
 }
 
+$genders = ['male', 'female'];
+$gender = sanitize_input($_POST['gender'] ?? '');
+if (empty($gender)) {
+    $errors['gender'] = 'Gender is required.';
+} elseif (!in_array($gender, $genders)) {
+    $errors['gender'] = 'Invalid gender.';
+}
+
 session_start();
 $_SESSION['errors'] = $errors;
 ?>
@@ -62,7 +70,7 @@ $_SESSION['errors'] = $errors;
     <input type="hidden" name="first_name" value="<?php echo htmlspecialchars($first_name); ?>">
     <input type="hidden" name="last_name" value="<?php echo htmlspecialchars($last_name); ?>">
     <input type="hidden" name="birthdate" value="<?php echo htmlspecialchars($birthdate); ?>">
-    
+   <input type="hidden" name="gender" value="<?php echo htmlspecialchars($gender); ?>"> 
 </form>
 <script>
 document.addEventListener('DOMContentLoaded', function() {

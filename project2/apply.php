@@ -79,11 +79,14 @@ unset($_SESSION['errors']);
 
                     <fieldset class="question">
                         <legend>Gender*</legend>
-                        <p> <input type="radio" id="male" name="gender" value="male" required>
+                        <p> <input type="radio" id="male" name="gender" value="male" <?php echo ($_POST['gender'] === 'male' ? 'checked' : '');?>>
                             <label for="male">Male</label>
-                            <input type="radio" id="female" name="gender" value="female">
+                            <input type="radio" id="female" name="gender" value="female" <?php echo ($_POST['gender'] === 'female' ? 'checked' : '');?>>
                             <label for="female">Female</label>
                         </p>
+                        <?php if((!empty($errors['gender']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['gender']); ?></span>
+                        <?php endif; ?>
                     </fieldset>
                 </div>
 
