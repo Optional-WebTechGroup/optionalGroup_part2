@@ -15,32 +15,54 @@
     
 	<?php include_once 'header.inc'; ?>
     
-    <main>
-        
+    <main> 
+
+        <?php 
+
+            $fileName = 'optional_group_db.sql';
+            $fileExists = file_exists($fileName);
+            if (!$fileExists) {
+                echo "<p>Error: Database cannot be found. Please try again later. Sorry for the inconvenience!</p>";
+            } else { 
+        ?>
         <h1>Manager Profile</h1>
 
         <form method="post" action="">
             <section>
                 <label for="JobReference">EOI: Job Reference Number</label>
                 <br>
-                <input type="text" name="EOI_reference" id="EOI_reference" required maxlength="20">
-                <input id="submit_button" type="submit" value="Search">
-                <input id="submit_button" type="submit" value="Delete EOI References">
+                <input type="text" name="EOI_reference" required maxlength="20">
+                <input  type="submit" name="search" value="Search">
+                <input  type="submit" name="delete" value="Delete EOI References">
             </section>
         </form>
-        <input id="submit_button" type="submit" value="Search All">
-        <Form method="post" action="">
+        <input type="submit" value="Search All">
+        <br> <br>
+        <form method="post" action="">
             <section>
                 <label for="ApplicantSurname">Find Applicant (Surname)</label>
                 <br>
                 <input type="text" name="Applicant" id="Applicant" required maxlength="20">
-                <input id="submit_button" type="submit" value="Find Applicant">
+                <input type="submit" value="Find Applicant">
             </section>
-        </Form>
+        </form>
+        <?php 
+            } 
+        ?>    
+
+        <?php 
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['EOI_reference']) && !empty(trim($_POST['EOI_reference']))) {
+                if (isset($_POST['search'])) { 
+                    //content
+                } elseif (isset($_POST['delete'])) { 
+                //cotent
+                } //if nothing then don't react
+            }
+        ?>
 
     </main>
 	
-    <?php include_once 'footer.inc'; ?>
+        <?php include_once 'footer.inc'; ?>
 
 </body>
 </html>
