@@ -28,7 +28,7 @@
         <h1>Manager Profile</h1>
         <br><br>
         <form method="post" action="">
-            <section>
+            <section id="jobRef">
                 <label for="JobReference">EOI: Job Reference Number</label>
                 <br>
                 <input type="text" name="EOI_reference" required maxlength="20">
@@ -36,10 +36,10 @@
                 <input  type="submit" name="delete" value="Delete EOI References">
             </section>
         </form>
-        <input type="submit" value="Search All">
+        <input type="submit" id="searchAll" value="Search All">
         <br> <br>
         <form method="post" action="">
-            <section>
+            <section id="applicantSort">
                 <label for="ApplicantSurname">Find Applicant (Surname)</label>
                 <br>
                 <input type="text" name="Applicant" id="Applicant" required maxlength="20">
@@ -63,6 +63,7 @@
         <section id="results"> 
             <h2>Query Results:</h2>
             <br> 
+            <p> No results currently </p> <!-- test content -->
         </section> 
 
     </main>
