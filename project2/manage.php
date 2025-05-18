@@ -16,7 +16,28 @@
 	<?php include_once 'header.inc'; ?>
     
     <main>
-        <p>This is a basic HTML template with meta tags, a header, and a body section.</p>
+        
+        <h1>Manager Profile</h1>
+
+        <form method="post" action="">
+            <section>
+                <label for="JobReference">EOI: Job Reference Number</label>
+                <br>
+                <input type="text" name="EOI_reference" id="EOI_reference" required maxlength="20">
+                <input id="submit_button" type="submit" value="Search">
+                <input id="submit_button" type="submit" value="Delete EOI References">
+            </section>
+        </form>
+        <input id="submit_button" type="submit" value="Search All">
+        <Form method="post" action="">
+            <section>
+                <label for="ApplicantSurname">Find Applicant (Surname)</label>
+                <br>
+                <input type="text" name="Applicant" id="Applicant" required maxlength="20">
+                <input id="submit_button" type="submit" value="Find Applicant">
+            </section>
+        </Form>
+
     </main>
 	
     <?php include_once 'footer.inc'; ?>
