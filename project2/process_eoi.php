@@ -61,6 +61,21 @@ if (empty($gender)) {
     $errors['gender'] = 'Invalid gender.';
 }
 
+$street_address = sanitize_input($_POST['street_address'] ?? '');
+if (empty($street_address)) {
+    $errors['street_address'] = "Street address is required.";
+} elseif (strlen($street_address) > 40) {
+   $errors['street_address'] = "Street address must not exceed 40 characters."; 
+}
+
+$suburb = sanitize_input($_POST['suburb'] ?? '');
+if (empty($suburb)) {
+    $errors['suburb'] = "Suburb is required.";
+} elseif (strlen($suburb) > 40) {
+   $errors['suburb'] = "Suburb must not exceed 40 characters."; 
+}
+
+
 session_start();
 $_SESSION['errors'] = $errors;
 ?>
@@ -71,6 +86,8 @@ $_SESSION['errors'] = $errors;
     <input type="hidden" name="last_name" value="<?php echo htmlspecialchars($last_name); ?>">
     <input type="hidden" name="birthdate" value="<?php echo htmlspecialchars($birthdate); ?>">
    <input type="hidden" name="gender" value="<?php echo htmlspecialchars($gender); ?>"> 
+   <input type="hidden" name="street_address" value="<?php echo htmlspecialchars($street_address); ?>"> 
+   <input type="hidden" name="suburb" value="<?php echo htmlspecialchars($suburb); ?>"> 
 </form>
 <script>
 document.addEventListener('DOMContentLoaded', function() {

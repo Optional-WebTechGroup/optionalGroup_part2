@@ -93,11 +93,17 @@ unset($_SESSION['errors']);
                 <div class="row">
                     <div class="question">
                         <label for="street_address">Street Address*</label>
-                        <input type="text" name="street_address" id="street_address" required maxlength="40">
+                        <input type="text" name="street_address" id="street_address" required maxlength="40" value="<?php echo htmlspecialchars($_POST['street_address'] ?? ''); ?>">
+                        <?php if((!empty($errors['street_address']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['street_address']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="suburb">Suburb/Town*</label>
-                        <input type="text" name="suburb" id="suburb" required maxlength="40">
+                        <input type="text" name="suburb" id="suburb" required maxlength="40" value="<?php echo htmlspecialchars($_POST['suburb'] ?? ''); ?>">
+                        <?php if((!empty($errors['suburb']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['suburb']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
 
