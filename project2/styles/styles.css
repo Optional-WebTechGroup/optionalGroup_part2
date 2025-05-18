@@ -714,3 +714,17 @@ textarea {
     flex-direction: column;
   }
 }
+
+#results {
+  justify-self: center;
+   width: 95%;
+    height: 300px;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 1em;
+    margin-bottom: 1em;
+    background-color: #f9f9f9;     
+    overflow: auto;
+    box-sizing: border-box;
+}
+

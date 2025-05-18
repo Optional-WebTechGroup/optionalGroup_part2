@@ -26,7 +26,7 @@
             } else { 
         ?>
         <h1>Manager Profile</h1>
-
+        <br><br>
         <form method="post" action="">
             <section>
                 <label for="JobReference">EOI: Job Reference Number</label>
@@ -59,6 +59,11 @@
                 } //if nothing then don't react
             }
         ?>
+        <br> <br>
+        <section id="results"> 
+            <h2>Query Results:</h2>
+            <br> 
+        </section> 
 
     </main>
 	
