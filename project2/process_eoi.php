@@ -133,7 +133,7 @@ if (empty($phone_number)) {
 
 $required_technical_skills = ['python', 'assembly', 'java', 'networking', 'switching', 'routing'];
 $skills = $_POST['technical_skills'] ?? [];
-if (empty($skills)) {
+if (empty($skills) && !isset($_POST['other_skills_checked'])) {
     $errors['technical_skills'] = "Technical skills is required.";
 } 
 
@@ -146,11 +146,16 @@ foreach ($skills as $skill) {
 
 if (!array_key_exists('technical_skills', $errors)) {
     $technical_skills = implode(',', $skills);
-    if (strlen($technical_skills) > 100) {
+    if (strlen($technical_skills) > 255) {
         $errors['technical_skills'] = 'Invalid technical skills.';
     }
 }
 
+
+$other_skills = sanitize_input($_POST['other_skills'] ?? '');
+if (empty($other_skills) && isset($_POST['other_skills_checked'])) {
+    $errors['other_skills'] = 'Other skills is required.';
+}
 
 $_SESSION['errors'] = $errors;
 ?>
@@ -160,16 +165,20 @@ $_SESSION['errors'] = $errors;
     <input type="hidden" name="first_name" value="<?php echo htmlspecialchars($first_name); ?>">
     <input type="hidden" name="last_name" value="<?php echo htmlspecialchars($last_name); ?>">
     <input type="hidden" name="birthdate" value="<?php echo htmlspecialchars($birthdate); ?>">
-   <input type="hidden" name="gender" value="<?php echo htmlspecialchars($gender); ?>"> 
-   <input type="hidden" name="street_address" value="<?php echo htmlspecialchars($street_address); ?>"> 
-   <input type="hidden" name="suburb" value="<?php echo htmlspecialchars($suburb); ?>"> 
-   <input type="hidden" name="state" value="<?php echo htmlspecialchars($state); ?>"> 
-   <input type="hidden" name="postcode" value="<?php echo htmlspecialchars($postcode); ?>"> 
-   <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>"> 
-   <input type="hidden" name="phone_number" value="<?php echo htmlspecialchars($phone_number); ?>"> 
+    <input type="hidden" name="gender" value="<?php echo htmlspecialchars($gender); ?>"> 
+    <input type="hidden" name="street_address" value="<?php echo htmlspecialchars($street_address); ?>"> 
+    <input type="hidden" name="suburb" value="<?php echo htmlspecialchars($suburb); ?>"> 
+    <input type="hidden" name="state" value="<?php echo htmlspecialchars($state); ?>"> 
+    <input type="hidden" name="postcode" value="<?php echo htmlspecialchars($postcode); ?>"> 
+    <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>"> 
+    <input type="hidden" name="phone_number" value="<?php echo htmlspecialchars($phone_number); ?>"> 
     <?php foreach ($skills as $skill): ?>
-         <input type="hidden" name="technical_skills[]" value="<?php echo htmlspecialchars($skill); ?>"> 
+        <input type="hidden" name="technical_skills[]" value="<?php echo htmlspecialchars($skill); ?>"> 
     <?php endforeach; ?>
+    <?php if (isset($_POST['other_skills_checked'])): ?>
+        <input type="hidden" name="other_skills_checked" value="<?php echo htmlspecialchars($_POST['other_skills_checked']); ?>">  
+    <?php endif;?>
+    <input type="hidden" name="other_skills" value="<?php echo htmlspecialchars($other_skills); ?>"> 
 </form>
 <script>
 document.addEventListener('DOMContentLoaded', function() {

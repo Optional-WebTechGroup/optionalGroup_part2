@@ -177,6 +177,10 @@ unset($_SESSION['errors']);
                                 <input type="checkbox" name="technical_skills[]" id="routing" value="routing" <?php echo (in_array('routing', $technical_skills) ? 'checked' : '')?>>
                                 <label for="routing">Routing</label>
                             </p>
+                            <p>
+                                <input type="checkbox" id="" name="other_skills_checked" value="other_skills_checked" <?php echo (isset($_POST['other_skills_checked']) ? 'checked' : '')?>>
+                                <label for="other_skills_checked">Other Skills</label> 
+                            </p>
                         </fieldset>
                         <?php if((!empty($errors['technical_skills']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['technical_skills']); ?></span>
@@ -185,6 +189,9 @@ unset($_SESSION['errors']);
                     <div class="question">
                         <label for="other_skills">Other Skills:</label>
                         <textarea name="other_skills" id="other_skills" rows="5"></textarea>
+                        <?php if((!empty($errors['other_skills']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['other_skills']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
             </section>
