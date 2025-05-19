@@ -11,7 +11,6 @@ function sanitize_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
     $data = strip_tags($data);
-    $data = htmlspecialchars_decode($data);
     return $data;
 }
 
@@ -132,6 +131,27 @@ if (empty($phone_number)) {
    $errors['phone_number'] = 'Phone number must not exceed 12 characters'; 
 }
 
+$required_technical_skills = ['python', 'assembly', 'java', 'networking', 'switching', 'routing'];
+$skills = $_POST['technical_skills'] ?? [];
+if (empty($skills)) {
+    $errors['technical_skills'] = "Technical skills is required.";
+} 
+
+foreach ($skills as $skill) {
+    if (!in_array($skill, $required_technical_skills)) {
+        $errors['technical_skills'] = 'Invalid technical skills.';
+        break;
+    }
+}
+
+if (!array_key_exists('technical_skills', $errors)) {
+    $technical_skills = implode(',', $skills);
+    if (strlen($technical_skills) > 100) {
+        $errors['technical_skills'] = 'Invalid technical skills.';
+    }
+}
+
+
 $_SESSION['errors'] = $errors;
 ?>
 
@@ -147,6 +167,9 @@ $_SESSION['errors'] = $errors;
    <input type="hidden" name="postcode" value="<?php echo htmlspecialchars($postcode); ?>"> 
    <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>"> 
    <input type="hidden" name="phone_number" value="<?php echo htmlspecialchars($phone_number); ?>"> 
+    <?php foreach ($skills as $skill): ?>
+         <input type="hidden" name="technical_skills[]" value="<?php echo htmlspecialchars($skill); ?>"> 
+    <?php endforeach; ?>
 </form>
 <script>
 document.addEventListener('DOMContentLoaded', function() {

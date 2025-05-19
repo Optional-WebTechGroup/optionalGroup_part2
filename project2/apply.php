@@ -160,24 +160,27 @@ unset($_SESSION['errors']);
                     <div class="question">
                         <fieldset>
                             <legend>Required Technical Skills*</legend>
+                            <?php $technical_skills = $_POST['technical_skills'] ?? []; ?>
                             <p>
-                                <input type="checkbox" name="technical_skills[]" id="python" value="python" required
-                                    checked>
+                                <input type="checkbox" name="technical_skills[]" id="python" value="python" <?php echo (in_array('python', $technical_skills) ? 'checked' : '')?>>
                                 <label for="python">Python</label>
-                                <input type="checkbox" name="technical_skills[]" id="java" value="java">
+                                <input type="checkbox" name="technical_skills[]" id="java" value="java" <?php echo (in_array('java', $technical_skills) ? 'checked' : '')?>>
                                 <label for="java">Java</label>
-                                <input type="checkbox" name="technical_skills[]" id="assembly" value="assembly">
+                                <input type="checkbox" name="technical_skills[]" id="assembly" value="assembly" <?php echo (in_array('assembly', $technical_skills) ? 'checked' : '')?>>
                                 <label for="assembly">Assembly</label>
                             </p>
                             <p>
-                                <input type="checkbox" name="technical_skills[]" id="networking" value="networking">
+                                <input type="checkbox" name="technical_skills[]" id="networking" value="networking" <?php echo (in_array('networking', $technical_skills) ? 'checked' : '')?>>
                                 <label for="networking">Networking</label>
-                                <input type="checkbox" name="technical_skills[]" id="switching" value="switching">
+                                <input type="checkbox" name="technical_skills[]" id="switching" value="switching" <?php echo (in_array('switching', $technical_skills) ? 'checked' : '')?>>
                                 <label for="switching">Switching</label>
-                                <input type="checkbox" name="technical_skills[]" id="routing" value="routing">
+                                <input type="checkbox" name="technical_skills[]" id="routing" value="routing" <?php echo (in_array('routing', $technical_skills) ? 'checked' : '')?>>
                                 <label for="routing">Routing</label>
                             </p>
                         </fieldset>
+                        <?php if((!empty($errors['technical_skills']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['technical_skills']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="other_skills">Other Skills:</label>
