@@ -31,7 +31,6 @@ unset($_SESSION['errors']);
                 <select name="job_reference_number" id="job_reference_number" required>
                     <option value="">Please Select</option>
                     <?php 
-                    echo $errors['job_reference_number']; 
                         $selected_job_reference_number = $_POST['job_reference_number'] ?? '';
                         $job_reference_numbers = ['5KC3U', 'PXUB6'];
                         foreach ($job_reference_numbers as $job_reference_number) {
@@ -71,8 +70,8 @@ unset($_SESSION['errors']);
                         <!-- input for birthdate, follows the patter of DD/MM/YYYY -->
                         <label for="birthdate">Birthdate*</label>
                         <input type="text" name="birthdate" id="birthdate" required placeholder="DD/MM/YYYY"
-                            pattern="(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[12])\/(\d){4}" value="<?php echo htmlspecialchars($_POST['birthdate'] ?? ''); ?>">
-                        <?php if((!empty($errors['last_name']))): ?>
+                            pattern="\d{2}/\d{2}/\d{4}" value="<?php echo htmlspecialchars($_POST['birthdate'] ?? ''); ?>">
+                        <?php if((!empty($errors['birthdate']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['birthdate']); ?></span>
                         <?php endif; ?>
                     </div>
@@ -113,20 +112,26 @@ unset($_SESSION['errors']);
                     <p class="question"><label for="state">State*: </label>
                         <select name="state" id="state" required>
                             <option value="">Please Select</option>
-                            <option value="ACT">Australian Capital Territory</option>
-                            <option value="NSW">New South Wales</option>
-                            <option value="NT">Northern Territory</option>
-                            <option value="QLD">Queensland</option>
-                            <option value="WA">South Australia</option>
-                            <option value="TAS">Tasmania</option>
-                            <option value="VIC">Victoria</option>
-                            <option value="SA">Western Australia</option>
+                            <option value="ACT" <?php echo ($_POST['state'] === 'ACT') ? 'selected' : ''; ?>>Australian Capital Territory</option>
+                            <option value="NSW" <?php echo ($_POST['state'] === 'NSW') ? 'selected' : ''; ?>>New South Wales</option>
+                            <option value="NT" <?php echo ($_POST['state'] === 'NT') ? 'selected' : ''; ?>>Northern Territory</option>
+                            <option value="QLD" <?php echo ($_POST['state'] === 'QLD') ? 'selected' : ''; ?>>Queensland</option>
+                            <option value="SA" <?php echo ($_POST['state'] === 'SA') ? 'selected' : ''; ?>>South Australia</option>
+                            <option value="TAS" <?php echo ($_POST['state'] === 'TAS') ? 'selected' : ''; ?>>Tasmania</option>
+                            <option value="VIC" <?php echo ($_POST['state'] === 'VIC') ? 'selected' : ''; ?>>Victoria</option>
+                            <option value="WA" <?php echo ($_POST['state'] === 'WA') ? 'selected' : ''; ?>>Western Australia</option>
                         </select>
+                        <?php if((!empty($errors['state']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['state']); ?></span>
+                        <?php endif; ?>
                     </p>
                     <div class="question">
                         <label for="postcode">Postcode*</label>
                         <input type="text" name="postcode" id="postcode" required minlength="4" maxlength="4"
-                            pattern="(0[289][0-9]{2})|([1-9][0-9]{3})">
+                            pattern="0[289]\d{2}|[1-9]\d{3}" value="<?php echo htmlspecialchars($_POST['postcode'] ?? ''); ?>">
+                        <?php if((!empty($errors['postcode']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['postcode']); ?></span>
+                        <?php endif; ?>
                     </div>
 
                 </div>

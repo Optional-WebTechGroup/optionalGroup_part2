@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('settings.php');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -75,8 +76,47 @@ if (empty($suburb)) {
    $errors['suburb'] = "Suburb must not exceed 40 characters."; 
 }
 
+$state_postcode_patterns = [
+    'ACT' => '/^(02\d{2}|26(0\d|1[0-8])|29(0\d|1\d|20))$/', // 0200–0299, 2600–2618, 2900–2920
+    'NSW' => '/^(1\d{3}|2[0-5]\d{2}|2619|26[2-9]\d|2[7-8]\d{2}|292\d|29[3-9]\d)$/', // 1000–1999, 2000–2599, 2619–2899, 2921–2999
+    'NT' => '/^0[8-9]\d{2}$/', // 0800–0999
+    'QLD' => '/^(4\d{3}|9\d{3})$/', // 4000–4999, 9000–9999
+    'SA' => '/^5\d{3}$/', // 5000–5999
+    'TAS' => '/^7\d{3}$/', // 7000–7999
+    'VIC' => '/^(3\d{3}|8\d{3})$/', // 3000–3999, 8000–8999
+    'WA' => '/^(6[0-6]\d{2}|67[0-8]\d|679[0-7]|6[8-9]\d{2})$/', // 6000–6797, 6800–6999
+];
 
-session_start();
+$state = sanitize_input($_POST['state'] ?? '');
+if (empty($state)) {
+    $errors['state'] = 'Please select a state.';
+    $errors['postcode'] = 'No state selected';
+} elseif (!array_key_exists($state, $state_postcode_patterns)) {
+    $errors['state'] = 'Invalid state selected.';
+} elseif (strlen($state) > 3) {
+    $errors['state'] = 'State must not exceed 3 characters'; 
+}
+
+$postcode = sanitize_input($_POST['postcode'] ?? '');
+if (!array_key_exists('state', $errors)) {
+    if (empty($postcode)) {
+        $errors['postcode'] = "Postcode is required."; 
+    } elseif (strlen($postcode) > 4) {
+        $errors['postcode'] = 'Postcode must not exceed 4 characters';    
+    } elseif (preg_match('/^(0[289]\d{2}|[1-9]\d{3})$/', $postcode)) {
+        if (!preg_match($state_postcode_patterns[$state], $postcode)) {
+            $errors['postcode'] = "Postcode doesn't match state.";    
+        }
+    } else {
+        $errors['postcode'] = "Invalid postcode.";    
+    }
+} else {
+    $errors['postcode'] = "Invalid state.";   
+}
+
+
+
+
 $_SESSION['errors'] = $errors;
 ?>
 
@@ -88,6 +128,8 @@ $_SESSION['errors'] = $errors;
    <input type="hidden" name="gender" value="<?php echo htmlspecialchars($gender); ?>"> 
    <input type="hidden" name="street_address" value="<?php echo htmlspecialchars($street_address); ?>"> 
    <input type="hidden" name="suburb" value="<?php echo htmlspecialchars($suburb); ?>"> 
+   <input type="hidden" name="state" value="<?php echo htmlspecialchars($state); ?>"> 
+   <input type="hidden" name="postcode" value="<?php echo htmlspecialchars($postcode); ?>"> 
 </form>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
