@@ -114,8 +114,23 @@ if (!array_key_exists('state', $errors)) {
     $errors['postcode'] = "Invalid state.";   
 }
 
+$email = sanitize_input($_POST['email'] ?? '');
+if (empty($email)) {
+    $errors['email'] = "Email is required.";
+} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors['email'] = "Invalid email";
+} elseif (strlen($email) > 100) {
+   $errors['email'] = 'Email must not exceed 100 characters'; 
+}
 
-
+$phone_number = sanitize_input($_POST['phone_number'] ?? '');
+if (empty($phone_number)) {
+    $errors['phone_number'] = "Phone number is required.";
+} elseif (!preg_match('/^[0-9 ]{8,12}$/')) {
+    $errors['phone_number'] = "Invalid phone number"; 
+} elseif (strlen($phone_number) > 12) {
+   $errors['phone_number'] = 'Phone number must not exceed 12 characters'; 
+}
 
 $_SESSION['errors'] = $errors;
 ?>
@@ -130,6 +145,8 @@ $_SESSION['errors'] = $errors;
    <input type="hidden" name="suburb" value="<?php echo htmlspecialchars($suburb); ?>"> 
    <input type="hidden" name="state" value="<?php echo htmlspecialchars($state); ?>"> 
    <input type="hidden" name="postcode" value="<?php echo htmlspecialchars($postcode); ?>"> 
+   <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>"> 
+   <input type="hidden" name="phone_number" value="<?php echo htmlspecialchars($phone_number); ?>"> 
 </form>
 <script>
 document.addEventListener('DOMContentLoaded', function() {

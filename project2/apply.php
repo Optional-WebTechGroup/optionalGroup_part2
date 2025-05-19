@@ -141,12 +141,18 @@ unset($_SESSION['errors']);
                         <!-- input for email address following the correct email address pattern -->
                         <label for="email_address">Email Address*</label>
                         <input type="text" name="email_address" id="email_address" required
-                            pattern="[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}">
+                            pattern="[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+                        <?php if((!empty($errors['email']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['email']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="phone_number">Phone Number*</label>
                         <input type="text" name="phone_number" id="phone_number" required minlength="8" maxlength="12"
-                            pattern="[0-9 ]{8,12}">
+                            pattern="[0-9 ]{8,12}" value="<?php echo htmlspecialchars($_POST['phone_number'] ?? ''); ?>">
+                        <?php if((!empty($errors['phone_number']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['phone_number']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
 
