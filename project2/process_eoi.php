@@ -14,6 +14,11 @@ function sanitize_input($data) {
     return $data;
 }
 
+function validate_date($date, $format='Y-m-d') {
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) === $date;
+}
+
 $errors = [];
 
 $job_reference_numbers = ['5KC3U', 'PXUB6'];
@@ -44,11 +49,10 @@ $birthdate = sanitize_input($_POST['birthdate'] ?? '');
 if (empty($birthdate)) {
     $errors['birthdate'] = "Birthdate is required."; 
 } elseif (preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $birthdate)) {
-    $day = (int)substr($birthdate, 0, 2);
-    $month = (int)substr($birthdate, 3, 2);
-    $year = (int)substr($birthdate, 6, 4);
-
-    if (!checkdate($month, $day, $year)) {
+    if (validate_date($birthdate, 'd/m/Y')) {
+        $sql_birthdate = DateTime::createFromFormat('d/m/Y', $birthdate);
+        $sql_birthdate = $sql_birthdate->format('Y-m-d');
+    } else {
         $errors['birthdate'] = "Invalid date.";  
     }
 } else {
@@ -115,22 +119,22 @@ if (!array_key_exists('state', $errors)) {
     $errors['postcode'] = "Invalid state.";   
 }
 
-$email = sanitize_input($_POST['email'] ?? '');
+$email = sanitize_input($_POST['email_address'] ?? '');
 if (empty($email)) {
-    $errors['email'] = "Email is required.";
+    $errors['email_address'] = "Email address is required.";
 } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors['email'] = "Invalid email";
+    $errors['email_address'] = "Invalid email address.";
 } elseif (strlen($email) > 100) {
-   $errors['email'] = 'Email must not exceed 100 characters'; 
+   $errors['email_address'] = 'Email address must not exceed 100 characters.'; 
 }
 
 $phone_number = sanitize_input($_POST['phone_number'] ?? '');
 if (empty($phone_number)) {
     $errors['phone_number'] = "Phone number is required.";
 } elseif (!preg_match('/^[0-9 ]{8,12}$/', $phone_number)) {
-    $errors['phone_number'] = "Invalid phone number"; 
+    $errors['phone_number'] = "Invalid phone number."; 
 } elseif (strlen($phone_number) > 12) {
-   $errors['phone_number'] = 'Phone number must not exceed 12 characters'; 
+   $errors['phone_number'] = 'Phone number must not exceed 12 characters.'; 
 }
 
 
@@ -155,10 +159,42 @@ if (!array_key_exists('technical_skills', $errors)) {
 }
 
 $other_skills = sanitize_input($_POST['other_skills'] ?? '');
+$other_skills = empty($other_skills) ? null : $other_skills;
 if (empty($other_skills) && in_array('other_skills', $skills)) {
     $errors['other_skills'] = 'Other skills is required.';
 }
+
+$experience_title = sanitize_input($_POST['experience_title'] ?? '');
+$experience_title = empty($experience_title) ? null : $experience_title;
+if (!empty($experience_title) && strlen($experience_title) > 100) {
+    $errors['experience_title'] = 'Title must not exceed 100 characters.';  
+}
+
+$experience_company = sanitize_input($_POST['experience_company'] ?? '');
+$experience_company = empty($experience_company) ? null : $experience_company;
+if (!empty($experience_company) && strlen($experience_company) > 100) {
+    $errors['experience_company'] = 'Company must not exceed 100 characters.';  
+}
+
+$experience_description = sanitize_input($_POST['experience_description'] ?? '');
+$experience_description = empty($experience_description) ? null : $experience_description;
+
+$experience_from_date = sanitize_input($_POST['experience_from_date'] ?? '');
+$experience_from_date = empty($experience_from_date) ? null : $experience_from_date;
+if (!empty($experience_from_date) && !validate_date($experience_from_date)) {
+    $errors['experience_from_date'] = 'Invalid date.';
+}
+
+$experience_to_date = sanitize_input($_POST['experience_to_date'] ?? '');
+$experience_to_date = empty($experience_to_date) ? null : $experience_to_date;
+if (!empty($experience_to_date) && !validate_date($experience_to_date)) {
+    $errors['experience_to_date'] = 'Invalid date.';
+}
+
+$currently_working = isset($_POST['currently_working']) ? 1 : 0;
 ?>
+
+
 
 <?php if (!empty($errors)): ?>
     <?php $_SESSION['errors'] = $errors; ?>
@@ -178,6 +214,14 @@ if (empty($other_skills) && in_array('other_skills', $skills)) {
             <input type="hidden" name="technical_skills[]" value="<?php echo htmlspecialchars($skill); ?>"> 
         <?php endforeach; ?>
         <input type="hidden" name="other_skills" value="<?php echo htmlspecialchars($other_skills); ?>"> 
+        <input type="hidden" name="experience_title" value="<?php echo htmlspecialchars($experience_title); ?>"> 
+        <input type="hidden" name="experience_company" value="<?php echo htmlspecialchars($experience_company); ?>"> 
+        <input type="hidden" name="experience_description" value="<?php echo htmlspecialchars($experience_description); ?>"> 
+        <input type="hidden" name="experience_from_date" value="<?php echo htmlspecialchars($experience_from_date); ?>"> 
+        <input type="hidden" name="experience_to_date" value="<?php echo htmlspecialchars($experience_to_date); ?>"> 
+        <?php if (isset($_POST['currently_working'])): ?>
+            <input type="hidden" name="currently_working" value="currently_working"> 
+        <?php endif; ?>
     </form>
     <script>
     document.addEventListener('DOMContentLoaded', function() {

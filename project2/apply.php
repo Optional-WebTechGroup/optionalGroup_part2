@@ -188,7 +188,7 @@ unset($_SESSION['errors']);
                     </div>
                     <div class="question">
                         <label for="other_skills">Other Skills:</label>
-                        <textarea name="other_skills" id="other_skills" rows="5"></textarea>
+                        <textarea name="other_skills" id="other_skills" rows="5"><?php echo htmlspecialchars($_POST['other_skills'] ?? ''); ?></textarea>
                         <?php if((!empty($errors['other_skills']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['other_skills']); ?></span>
                         <?php endif; ?>
@@ -202,33 +202,47 @@ unset($_SESSION['errors']);
                 <div class="row">
                     <div class="question">
                         <label for="experience_title">Title</label>
-                        <input type="text" name="experience_title" id="experience_title">
+                        <input type="text" name="experience_title" id="experience_title" value="<?php echo htmlspecialchars($_POST['experience_title'] ?? ''); ?>">
+                         <?php if((!empty($errors['experience_title']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['experience_title']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="experience_company">Company</label>
-                        <input type="text" name="experience_company" id="experience_company">
+                        <input type="text" name="experience_company" id="experience_company" value="<?php echo htmlspecialchars($_POST['experience_company'] ?? ''); ?>">
+                        <?php if((!empty($errors['experience_company']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['experience_company']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
                         <label for="experience_description">Description</label>
-                        <textarea name="experience_description" id="experience_description" rows="5"></textarea>
+                        <textarea name="experience_description" id="experience_description" rows="5"><?php echo htmlspecialchars($_POST['experience_description'] ?? ''); ?></textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
                         <label for="experience_from_date">From</label>
-                        <input type="date" name="experience_from_date" id="experience_from_date">
+                        <input type="date" name="experience_from_date" id="experience_from_date" value="<?php echo htmlspecialchars($_POST['experience_from_date'] ?? ''); ?>">
+                        <?php if((!empty($errors['experience_from_date']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['experience_from_date']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="experience_to_date">To</label>
-                        <input type="date" name="experience_to_date" id="experience_to_date">
+                        <input type="date" name="experience_to_date" id="experience_to_date" value="<?php echo htmlspecialchars($_POST['experience_to_date'] ?? ''); ?>">
+                        <?php echo htmlspecialchars($_POST['experience_to_date'] ?? ''); ?>
+                        <?php if((!empty($errors['experience_to_date']))): ?>
+                            
+                            <span class="error"><?php echo htmlspecialchars($errors['experience_to_date']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
                         <p><input type="checkbox" name="currently_working" id="currently_working"
-                                value="currently_working">
+                                value="currently_working" <?php echo (isset($_POST['currently_working'])) ? 'checked' : ''?>>
                             <label for="currently_working">I currently work here</label>
                         </p>
                     </div>
