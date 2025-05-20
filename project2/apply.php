@@ -1,3 +1,10 @@
+<?php
+session_start();
+$errors = $_SESSION['errors'] ?? [];
+
+unset($_SESSION['errors']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,17 +22,26 @@
 
 <body>
     <?php include("header.inc"); ?>
+
     <main id="apply_main">
         <!-- title section with the reference dropdown below -->
         <h1>Apply to your <span class="text_gradient">Dream Job</span></h1>
-        <form action="https://mercury.swin.edu.au/it000000/formtest.php" method="post">
-            <p class="center"><label for="reference_number">Job Reference Number: </label>
-                <select name="reference_number" id="reference_number" required>
+        <form action="process_eoi.php" method="post" novalidate>
+            <p class="center" id="reference_number"><label for="job_reference_number">Job Reference Number: </label>
+                <select name="job_reference_number" id="job_reference_number" required>
                     <option value="">Please Select</option>
-                    <option value="5KC3U">5KC3U</option>
-                    <option value="PXUB6">PXUB6</option>
+                    <?php 
+                        $selected_job_reference_number = $_POST['job_reference_number'] ?? '';
+                        $job_reference_numbers = ['5KC3U', 'PXUB6'];
+                        foreach ($job_reference_numbers as $job_reference_number) {
+                            echo "<option value='$job_reference_number'" . ($selected_job_reference_number === $job_reference_number ? "selected" : "") . ">$job_reference_number</option>";
+                        }
+                    ?>
                 </select>
             </p>
+            <?php if((!empty($errors['job_reference_number']))): ?>
+                <span class="center error"><?php echo htmlspecialchars($errors['job_reference_number']); ?></span>
+            <?php endif; ?>
             <hr>
             <!-- Section to add personal informations -->
             <section>
@@ -35,11 +51,17 @@
                 <div class="row">
                     <div class="question">
                         <label for="first_name">First name*</label>
-                        <input type="text" name="first_name" id="first_name" required maxlength="20">
+                        <input type="text" name="first_name" id="first_name" required maxlength="20" value="<?php echo htmlspecialchars($_POST['first_name'] ?? ''); ?>">
+                        <?php if((!empty($errors['first_name']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['first_name']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="last_name">Last name*</label>
-                        <input type="text" name="last_name" id="last_name" required maxlength="20">
+                        <input type="text" name="last_name" id="last_name" required maxlength="20" value="<?php echo htmlspecialchars($_POST['last_name'] ?? ''); ?>">
+                        <?php if((!empty($errors['last_name']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['last_name']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -48,27 +70,39 @@
                         <!-- input for birthdate, follows the patter of DD/MM/YYYY -->
                         <label for="birthdate">Birthdate*</label>
                         <input type="text" name="birthdate" id="birthdate" required placeholder="DD/MM/YYYY"
-                            pattern="(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[12])\/(\d){4}">
+                            pattern="\d{2}/\d{2}/\d{4}" value="<?php echo htmlspecialchars($_POST['birthdate'] ?? ''); ?>">
+                        <?php if((!empty($errors['birthdate']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['birthdate']); ?></span>
+                        <?php endif; ?>
                     </div>
 
                     <fieldset class="question">
                         <legend>Gender*</legend>
-                        <p> <input type="radio" id="male" name="gender" value="male" required>
+                        <p> <input type="radio" id="male" name="gender" value="male" <?php echo ($_POST['gender'] === 'male' ? 'checked' : '');?>>
                             <label for="male">Male</label>
-                            <input type="radio" id="female" name="gender" value="female">
+                            <input type="radio" id="female" name="gender" value="female" <?php echo ($_POST['gender'] === 'female' ? 'checked' : '');?>>
                             <label for="female">Female</label>
                         </p>
+                        <?php if((!empty($errors['gender']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['gender']); ?></span>
+                        <?php endif; ?>
                     </fieldset>
                 </div>
 
                 <div class="row">
                     <div class="question">
                         <label for="street_address">Street Address*</label>
-                        <input type="text" name="street_address" id="street_address" required maxlength="40">
+                        <input type="text" name="street_address" id="street_address" required maxlength="40" value="<?php echo htmlspecialchars($_POST['street_address'] ?? ''); ?>">
+                        <?php if((!empty($errors['street_address']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['street_address']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="suburb">Suburb/Town*</label>
-                        <input type="text" name="suburb" id="suburb" required maxlength="40">
+                        <input type="text" name="suburb" id="suburb" required maxlength="40" value="<?php echo htmlspecialchars($_POST['suburb'] ?? ''); ?>">
+                        <?php if((!empty($errors['suburb']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['suburb']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -78,20 +112,26 @@
                     <p class="question"><label for="state">State*: </label>
                         <select name="state" id="state" required>
                             <option value="">Please Select</option>
-                            <option value="ACT">Australian Capital Territory</option>
-                            <option value="NSW">New South Wales</option>
-                            <option value="NT">Northern Territory</option>
-                            <option value="QLD">Queensland</option>
-                            <option value="WA">South Australia</option>
-                            <option value="TAS">Tasmania</option>
-                            <option value="VIC">Victoria</option>
-                            <option value="SA">Western Australia</option>
+                            <option value="ACT" <?php echo ($_POST['state'] === 'ACT') ? 'selected' : ''; ?>>Australian Capital Territory</option>
+                            <option value="NSW" <?php echo ($_POST['state'] === 'NSW') ? 'selected' : ''; ?>>New South Wales</option>
+                            <option value="NT" <?php echo ($_POST['state'] === 'NT') ? 'selected' : ''; ?>>Northern Territory</option>
+                            <option value="QLD" <?php echo ($_POST['state'] === 'QLD') ? 'selected' : ''; ?>>Queensland</option>
+                            <option value="SA" <?php echo ($_POST['state'] === 'SA') ? 'selected' : ''; ?>>South Australia</option>
+                            <option value="TAS" <?php echo ($_POST['state'] === 'TAS') ? 'selected' : ''; ?>>Tasmania</option>
+                            <option value="VIC" <?php echo ($_POST['state'] === 'VIC') ? 'selected' : ''; ?>>Victoria</option>
+                            <option value="WA" <?php echo ($_POST['state'] === 'WA') ? 'selected' : ''; ?>>Western Australia</option>
                         </select>
+                        <?php if((!empty($errors['state']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['state']); ?></span>
+                        <?php endif; ?>
                     </p>
                     <div class="question">
                         <label for="postcode">Postcode*</label>
                         <input type="text" name="postcode" id="postcode" required minlength="4" maxlength="4"
-                            pattern="(0[289][0-9]{2})|([1-9][0-9]{3})">
+                            pattern="0[289]\d{2}|[1-9]\d{3}" value="<?php echo htmlspecialchars($_POST['postcode'] ?? ''); ?>">
+                        <?php if((!empty($errors['postcode']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['postcode']); ?></span>
+                        <?php endif; ?>
                     </div>
 
                 </div>
@@ -101,12 +141,18 @@
                         <!-- input for email address following the correct email address pattern -->
                         <label for="email_address">Email Address*</label>
                         <input type="text" name="email_address" id="email_address" required
-                            pattern="[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}">
+                            pattern="[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+                        <?php if((!empty($errors['email']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['email']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="phone_number">Phone Number*</label>
                         <input type="text" name="phone_number" id="phone_number" required minlength="8" maxlength="12"
-                            pattern="[0-9 ]{8,12}">
+                            pattern="[0-9 ]{8,12}" value="<?php echo htmlspecialchars($_POST['phone_number'] ?? ''); ?>">
+                        <?php if((!empty($errors['phone_number']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['phone_number']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -114,28 +160,38 @@
                     <div class="question">
                         <fieldset>
                             <legend>Required Technical Skills*</legend>
+                            <?php $technical_skills = $_POST['technical_skills'] ?? []; ?>
                             <p>
-                                <input type="checkbox" name="technical_skills[]" id="python" value="python" required
-                                    checked>
+                                <input type="checkbox" name="technical_skills[]" id="python" value="python" <?php echo (in_array('python', $technical_skills) ? 'checked' : '')?>>
                                 <label for="python">Python</label>
-                                <input type="checkbox" name="technical_skills[]" id="java" value="java">
+                                <input type="checkbox" name="technical_skills[]" id="java" value="java" <?php echo (in_array('java', $technical_skills) ? 'checked' : '')?>>
                                 <label for="java">Java</label>
-                                <input type="checkbox" name="technical_skills[]" id="assembly" value="assembly">
+                                <input type="checkbox" name="technical_skills[]" id="assembly" value="assembly" <?php echo (in_array('assembly', $technical_skills) ? 'checked' : '')?>>
                                 <label for="assembly">Assembly</label>
                             </p>
                             <p>
-                                <input type="checkbox" name="technical_skills[]" id="networking" value="networking">
+                                <input type="checkbox" name="technical_skills[]" id="networking" value="networking" <?php echo (in_array('networking', $technical_skills) ? 'checked' : '')?>>
                                 <label for="networking">Networking</label>
-                                <input type="checkbox" name="technical_skills[]" id="switching" value="switching">
+                                <input type="checkbox" name="technical_skills[]" id="switching" value="switching" <?php echo (in_array('switching', $technical_skills) ? 'checked' : '')?>>
                                 <label for="switching">Switching</label>
-                                <input type="checkbox" name="technical_skills[]" id="routing" value="routing">
+                                <input type="checkbox" name="technical_skills[]" id="routing" value="routing" <?php echo (in_array('routing', $technical_skills) ? 'checked' : '')?>>
                                 <label for="routing">Routing</label>
                             </p>
+                            <p>
+                                <input type="checkbox" id="" name="other_skills_checked" value="other_skills_checked" <?php echo (isset($_POST['other_skills_checked']) ? 'checked' : '')?>>
+                                <label for="other_skills_checked">Other Skills</label> 
+                            </p>
                         </fieldset>
+                        <?php if((!empty($errors['technical_skills']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['technical_skills']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="other_skills">Other Skills:</label>
                         <textarea name="other_skills" id="other_skills" rows="5"></textarea>
+                        <?php if((!empty($errors['other_skills']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['other_skills']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
             </section>
@@ -145,12 +201,12 @@
                 <h2>Experience</h2>
                 <div class="row">
                     <div class="question">
-                        <label for="title">Title</label>
-                        <input type="text" name="title" id="title">
+                        <label for="experience_title">Title</label>
+                        <input type="text" name="experience_title" id="experience_title">
                     </div>
                     <div class="question">
-                        <label for="company">Company</label>
-                        <input type="text" name="company" id="company">
+                        <label for="experience_company">Company</label>
+                        <input type="text" name="experience_company" id="experience_company">
                     </div>
                 </div>
                 <div class="row">
@@ -184,18 +240,18 @@
                 <h2>Education</h2>
                 <div class="row">
                     <div class="question">
-                        <label for="institution">Institution</label>
-                        <input type="text" name="institution" id="institution">
+                        <label for="education_institution">Institution</label>
+                        <input type="text" name="education_institution" id="education_institution">
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
-                        <label for="degree">Degree</label>
-                        <input type="text" name="degree" id="degree">
+                        <label for="education_degree">Degree</label>
+                        <input type="text" name="education_degree" id="education_degree">
                     </div>
                     <div class="question">
-                        <label for="major">Major</label>
-                        <input type="text" name="major" id="major">
+                        <label for="education_major">Major</label>
+                        <input type="text" name="education_major" id="education_major">
                     </div>
                 </div>
                 <div class="row">
@@ -230,21 +286,21 @@
                 <div class="row">
                     <div class="question">
                         <label for="linkedin">LinkedIn</label>
-                        <input type="text" name="linkedin" id="linkedin">
+                        <input type="url" name="linkedin" id="linkedin">
                     </div>
                     <div class="question">
                         <label for="twitter">X (Twitter)</label>
-                        <input type="text" name="twitter" id="twitter">
+                        <input type="url" name="twitter" id="twitter">
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
                         <label for="github">Github</label>
-                        <input type="text" name="github" id="github">
+                        <input type="url" name="github" id="github">
                     </div>
                     <div class="question">
                         <label for="personal_website">Personal Website</label>
-                        <input type="text" name="personal_website" id="personal_website">
+                        <input type="url" name="personal_website" id="personal_website">
                     </div>
                 </div>
             </section>
