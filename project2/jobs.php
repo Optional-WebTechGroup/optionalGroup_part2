@@ -34,20 +34,7 @@
 </head>
 
 <body>
-    <header>
-        <a href="index.html"><img src="images/the_optional_group_logo.png" alt="The Optional Group Logo"
-                class="logo"></a>
-        <!-- ChatGPT GenAI Image Prompt: Create an image for a company logo for It company called The Optional Group. It’s a company which supplies remote it support and environmental impact. The group colours are blues, greens, and shades-->
-        <nav class="nav">
-            <ul class="nav_links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="jobs.html" class="active">Jobs</a></li>
-                <li><a href="apply.html">Apply</a></li>
-            </ul>
-        </nav>
-        <a id="cta" href="mailto:info@theoptionalgroup.com.au">Email Us</a>
-    </header>
+    <?php include('header.inc') ?>
 
     <main id="jobs_main">
         <h1>Find your <span class="text_gradient">Dream Job</span></h1>
@@ -176,27 +163,7 @@
             <p>5KC3U</p>
         </section>
     </main>
-    <footer>
-        <div id="footer_nav">
-            <a href="index.html"><img src="images/the_optional_group_logo.png" alt="The Optional Group Logo"
-                    class="logo"></a>
-            <!-- ChatGPT GenAI Image Prompt: Create an image for a company logo for It company called The Optional Group. It’s a company which supplies remote it support and environmental impact. The group colours are blues, greens, and shades-->
-            <ul id="footer_links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="jobs.html">Jobs</a></li>
-                <li><a href="apply.html">Apply</a></li>
-            </ul>
-        </div>
-        <div id="footer_row">
-            <a class="footer_link" href="https://nagooptional.atlassian.net/jira/software/projects/SCRUM/summary"
-                target="_blank">Jira
-                Project Link</a>
-            <a class="footer_link" href="https://github.com/Optional-WebTechGroup/OptionalGroupProject01"
-                target="_blank">Github Repo Link</a>
-        </div>
-        <p id="copyright">&copy; Copyright 2025 | The Optional Group | All Rights Reserved</p>
-    </footer>
+    <?php include('footer.inc') ?>
 </body>
 
 </html>
