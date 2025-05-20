@@ -22,6 +22,8 @@ if (empty($job_reference_number)) {
     $errors['job_reference_number'] = 'Please select a job reference number.';
 } elseif (!in_array($job_reference_number, $job_reference_numbers)) {
     $errors['job_reference_number'] = 'Invalid job reference number selected.';
+} elseif (strlen($job_reference_number) > 5) {
+   $errors['job_reference_number'] = 'Jobs reference number must not exceed 5 characters.'; 
 }
 
 $first_name = sanitize_input($_POST['first_name'] ?? '');
@@ -125,15 +127,17 @@ if (empty($email)) {
 $phone_number = sanitize_input($_POST['phone_number'] ?? '');
 if (empty($phone_number)) {
     $errors['phone_number'] = "Phone number is required.";
-} elseif (!preg_match('/^[0-9 ]{8,12}$/')) {
+} elseif (!preg_match('/^[0-9 ]{8,12}$/', $phone_number)) {
     $errors['phone_number'] = "Invalid phone number"; 
 } elseif (strlen($phone_number) > 12) {
    $errors['phone_number'] = 'Phone number must not exceed 12 characters'; 
 }
 
+
+$other_skills_checked = isset($_POST['other_skills_checked']);
 $required_technical_skills = ['python', 'assembly', 'java', 'networking', 'switching', 'routing'];
 $skills = $_POST['technical_skills'] ?? [];
-if (empty($skills) && !isset($_POST['other_skills_checked'])) {
+if (empty($skills) && !$other_skills_checked) {
     $errors['technical_skills'] = "Technical skills is required.";
 } 
 
@@ -151,37 +155,47 @@ if (!array_key_exists('technical_skills', $errors)) {
     }
 }
 
-
 $other_skills = sanitize_input($_POST['other_skills'] ?? '');
-if (empty($other_skills) && isset($_POST['other_skills_checked'])) {
+if (empty($other_skills) && $other_skills_checked) {
     $errors['other_skills'] = 'Other skills is required.';
 }
-
-$_SESSION['errors'] = $errors;
 ?>
 
-<form action="apply.php" method="post">
-    <input type="hidden" name="job_reference_number" value="<?php echo htmlspecialchars($job_reference_number); ?>">
-    <input type="hidden" name="first_name" value="<?php echo htmlspecialchars($first_name); ?>">
-    <input type="hidden" name="last_name" value="<?php echo htmlspecialchars($last_name); ?>">
-    <input type="hidden" name="birthdate" value="<?php echo htmlspecialchars($birthdate); ?>">
-    <input type="hidden" name="gender" value="<?php echo htmlspecialchars($gender); ?>"> 
-    <input type="hidden" name="street_address" value="<?php echo htmlspecialchars($street_address); ?>"> 
-    <input type="hidden" name="suburb" value="<?php echo htmlspecialchars($suburb); ?>"> 
-    <input type="hidden" name="state" value="<?php echo htmlspecialchars($state); ?>"> 
-    <input type="hidden" name="postcode" value="<?php echo htmlspecialchars($postcode); ?>"> 
-    <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>"> 
-    <input type="hidden" name="phone_number" value="<?php echo htmlspecialchars($phone_number); ?>"> 
-    <?php foreach ($skills as $skill): ?>
-        <input type="hidden" name="technical_skills[]" value="<?php echo htmlspecialchars($skill); ?>"> 
-    <?php endforeach; ?>
-    <?php if (isset($_POST['other_skills_checked'])): ?>
-        <input type="hidden" name="other_skills_checked" value="<?php echo htmlspecialchars($_POST['other_skills_checked']); ?>">  
-    <?php endif;?>
-    <input type="hidden" name="other_skills" value="<?php echo htmlspecialchars($other_skills); ?>"> 
-</form>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('form').submit();
-});
-</script>
+<?php if (!empty($errors)): ?>
+    <?php $_SESSION['errors'] = $errors; ?>
+    <form action="apply.php" method="post">
+        <input type="hidden" name="job_reference_number" value="<?php echo htmlspecialchars($job_reference_number); ?>">
+        <input type="hidden" name="first_name" value="<?php echo htmlspecialchars($first_name); ?>">
+        <input type="hidden" name="last_name" value="<?php echo htmlspecialchars($last_name); ?>">
+        <input type="hidden" name="birthdate" value="<?php echo htmlspecialchars($birthdate); ?>">
+        <input type="hidden" name="gender" value="<?php echo htmlspecialchars($gender); ?>"> 
+        <input type="hidden" name="street_address" value="<?php echo htmlspecialchars($street_address); ?>"> 
+        <input type="hidden" name="suburb" value="<?php echo htmlspecialchars($suburb); ?>"> 
+        <input type="hidden" name="state" value="<?php echo htmlspecialchars($state); ?>"> 
+        <input type="hidden" name="postcode" value="<?php echo htmlspecialchars($postcode); ?>"> 
+        <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>"> 
+        <input type="hidden" name="phone_number" value="<?php echo htmlspecialchars($phone_number); ?>"> 
+        <?php foreach ($skills as $skill): ?>
+            <input type="hidden" name="technical_skills[]" value="<?php echo htmlspecialchars($skill); ?>"> 
+        <?php endforeach; ?>
+        <?php if ($other_skills_checked): ?>
+            <input type="hidden" name="other_skills_checked" value="<?php echo htmlspecialchars($_POST['other_skills_checked']); ?>">  
+        <?php endif;?>
+        <input type="hidden" name="other_skills" value="<?php echo htmlspecialchars($other_skills); ?>"> 
+    </form>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('form').submit();
+    });
+    </script>
+<?php endif; ?>
+
+<?php
+if (empty($errors)) {
+    $conn = mysqli_connect($host, $username, $password, $database);
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+}
+?>
