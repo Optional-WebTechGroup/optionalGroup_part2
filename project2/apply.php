@@ -22,7 +22,7 @@ unset($_SESSION['errors']);
 
 <body>
     <?php include("header.inc"); ?>
-    
+
     <main id="apply_main">
         <!-- title section with the reference dropdown below -->
         <h1>Apply to your <span class="text_gradient">Dream Job</span></h1>
