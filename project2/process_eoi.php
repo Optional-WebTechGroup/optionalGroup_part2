@@ -134,10 +134,9 @@ if (empty($phone_number)) {
 }
 
 
-$other_skills_checked = isset($_POST['other_skills_checked']);
-$required_technical_skills = ['python', 'assembly', 'java', 'networking', 'switching', 'routing'];
+$required_technical_skills = ['python', 'assembly', 'java', 'networking', 'switching', 'routing', 'other_skills'];
 $skills = $_POST['technical_skills'] ?? [];
-if (empty($skills) && !$other_skills_checked) {
+if (empty($skills)) {
     $errors['technical_skills'] = "Technical skills is required.";
 } 
 
@@ -156,7 +155,7 @@ if (!array_key_exists('technical_skills', $errors)) {
 }
 
 $other_skills = sanitize_input($_POST['other_skills'] ?? '');
-if (empty($other_skills) && $other_skills_checked) {
+if (empty($other_skills) && in_array('other_skills', $skills)) {
     $errors['other_skills'] = 'Other skills is required.';
 }
 ?>
@@ -178,9 +177,6 @@ if (empty($other_skills) && $other_skills_checked) {
         <?php foreach ($skills as $skill): ?>
             <input type="hidden" name="technical_skills[]" value="<?php echo htmlspecialchars($skill); ?>"> 
         <?php endforeach; ?>
-        <?php if ($other_skills_checked): ?>
-            <input type="hidden" name="other_skills_checked" value="<?php echo htmlspecialchars($_POST['other_skills_checked']); ?>">  
-        <?php endif;?>
         <input type="hidden" name="other_skills" value="<?php echo htmlspecialchars($other_skills); ?>"> 
     </form>
     <script>

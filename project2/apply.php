@@ -178,7 +178,7 @@ unset($_SESSION['errors']);
                                 <label for="routing">Routing</label>
                             </p>
                             <p>
-                                <input type="checkbox" id="" name="other_skills_checked" value="other_skills_checked" <?php echo (isset($_POST['other_skills_checked']) ? 'checked' : '')?>>
+                                <input type="checkbox" id="" name="technical_skills[]" value="other_skills" <?php echo (in_array('other_skills', $technical_skills) ? 'checked' : '')?>>
                                 <label for="other_skills_checked">Other Skills</label> 
                             </p>
                         </fieldset>
