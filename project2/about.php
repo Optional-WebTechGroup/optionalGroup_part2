@@ -130,16 +130,16 @@
                 <h2>Member contributions</h2>
                 <dl> <!-- Defintion List elements for text of Member Contributions-->
                     <dt> Aldrin Filbert Maano </dt>
-                    <dd> contributions: Team Leader, apply.html Page Manager, CSS contributor</dd>
+                    <dd> contributions: Team Leader, apply.html Page Manager, CSS contributor, EOI table and validation</dd>
 
                     <dt> Giuliano Zuccara </dt>
-                    <dd> contributions: jobs.html Page Manager, CSS contributor</dd>
+                    <dd> contributions: jobs.html Page Manager, CSS contributor, job description table</dd>
 
                     <dt> Nikolas Popovic </dt>
-                    <dd> contributions: index.html Page Manager, CSS contributor</dd>
+                    <dd> contributions: index.html Page Manager, CSS contributor, manage.php</dd>
 
                     <dt> Oliver Scott </dt>
-                    <dd> contributions: About.html Page Manager, CSS contributor</dd>
+                    <dd> contributions: About.html Page Manager, CSS contributor, settings.php, modularisation</dd>
                 </dl>
             </section>
         </div>
