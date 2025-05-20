@@ -192,6 +192,41 @@ if (!empty($experience_to_date) && !validate_date($experience_to_date)) {
 }
 
 $currently_working = isset($_POST['currently_working']) ? 1 : 0;
+
+$education_institution = sanitize_input($_POST['education_institution'] ?? '');
+$education_institution = empty($education_institution) ? null : $education_institution;
+if (!empty($education_institution) && strlen($education_institution) > 100) {
+    $errors['education_institution'] = 'Education institution must not exceed 100 characters.';  
+}
+
+$education_degree = sanitize_input($_POST['education_degree'] ?? '');
+$education_degree = empty($education_degree) ? null : $education_degree;
+if (!empty($education_degree) && strlen($education_degree) > 100) {
+    $errors['education_degree'] = 'Education degree must not exceed 100 characters.';  
+}
+
+$education_major = sanitize_input($_POST['education_major'] ?? '');
+$education_major = empty($education_major) ? null : $education_major;
+if (!empty($education_major) && strlen($education_major) > 100) {
+    $errors['education_major'] = 'Education major must not exceed 100 characters.';  
+}
+
+$education_description = sanitize_input($_POST['education_description'] ?? '');
+$education_description = empty($education_description) ? null : $education_description;
+
+$education_from_date = sanitize_input($_POST['education_from_date'] ?? '');
+$education_from_date = empty($education_from_date) ? null : $education_from_date;
+if (!empty($education_from_date) && !validate_date($education_from_date)) {
+    $errors['education_from_date'] = 'Invalid date.';
+}
+
+$education_to_date = sanitize_input($_POST['education_to_date'] ?? '');
+$education_to_date = empty($education_to_date) ? null : $education_to_date;
+if (!empty($education_to_date) && !validate_date($education_to_date)) {
+    $errors['education_to_date'] = 'Invalid date.';
+}
+
+$currently_attending = isset($_POST['currently_attending']) ? 1 : 0;
 ?>
 
 
@@ -221,6 +256,15 @@ $currently_working = isset($_POST['currently_working']) ? 1 : 0;
         <input type="hidden" name="experience_to_date" value="<?php echo htmlspecialchars($experience_to_date); ?>"> 
         <?php if (isset($_POST['currently_working'])): ?>
             <input type="hidden" name="currently_working" value="currently_working"> 
+        <?php endif; ?>
+        <input type="hidden" name="education_institution" value="<?php echo htmlspecialchars($education_institution); ?>"> 
+        <input type="hidden" name="education_degree" value="<?php echo htmlspecialchars($education_degree); ?>"> 
+        <input type="hidden" name="education_major" value="<?php echo htmlspecialchars($education_major); ?>"> 
+        <input type="hidden" name="education_description" value="<?php echo htmlspecialchars($education_description); ?>"> 
+        <input type="hidden" name="education_from_date" value="<?php echo htmlspecialchars($education_from_date); ?>"> 
+        <input type="hidden" name="education_to_date" value="<?php echo htmlspecialchars($education_to_date); ?>"> 
+        <?php if (isset($_POST['currently_attending'])): ?>
+            <input type="hidden" name="currently_attending" value="currently_attending"> 
         <?php endif; ?>
     </form>
     <script>

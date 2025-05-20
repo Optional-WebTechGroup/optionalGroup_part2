@@ -234,7 +234,6 @@ unset($_SESSION['errors']);
                         <input type="date" name="experience_to_date" id="experience_to_date" value="<?php echo htmlspecialchars($_POST['experience_to_date'] ?? ''); ?>">
                         <?php echo htmlspecialchars($_POST['experience_to_date'] ?? ''); ?>
                         <?php if((!empty($errors['experience_to_date']))): ?>
-                            
                             <span class="error"><?php echo htmlspecialchars($errors['experience_to_date']); ?></span>
                         <?php endif; ?>
                     </div>
@@ -255,39 +254,54 @@ unset($_SESSION['errors']);
                 <div class="row">
                     <div class="question">
                         <label for="education_institution">Institution</label>
-                        <input type="text" name="education_institution" id="education_institution">
+                        <input type="text" name="education_institution" id="education_institution" value="<?php echo htmlspecialchars($_POST['education_institution'] ?? ''); ?>">
+                         <?php if((!empty($errors['education_insitution']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['education_institution']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
                         <label for="education_degree">Degree</label>
-                        <input type="text" name="education_degree" id="education_degree">
+                        <input type="text" name="education_degree" id="education_degree" value="<?php echo htmlspecialchars($_POST['education_degree'] ?? ''); ?>">
+                        <?php if((!empty($errors['education_degree']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['education_degree']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="education_major">Major</label>
-                        <input type="text" name="education_major" id="education_major">
+                        <input type="text" name="education_major" id="education_major" value="<?php echo htmlspecialchars($_POST['education_major'] ?? ''); ?>">
+                        <?php if((!empty($errors['education_major']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['education_major']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
                         <label for="education_description">Description</label>
-                        <textarea name="education_description" id="education_description" rows="5"></textarea>
+                        <textarea name="education_description" id="education_description" rows="5"><?php echo htmlspecialchars($_POST['education_description'] ?? ''); ?></textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
                         <label for="education_from_date">From</label>
-                        <input type="date" name="education_from_date" id="education_from_date">
+                        <input type="date" name="education_from_date" id="education_from_date" value="<?php echo htmlspecialchars($_POST['education_from_date'] ?? ''); ?>">
+                        <?php if((!empty($errors['education_from_date']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['education_from_date']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="education_to_date">To</label>
-                        <input type="date" name="education_to_date" id="education_to_date">
+                        <input type="date" name="education_to_date" id="education_to_date" value="<?php echo htmlspecialchars($_POST['education_to_date'] ?? ''); ?>">
+                        <?php if((!empty($errors['education_to_date']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['education_to_date']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
                         <p><input type="checkbox" name="currently_attending" id="currently_attending"
-                                value="currently_attending">
+                                value="currently_attending" <?php echo (isset($_POST['currently_attending'])) ? 'checked' : ''?>>
                             <label for="currently_attending">I currently attend</label>
                         </p>
                     </div>
