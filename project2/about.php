@@ -174,7 +174,7 @@
             </section>
         </div>
     </main>
-
+    
     <?php include('footer.inc') ?>
 </body>
 
