@@ -1,7 +1,6 @@
 <?php
 session_start();
 $errors = $_SESSION['errors'] ?? [];
-
 unset($_SESSION['errors']);
 ?>
 
@@ -26,7 +25,7 @@ unset($_SESSION['errors']);
     <main id="apply_main">
         <!-- title section with the reference dropdown below -->
         <h1>Apply to your <span class="text_gradient">Dream Job</span></h1>
-        <form action="process_eoi.php" method="post" novalidate>
+        <form action="process_eoi.php" method="post" enctype="multipart/form-data" novalidate>
             <p class="center" id="reference_number"><label for="job_reference_number">Job Reference Number: </label>
                 <select name="job_reference_number" id="job_reference_number" required>
                     <option value="">Please Select</option>
@@ -351,9 +350,12 @@ unset($_SESSION['errors']);
                 <div class="row">
                     <div class="question">
                         <label for="resume" id="file_input">
-                            Upload your resume here <span>only accepts .pdf .docx .doc</span>
+                            Upload your resume here <span>only accepts .pdf .docx .doc (2 MB limit) </span>
                             <input type="file" accept=".pdf,.docx,.doc" name="resume" id="resume">
                         </label>
+                        <?php if((!empty($errors['resume']))): ?>
+                            <span class="center error"><?php echo htmlspecialchars($errors['resume']); ?></span>
+                        <?php endif; ?> 
                     </div>
                 </div>
             </section>
@@ -364,7 +366,7 @@ unset($_SESSION['errors']);
                 <div class="row">
                     <div class="question">
                         <label for="message_for_us">Let us know about your interest in working here</label>
-                        <textarea name="message_for_us" id="message_for_us" rows="10"></textarea>
+                        <textarea name="message_for_us" id="message_for_us" rows="10"><?php echo htmlspecialchars($_POST['message_for_us'] ?? ''); ?></textarea>
                     </div>
                 </div>
             </section>

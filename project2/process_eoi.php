@@ -253,9 +253,45 @@ if (!empty($personal_website) && !filter_var($personal_website, FILTER_VALIDATE_
 }
 
 
+if (isset($_FILES['resume'])) {
+    if ($_FILES['resume']['error'] === UPLOAD_ERR_OK) {
+        $file_tmp_path = $_FILES['resume']['tmp_name'];
+        $file_name = $_FILES['resume']['name'];
+        $file_size = $_FILES['resume']['size'];
+        $file_type = $_FILES['resume']['type'];
+
+        if ($file_size > 2 * 1024 * 1024) {
+            $errors['resume'] = "File too large."; 
+        }
+
+        $allowed_extensions = ['pdf', 'docx', 'doc'];
+        $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        if (!in_array($file_extension, $allowed_extensions)) {
+            $errors['resume'] = "Invalid file type.";
+        }
+
+        // Set upload directory
+        $upload_folder = 'resumes/';
+        
+        if (!empty($first_name) && !empty($last_name) && empty($errors)) {
+            $destination = $upload_folder . $first_name . '_' . $last_name . '_' . time() . '.' . $file_extension;
+            // Move file from temp location to destination
+            if (!move_uploaded_file($file_tmp_path, $destination)) {
+                $errors['resume'] = 'Upload Error';
+            }
+        } 
+
+        if (!empty($errors) && empty($errors['resume'] ?? '')) {
+            $errors['resume'] = "Please reupload your resume."; 
+        }
+    } else {
+        $errors['resume'] = "File upload error."; 
+    } 
+}
+
+$message_for_us = sanitize_input($_POST['message_for_us'] ?? '');
+$message_for_us = empty($message_for_us) ? null : $message_for_us;
 ?>
-
-
 
 <?php if (!empty($errors)): ?>
     <?php $_SESSION['errors'] = $errors; ?>
@@ -296,6 +332,7 @@ if (!empty($personal_website) && !filter_var($personal_website, FILTER_VALIDATE_
         <input type="hidden" name="twitter" value="<?php echo htmlspecialchars($twitter); ?>"> 
         <input type="hidden" name="github" value="<?php echo htmlspecialchars($github); ?>"> 
         <input type="hidden" name="personal_website" value="<?php echo htmlspecialchars($personal_website); ?>"> 
+        <input type="hidden" name="message_for_us" value="<?php echo htmlspecialchars($message_for_us); ?>"> 
     </form>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
