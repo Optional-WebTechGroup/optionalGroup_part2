@@ -429,8 +429,24 @@ if (empty($errors)) {
         header('Location: database_error.html');
         exit(); 
     } 
+    $eoi_number = $conn->insert_id;
     mysqli_close($conn);
-    header('Location: successful_application.html');
-    exit();  
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css"> 
+    <title>Successful Application</title>
+</head>
+<body>
+    <div class='center_content'>
+        <h1>Successful Application</h1> 
+        <p>Your Expression of Interest (EOI) number is <?php echo $eoi_number; ?></p>
+        <a href="index.php">Go back to website.</a>
+    </div>
+</body>
+</html>
