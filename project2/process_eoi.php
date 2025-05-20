@@ -196,19 +196,19 @@ $currently_working = isset($_POST['currently_working']) ? 1 : 0;
 $education_institution = sanitize_input($_POST['education_institution'] ?? '');
 $education_institution = empty($education_institution) ? null : $education_institution;
 if (!empty($education_institution) && strlen($education_institution) > 100) {
-    $errors['education_institution'] = 'Education institution must not exceed 100 characters.';  
+    $errors['education_institution'] = 'Institution must not exceed 100 characters.';  
 }
 
 $education_degree = sanitize_input($_POST['education_degree'] ?? '');
 $education_degree = empty($education_degree) ? null : $education_degree;
 if (!empty($education_degree) && strlen($education_degree) > 100) {
-    $errors['education_degree'] = 'Education degree must not exceed 100 characters.';  
+    $errors['education_degree'] = 'Degree must not exceed 100 characters.';  
 }
 
 $education_major = sanitize_input($_POST['education_major'] ?? '');
 $education_major = empty($education_major) ? null : $education_major;
 if (!empty($education_major) && strlen($education_major) > 100) {
-    $errors['education_major'] = 'Education major must not exceed 100 characters.';  
+    $errors['education_major'] = 'Major must not exceed 100 characters.';  
 }
 
 $education_description = sanitize_input($_POST['education_description'] ?? '');
@@ -227,6 +227,32 @@ if (!empty($education_to_date) && !validate_date($education_to_date)) {
 }
 
 $currently_attending = isset($_POST['currently_attending']) ? 1 : 0;
+
+$linkedin = sanitize_input($_POST['linkedin'] ?? '');
+$linkedin = empty($linkedin) ? null : $linkedin;
+if (!empty($linkedin) && !filter_var($linkedin, FILTER_VALIDATE_URL)) {
+    $errors['linkedin'] = 'Invalid url.';
+}
+
+$twitter = sanitize_input($_POST['twitter'] ?? '');
+$twitter = empty($twitter) ? null : $twitter;
+if (!empty($twitter) && !filter_var($twitter, FILTER_VALIDATE_URL)) {
+    $errors['twitter'] = 'Invalid url.';
+}
+
+$github = sanitize_input($_POST['github'] ?? '');
+$github = empty($github) ? null : $github;
+if (!empty($github) && !filter_var($github, FILTER_VALIDATE_URL)) {
+    $errors['github'] = 'Invalid url.';
+}
+
+$personal_website = sanitize_input($_POST['personal_website'] ?? '');
+$personal_website = empty($personal_website) ? null : $personal_website;
+if (!empty($personal_website) && !filter_var($personal_website, FILTER_VALIDATE_URL)) {
+    $errors['personal_website'] = 'Invalid url.';
+}
+
+
 ?>
 
 
@@ -266,6 +292,10 @@ $currently_attending = isset($_POST['currently_attending']) ? 1 : 0;
         <?php if (isset($_POST['currently_attending'])): ?>
             <input type="hidden" name="currently_attending" value="currently_attending"> 
         <?php endif; ?>
+        <input type="hidden" name="linkedin" value="<?php echo htmlspecialchars($linkedin); ?>"> 
+        <input type="hidden" name="twitter" value="<?php echo htmlspecialchars($twitter); ?>"> 
+        <input type="hidden" name="github" value="<?php echo htmlspecialchars($github); ?>"> 
+        <input type="hidden" name="personal_website" value="<?php echo htmlspecialchars($personal_website); ?>"> 
     </form>
     <script>
     document.addEventListener('DOMContentLoaded', function() {

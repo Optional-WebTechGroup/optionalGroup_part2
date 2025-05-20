@@ -314,21 +314,33 @@ unset($_SESSION['errors']);
                 <div class="row">
                     <div class="question">
                         <label for="linkedin">LinkedIn</label>
-                        <input type="url" name="linkedin" id="linkedin">
+                        <input type="url" name="linkedin" id="linkedin" value="<?php echo htmlspecialchars($_POST['linkedin'] ?? ''); ?>">
+                        <?php if((!empty($errors['linkedin']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['linkedin']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="twitter">X (Twitter)</label>
-                        <input type="url" name="twitter" id="twitter">
+                        <input type="url" name="twitter" id="twitter" value="<?php echo htmlspecialchars($_POST['twitter'] ?? ''); ?>">
+                        <?php if((!empty($errors['twitter']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['twitter']); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
                         <label for="github">Github</label>
-                        <input type="url" name="github" id="github">
+                        <input type="url" name="github" id="github" value="<?php echo htmlspecialchars($_POST['github'] ?? ''); ?>">
+                        <?php if((!empty($errors['github']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['github']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="personal_website">Personal Website</label>
-                        <input type="url" name="personal_website" id="personal_website">
+                        <input type="url" name="personal_website" id="personal_website" value="<?php echo htmlspecialchars($_POST['personal_website'] ?? ''); ?>">
+                        <?php if((!empty($errors['personal_website']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['personal_website']); ?></span>
+                        <?php endif; ?> 
                     </div>
                 </div>
             </section>
