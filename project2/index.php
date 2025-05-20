@@ -60,7 +60,7 @@
                             ecosystems that enable remote communities to thrive through innovation, while minimising
                             environmental impact. At The Optional Group, we believe technology should enhance the
                             quality of life without compromising the planet.</p>
-                        <a id="link_about_us" href="about.html" class="button">Find Out More!</a>
+                        <a id="link_about_us" href="about.php" class="button">Find Out More!</a>
                     </div>
                     <div class="column">
                         <img id="setup" src="images/setup.jpg" alt="cool setup over here">
@@ -133,14 +133,14 @@
                     <div class="column blue_section">
                         <h3>Want to find out about our positions?</h3>
                         <p>Click the button to find out more</p>
-                        <a href="jobs.html" id="job_button" class="button">Job Positions</a>
+                        <a href="jobs.php" id="job_button" class="button">Job Positions</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="column green_section">
                         <h3>How to Apply?</h3>
                         <p>You can apply by going to the Apply page</p>
-                        <a href="apply.html" id="apply_button" class="button">Apply Now!</a>
+                        <a href="apply.php" id="apply_button" class="button">Apply Now!</a>
                     </div>
                 </div>
             </section>
