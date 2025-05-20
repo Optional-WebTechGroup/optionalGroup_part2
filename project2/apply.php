@@ -141,8 +141,8 @@ unset($_SESSION['errors']);
                         <label for="email_address">Email Address*</label>
                         <input type="text" name="email_address" id="email_address" required
                             pattern="[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
-                        <?php if((!empty($errors['email']))): ?>
-                            <span class="error"><?php echo htmlspecialchars($errors['email']); ?></span>
+                        <?php if((!empty($errors['email_address']))): ?>
+                            <span class="error"><?php echo htmlspecialchars($errors['email_address']); ?></span>
                         <?php endif; ?>
                     </div>
                     <div class="question">

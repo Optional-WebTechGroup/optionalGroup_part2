@@ -252,7 +252,6 @@ if (!empty($personal_website) && !filter_var($personal_website, FILTER_VALIDATE_
     $errors['personal_website'] = 'Invalid url.';
 }
 
-
 if (isset($_FILES['resume'])) {
     if ($_FILES['resume']['error'] === UPLOAD_ERR_OK) {
         $file_tmp_path = $_FILES['resume']['tmp_name'];
@@ -276,6 +275,7 @@ if (isset($_FILES['resume'])) {
         if (!empty($first_name) && !empty($last_name) && empty($errors)) {
             $destination = $upload_folder . $first_name . '_' . $last_name . '_' . time() . '.' . $file_extension;
             // Move file from temp location to destination
+            // Might cause an error on your device if you don't have write permission for resumes folder
             if (!move_uploaded_file($file_tmp_path, $destination)) {
                 $errors['resume'] = 'Upload Error';
             }
@@ -284,7 +284,7 @@ if (isset($_FILES['resume'])) {
         if (!empty($errors) && empty($errors['resume'] ?? '')) {
             $errors['resume'] = "Please reupload your resume."; 
         }
-    } else {
+    } elseif ($_FILES['resume']['error'] !== UPLOAD_ERR_NO_FILE) {
         $errors['resume'] = "File upload error."; 
     } 
 }
@@ -348,5 +348,8 @@ if (empty($errors)) {
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
+
+   header('Location: apply.php');
+    exit(); 
 }
 ?>
