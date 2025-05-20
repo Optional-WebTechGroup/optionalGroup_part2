@@ -1,4 +1,5 @@
 <?php
+require_once('settings.php');
 session_start();
 $errors = $_SESSION['errors'] ?? [];
 unset($_SESSION['errors']);
@@ -31,7 +32,21 @@ unset($_SESSION['errors']);
                     <option value="">Please Select</option>
                     <?php 
                         $selected_job_reference_number = $_POST['job_reference_number'] ?? '';
-                        $job_reference_numbers = ['5KC3U', 'PXUB6'];
+                        $conn = mysqli_connect($host, $username, $password, $database);
+                        if (!$conn) {
+                            header('Location: database_error.html');
+                            exit();
+                        }
+                        $sql = "SELECT job_reference_number FROM jobs ORDER BY job_reference_number ASC;";
+                        $result = mysqli_query($conn, $sql);
+                        if (!$result) {
+                            header('Location: database_error.html');
+                            exit(); 
+                        }
+                        $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                        mysqli_free_result($result);
+                        mysqli_close($conn);
+                        $job_reference_numbers = array_column($rows, 'job_reference_number');
                         foreach ($job_reference_numbers as $job_reference_number) {
                             echo "<option value='$job_reference_number'" . ($selected_job_reference_number === $job_reference_number ? "selected" : "") . ">$job_reference_number</option>";
                         }

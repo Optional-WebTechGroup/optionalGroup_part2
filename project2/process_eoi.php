@@ -21,7 +21,25 @@ function validate_date($date, $format='Y-m-d') {
 
 $errors = [];
 
-$job_reference_numbers = ['5KC3U', 'PXUB6'];
+$conn = mysqli_connect($host, $username, $password, $database);
+if (!$conn) {
+    header('Location: database_error.html');
+    exit();
+}
+
+$sql = "SELECT job_reference_number FROM jobs ORDER BY job_reference_number ASC;";
+$result = mysqli_query($conn, $sql);
+
+if (!$result) {
+   header('Location: database_error.html');
+    exit(); 
+}
+
+$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+mysqli_free_result($result);
+mysqli_close($conn);
+
+$job_reference_numbers = array_column($rows, 'job_reference_number');
 $job_reference_number = sanitize_input($_POST['job_reference_number'] ?? '');
 if (empty($job_reference_number)) {
     $errors['job_reference_number'] = 'Please select a job reference number.';
@@ -119,12 +137,12 @@ if (!array_key_exists('state', $errors)) {
     $errors['postcode'] = "Invalid state.";   
 }
 
-$email = sanitize_input($_POST['email_address'] ?? '');
-if (empty($email)) {
+$email_address = sanitize_input($_POST['email_address'] ?? '');
+if (empty($email_address)) {
     $errors['email_address'] = "Email address is required.";
-} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+} elseif (!filter_var($email_address, FILTER_VALIDATE_EMAIL)) {
     $errors['email_address'] = "Invalid email address.";
-} elseif (strlen($email) > 100) {
+} elseif (strlen($email_address) > 100) {
    $errors['email_address'] = 'Email address must not exceed 100 characters.'; 
 }
 
@@ -269,11 +287,10 @@ if (isset($_FILES['resume'])) {
             $errors['resume'] = "Invalid file type.";
         }
 
-        // Set upload directory
         $upload_folder = 'resumes/';
-        
         if (!empty($first_name) && !empty($last_name) && empty($errors)) {
-            $destination = $upload_folder . $first_name . '_' . $last_name . '_' . time() . '.' . $file_extension;
+            $resume_file_name = $first_name . '_' . $last_name . '_' . time() . '.' . $file_extension;
+            $destination = $upload_folder . $resume_file_name;
             // Move file from temp location to destination
             // Might cause an error on your device if you don't have write permission for resumes folder
             if (!move_uploaded_file($file_tmp_path, $destination)) {
@@ -305,7 +322,7 @@ $message_for_us = empty($message_for_us) ? null : $message_for_us;
         <input type="hidden" name="suburb" value="<?php echo htmlspecialchars($suburb); ?>"> 
         <input type="hidden" name="state" value="<?php echo htmlspecialchars($state); ?>"> 
         <input type="hidden" name="postcode" value="<?php echo htmlspecialchars($postcode); ?>"> 
-        <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>"> 
+        <input type="hidden" name="email" value="<?php echo htmlspecialchars($email_address); ?>"> 
         <input type="hidden" name="phone_number" value="<?php echo htmlspecialchars($phone_number); ?>"> 
         <?php foreach ($skills as $skill): ?>
             <input type="hidden" name="technical_skills[]" value="<?php echo htmlspecialchars($skill); ?>"> 
@@ -346,10 +363,74 @@ if (empty($errors)) {
     $conn = mysqli_connect($host, $username, $password, $database);
 
     if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
+        header('Location: database_error.html');
+        exit(); 
     }
 
-   header('Location: apply.php');
-    exit(); 
+    $query = "CREATE TABLE IF NOT EXISTS eoi (
+  eoi_number INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  job_reference_number VARCHAR(5) NOT NULL,
+  first_name VARCHAR(20) NOT NULL,
+  last_name VARCHAR(20) NOT NULL,
+  birthdate DATE NOT NULL,
+  gender ENUM('male','female') NOT NULL,
+  street_address VARCHAR(40) NOT NULL,
+  suburb VARCHAR(40) NOT NULL,
+  state CHAR(3) NOT NULL,
+  postcode CHAR(4) NOT NULL,
+  email_address VARCHAR(100) NOT NULL,
+  phone_number VARCHAR(12) NOT NULL,
+  technical_skills VARCHAR(255) NOT NULL,
+  other_skills TEXT,
+  experience_title VARCHAR(100),
+  experience_company VARCHAR(100),
+  experience_description TEXT,
+  experience_from_date DATE,
+  experience_to_date DATE,
+  currently_working TINYINT(1) NOT NULL DEFAULT 0,
+  education_institution VARCHAR(100),
+  education_degree VARCHAR(100),
+  education_major VARCHAR(100),
+  education_description TEXT,
+  education_from_date DATE,
+  education_to_date DATE,
+  currently_attending TINYINT(1) NOT NULL DEFAULT 0,
+  linkedin VARCHAR(255),
+  twitter VARCHAR(255),
+  github VARCHAR(255),
+  personal_website VARCHAR(255),
+  resume VARCHAR(255),
+  message_for_us TEXT,
+  status ENUM('New','Current','Final') NOT NULL DEFAULT 'New',
+  FOREIGN KEY (job_reference_number) REFERENCES jobs(job_reference_number)
+);";
+
+    if (!mysqli_query($conn, $query)) {
+        header('Location: database_error.html');
+        exit();
+    }
+
+   $stmt = $conn->prepare("INSERT INTO eoi (
+  job_reference_number, first_name, last_name, birthdate, gender, street_address, suburb, state, postcode,
+  email_address, phone_number, technical_skills, other_skills, experience_title, experience_company,
+  experience_description, experience_from_date, experience_to_date, currently_working,
+  education_institution, education_degree, education_major, education_description, education_from_date,
+  education_to_date, currently_attending, linkedin, twitter, github, personal_website, resume,
+  message_for_us
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssssssssssssissssssissssss",
+    $job_reference_number, $first_name, $last_name, $sql_birthdate, $gender, $street_address, $suburb, $state, $postcode,
+    $email_address, $phone_number, $technical_skills, $other_skills, $experience_title, $experience_company,
+    $experience_description, $experience_from_date, $experience_to_date, $currently_working,
+    $education_institution, $education_degree, $education_major, $education_description, $education_from_date,
+    $education_to_date, $currently_attending, $linkedin, $twitter, $github, $personal_website, $resume_file_name,
+    $message_for_us); 
+    if (!$stmt->execute()) {
+        header('Location: database_error.html');
+        exit(); 
+    } 
+    mysqli_close($conn);
+    header('Location: successful_application.html');
+    exit();  
 }
 ?>
