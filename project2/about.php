@@ -34,7 +34,6 @@
 
 <body>
     <?php include('header.inc') ?>
-
     <main>
         <!-- title is sectioned to easily apply css -->
         <section id="hero">
@@ -174,7 +173,6 @@
             </section>
         </div>
     </main>
-    
     <?php include('footer.inc') ?>
 </body>
 
