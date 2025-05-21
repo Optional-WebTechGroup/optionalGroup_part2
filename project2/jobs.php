@@ -24,7 +24,6 @@ session_start();
 if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit;
-}
 ?>
 
 <!DOCTYPE html>
@@ -86,12 +85,9 @@ if (!isset($_SESSION['username'])) {
 
 // Database connection
 
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "optional_group_db";
+require_once 'settings.php';
 
-$conn = new mysqli($host, $user, $password, $database);
+$conn = new mysqli($host, $user, $pwd, $sql_db);
 
 // Check connection
 if ($conn->connect_error) {
@@ -124,8 +120,8 @@ $conn->close();
 ?>
 
     </main>
-    
-    <?php include('footer.inc') ?>
+     
+   <?php include('footer.inc') ?>
 </body>
 
 </html>
