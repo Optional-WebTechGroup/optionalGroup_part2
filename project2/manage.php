@@ -44,7 +44,9 @@
                 <input  type="submit" name="delete" value="Delete EOI References">
             </section>
         </form>
-        <input type="submit" id="searchAll" value="Search All">
+        <form method="post" action="">
+            <input type="submit" name="searchAll" value="Search All">
+        </form>
         <br> <br>
         <form method="post" action="">
             <section id="applicantSort">
@@ -55,24 +57,64 @@
             </section>
         </form>
 
-        <?php 
+        <?php //ChatGPT prompt: please check my code and give me feedback on how to get it working, 21/05/25 - code supplied edited
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['EOI_reference']) && !empty(trim($_POST['EOI_reference']))) {
-                //$eoi_reference = trim($_POST['EOI_reference'] ?? '');
+                $eoi_reference = trim($_POST['EOI_reference']);
+                // Prepare a query to check if the EOI reference exists
+                $check_sql = "SELECT * FROM eoi WHERE job_reference_number = ?";
+                $stmt = $conn->prepare($check_sql);
+                $stmt->bind_param("s", $eoi_reference);
+                $stmt->execute();
+                $result = $stmt->get_result();
                 if (isset($_POST['search'])) { 
-                    //if $eoi_reference is in database
-                        //SELECT * FROM Jobs WHERE $eoi_reference;
-                        //echo "<p>Found '$eoi_reference'</p>"
-                    // if $eoi_reference not in database
-                        // echo "<p>No data found for '$eoi_reference'</p>"
+                    if ($result->num_rows > 0) {
+                        echo "<p>Found record(s) for '$eoi_reference'</p>";
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<pre>" . print_r($row, true) . "</pre>";
+                        }
+                    } else {
+                        echo "<p>No data found for '$eoi_reference'</p>";
+                    }
                 } elseif (isset($_POST['delete'])) { 
-                    //if $eoi_reference is in database
-                        //DELETE * FROM Jobs WHERE $eoi_reference;
-                        //echo "<p>Deleted all '$eoi_reference' EOIs</p>"
-                    // if $eoi_reference not in database
-                        // echo "<p>No data found for '$eoi_reference'</p>"
-                } //if nothing then don't react
+                    if ($result->num_rows > 0) {
+                        $delete_sql = "DELETE FROM eoi WHERE job_reference_number = ?";
+                        $del_stmt = $conn->prepare($delete_sql);
+                        $del_stmt->bind_param("s", $eoi_reference);
+                        $del_stmt->execute();
+                        echo "<p>Deleted all '$eoi_reference' EOIs</p>";
+                    } else {
+                        echo "<p>No data found for '$eoi_reference'</p>";
+                    }
+                }
+                $stmt->close();
+                $conn->close();
+            }     
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['searchAll'])) {
+                require_once 'settings.php';
+                $conn = mysqli_connect($host, $username, $password, $database);
+
+                if (!$conn) {
+                    die("Connection failed: " . mysqli_connect_error());
+                }
+
+                $query = "SELECT * FROM eoi";
+                $result = mysqli_query($conn, $query);
+
+                if ($result && mysqli_num_rows($result) > 0) {
+                    echo "<p>Found " . mysqli_num_rows($result) . " EOI record(s):</p><br>";
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<pre>" . print_r($row, true) . "</pre>";
+                    }
+                } else {
+                    echo "<p>No EOI records found.</p>";
+                }
+
+                mysqli_close($conn);
             }
+
         ?>
+
         <br> <br>
         <section id="results"> 
             <h2>Query Results:</h2>
