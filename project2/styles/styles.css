@@ -148,6 +148,16 @@ header {
   background-color: var(--hightlight_color);
 }
 
+.center_content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.2em;
+}
+
 .active {
   border-bottom: 5px solid #79BF74;
 }
@@ -715,30 +725,30 @@ textarea {
   }
 }
 
-  #jobRef {
-    margin-left: 2.25%;
-  }
+#jobRef {
+  margin-left: 2.25%;
+}
 
-  #searchAll {
-    margin-left: 2.25%;
-    font-size: 1.25em;
-  }
+#searchAll {
+  margin-left: 2.25%;
+  font-size: 1.25em;
+}
 
-  #applicantSort {
-    margin-left: 2.25%;
-  }
+#applicantSort {
+  margin-left: 2.25%;
+}
 
 #results {
   justify-self: center;
-   width: 95%;
-    height: 300px;
-    border: 1px solid black;
-    border-radius: 8px;
-    padding: 1em;
-    margin-bottom: 2em;
-    background-color: #f9f9f9;     
-    overflow: auto;
-    box-sizing: border-box;
+  width: 95%;
+  height: 300px;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 1em;
+  margin-bottom: 2em;
+  background-color: #f9f9f9;
+  overflow: auto;
+  box-sizing: border-box;
 }
 
 #results h2 {
@@ -750,6 +760,7 @@ textarea {
 #results p {
   font-family: monospace;
   font-size: 1.35em;
+
 }
 
 .eoi-record {

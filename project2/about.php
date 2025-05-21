@@ -33,182 +33,170 @@
 </head>
 
 <body>
-    <header>
-        <a href="index.html"><img src="images/the_optional_group_logo.png" alt="The Optional Group Logo"
-                class="logo"></a>
-        <!-- ChatGPT GenAI Image Prompt: Create an image for a company logo for It company called The Optional Group. It’s a company which supplies remote it support and environmental impact. The group colours are blues, greens, and shades-->
-        <nav class="nav">
-            <ul class="nav_links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="jobs.html">Jobs</a></li>
-                <li><a href="apply.html">Apply</a></li>
-            </ul>
-        </nav>
-        <a id="cta" href="mailto:info@theoptionalgroup.com.au">Email Us</a>
-    </header>
+    <?php include('header.inc') ?>
+    <main id="about_main">
+        <h1>About <span class="text_gradient">The Optional Group</span></h1>
 
-    <main>
-        <!-- title is sectioned to easily apply css -->
-        <section id="hero">
-            <div id="hero_text">
-                <h1>The Optional Group</h1>
-                <p id="hero_tagline">Helping you is always an Option</p>
+        <hr>
+
+        <!-- ChatGPT GenAI Prompt: what other things should the about page of our website have instead of the mission and vision, provide the content for each section -->
+        <section class="green_section">
+            <h2>📖 Our Story</h2>
+            <p>The Optional Group began with a simple belief: that access to technology and the internet shouldn't be a
+                privilege—it should be a right. Founded by a group of tech innovators and sustainability advocates, we
+                saw how remote and off-grid communities were being left behind in the digital age.
+                So we set out to change that.
+                Today, we're building future-ready, eco-conscious networks that empower people, uplift communities, and
+                protect the environment. Because we believe innovation should improve lives—not just in cities, but
+                everywhere.</p>
+        </section>
+
+        <!--section and div-->
+        <section>
+            <div class="row">
+                <div class="column blue_section">
+                    <h2>🌍 Mission Statement</h2>
+                    <p>To empower remote and off-grid communities by delivering sustainable, high-speed connectivity
+                        through cutting-edge technology and eco-friendly infrastructure—enabling people to thrive
+                        without compromising the planet.</p>
+                </div>
+                <div class="column blue_section">
+                    <h2>🌱 Vission Statement</h2>
+                    <p>To be a global leader in bridging the digital divide by creating self-sufficient, environmentally
+                        responsible ecosystems where every community, no matter how remote, can access the opportunities
+                        of the digital world.</p>
+                </div>
             </div>
         </section>
 
-        <!-- content is sectioned to easily apply css -->
-        <div id="index_main">
-            <section id="about_us">
-                <h2>About Us</h2>
-                <!-- row to keep image and text inline -->
-                <div class="row" id="responsive">
-                    <div class="column">
-                        <p>The Optional Group is a forward-thinking technology company dedicated to bridging the digital
-                            divide by setting up advanced, sustainable networks for remote communities and off-grid
-                            locations. By combining cutting-edge technology with green, eco-friendly practices, we
-                            empowerunderserved areas with reliable, high-speed internet access and smart solutions that
-                            promote environmental sustainability. Our mission is to create interconnected,
-                            self-sufficient
-                            ecosystems that enable remote communities to thrive through innovation, while minimising
-                            environmental impact. At The Optional Group, we believe technology should enhance the
-                            quality of life without compromising the planet.</p>
-                        <a id="link_about_us" href="about.html" class="button">Find Out More!</a>
-                    </div>
-                    <div class="column">
-                        <img id="setup" src="images/setup.jpg" alt="cool setup over here">
-                    </div>
+        <!-- Section and div-->
+        <section>
+            <div class="row">
+                <div class="column green_section">
+                    <h2>Real Results, Real Change</h2>
+                    <ul>
+                        <li>+25 remote communities connected across the region</li>
+                        <li>100% solar-powered infrastructure across all project sites</li>
+                        <li>98% uptime even in challenging environments</li>
+                        <li>Thousands of lives improved through access to education, health, and opportunity</li>
+                    </ul>
                 </div>
-            </section>
-            <hr>
-            <section>
-                <h2>Services We Offer</h2>
-                <!-- ChatGPT GenAI Prompt: Give a list of services that the optional group offers  -->
-                <div class="row">
-                    <div class="column">
-                        <h3>🌐 Network Infrastructure & Connectivity</h3>
-                        <ul>
-                            <li>High-Speed Internet Deployment for remote and off-grid areas</li>
-                            <li>Wireless Mesh Networks for flexible, scalable coverage</li>
-                            <li>Satellite & Microwave Link Integration for long-distance connectivity</li>
-                            <li>Rural & Remote 5G Solutions</li>
-                        </ul>
-                    </div>
-                    <div class="column">
-                        <h3>⚡ Sustainable Energy-Powered Systems</h3>
-                        <ul>
-                            <li>Solar-Powered Network Installations</li>
-                            <li>Hybrid Energy Solutions (solar, wind, and battery storage)</li>
-                            <li>Green Power Infrastructure Consulting</li>
-                        </ul>
-                    </div>
-                    <div class="column">
-                        <h3>📡 Remote Monitoring & Smart Infrastructure</h3>
-                        <ul>
-                            <li>Real-Time Network Performance Monitoring</li>
-                            <li>Smart Grid Integration & Management</li>
-                            <li>Remote Equipment Diagnostics & Predictive Maintenance</li>
-                            <li>Data Analytics for Infrastructure Optimisation</li>
-                        </ul>
-                    </div>
+                <div class="column green_section">
+                    <h2>Testimonial</h2>
+                    <blockquote>
+                        <q>
+                            Thanks to The Optional Group, our school now has internet access for the first time. Our
+                            students can now learn beyond the textbooks.
+                        </q>
+                        <p>- Teacher, rural Philippines</p>
+                    </blockquote>
                 </div>
-                <div class="row">
-                    <div class="column">
-                        <h3>♻️ Eco-Friendly Infrastructure Planning</h3>
-                        <ul>
-                            <li>Low-impact Site Design & Deployment</li>
-                            <li>Environmentally Sustainable Equipment Procurement</li>
-                            <li>Carbon Footprint Assessment & Mitigation</li>
-                        </ul>
-                    </div>
-                    <div class="column">
-                        <h3>🛠️ Custom Tech Solutions & Consulting</h3>
-                        <ul>
-                            <li>Tailored Connectivity Planning for unique geographic or demographic needs</li>
-                            <li>Resilience & Disaster Recovery Networks</li>
-                            <li>Monitoring & Maintenance Services with remote diagnostics</li>
-                        </ul>
-                    </div>
-                    <div class="column">
-                        <h3>🏘️ Community Tech Enablement</h3>
-                        <ul>
-                            <li>Digital Hubs & Community Wi-Fi Zones</li>
-                            <li>Local Tech Training & Support Programs</li>
-                            <li>IoT-Enabled Smart Village Solutions (e.g., smart agriculture, water monitoring)</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            <hr>
-            <section id="hiring">
-                <h2>We are currently hiring!</h2>
-                <div class="row">
-                    <div class="column blue_section">
-                        <h3>Want to find out about our positions?</h3>
-                        <p>Click the button to find out more</p>
-                        <a href="jobs.html" id="job_button" class="button">Job Positions</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="column green_section">
-                        <h3>How to Apply?</h3>
-                        <p>You can apply by going to the Apply page</p>
-                        <a href="apply.html" id="apply_button" class="button">Apply Now!</a>
-                    </div>
-                </div>
-            </section>
-            <hr>
-            <section>
-                <h2>Contact Us</h2>
-                <form action="https://mercury.swin.edu.au/it000000/formtest.php" method="post">
-                    <div class="row">
-                        <div class="question">
-                            <label for="name">Name:</label>
-                            <input type="text" name="name" id="name">
-                        </div>
-                        <div class="question">
-                            <label for="email">Email:</label>
-                            <input type="email" name="email" id="email" pattern="[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}">
-                        </div>
-                        <div class="question">
-                            <label for="phone_number">Phone:</label>
-                            <input type="text" name="phone_number" id="phone_number" minlength="8" maxlength="12"
-                                pattern="[0-9 ]{8,12}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="question">
-                            <label for="message">Message:</label>
-                            <textarea name="message" id="message" rows="10"></textarea>
-                        </div>
-                    </div>
-                    <input id="submit_button" type="submit" value="Send Message">
-                </form>
-            </section>
-        </div>
-    </main>
+            </div>
+        </section>
 
-    <footer>
-        <div id="footer_nav">
-            <a href="index.html"><img src="images/the_optional_group_logo.png" alt="The Optional Group Logo"
-                    class="logo"></a>
-            <!-- ChatGPT GenAI Image Prompt: Create an image for a company logo for It company called The Optional Group. It’s a company which supplies remote it support and environmental impact. The group colours are blues, greens, and shades-->
-            <ul id="footer_links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="jobs.html">Jobs</a></li>
-                <li><a href="apply.html">Apply</a></li>
-            </ul>
+        <hr>
+
+        <h2 id="team">Meet Our Team</h2>
+        <!-- Section and div with linked class for Class Details-->
+        <section class="Class_Details">
+            <div class="Class_Name">
+                <h2> Class Details </h2>
+                <ul>
+                    <li>The Optional Group
+                        <ul>
+                            <li>2.30pm - 4.30pm Wednesday</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="Tutor">
+                <p> <strong> Class Tutor: </strong> </p>
+                <p> <strong> Rahul Raghavan </strong> </p>
+            </div>
+        </section>
+
+        <!-- Div and subsection with linked class for Member Details-->
+        <div class="Member_Details">
+            <section class="GroupIDs">
+                <h2> Group Members </h2>
+                <ul>
+                    <li> Aldrin Filbert Maano: 105667785 </li>
+                    <li> Giuliano Zuccara: 105910780 </li>
+                    <li> Nikolas Popovic: 105920284 </li>
+                    <li> Oliver Scott: 105912692 </li>
+                </ul>
+            </section>
+            <section class="MemberCont">
+                <h2>Member contributions</h2>
+                <dl> <!-- Defintion List elements for text of Member Contributions-->
+                    <dt> Aldrin Filbert Maano </dt>
+                    <dd> contributions: Team Leader, apply.html Page Manager, CSS contributor, EOI table and validation</dd>
+
+                    <dt> Giuliano Zuccara </dt>
+                    <dd> contributions: jobs.html Page Manager, CSS contributor, job description table</dd>
+
+                    <dt> Nikolas Popovic </dt>
+                    <dd> contributions: index.html Page Manager, CSS contributor, manage.php</dd>
+
+                    <dt> Oliver Scott </dt>
+                    <dd> contributions: About.html Page Manager, CSS contributor, settings.php, modularisation</dd>
+                </dl>
+            </section>
         </div>
-        <div id="footer_row">
-            <a class="footer_link" href="https://nagooptional.atlassian.net/jira/software/projects/SCRUM/summary"
-                target="_blank">Jira
-                Project Link</a>
-            <a class="footer_link" href="https://github.com/Optional-WebTechGroup/OptionalGroupProject01"
-                target="_blank">Github Repo Link</a>
+
+        <!-- Section and subsection with linked class for Member Styles-->
+        <div class="Member_Styles row">
+            <div class="Member_Interests">
+                <table> <!-- Table elements for Member Interests-->
+                    <caption><strong>Members Interests </strong></caption> <!-- bold accessability tag-->
+
+                    <thead>
+                        <tr>
+                            <th> Group Member </th>
+                            <th> Computer Science Interests </th>
+                            <th> Recreational Interests </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td class="MemberNames"> Aldrin Filbert Maano </td>
+                            <td> AI, Robotics</td>
+                            <td> Anime, Manga </td>
+                        </tr>
+                        <tr>
+                            <td class="MemberNames"> Giuliano Zuccara </td>
+                            <td> How computers work, Programming </td>
+                            <td> Moding consoles, Playing Video Games</td>
+                        </tr>
+                        <tr>
+                            <td class="MemberNames"> Nikolas Popovic </td>
+                            <td> Cyber Security, Programming</td>
+                            <td> Music, Playing Video Games</td>
+                        </tr>
+                        <tr>
+                            <td class="MemberNames"> Oliver Scott </td>
+                            <td> Automative systems, Programming</td>
+                            <td> Reading Comics, Playing Video Games</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section sub for GroupPhoto figure tag with alternative text-->
+            <div class="GroupPhoto_Section">
+                <figure>
+                    <img id="GroupPhoto" src="images/OptionalGroupPh.jpg"
+                        alt="A group photo of the members of The Optional Group" title="The Optional group"
+                        loading="lazy">
+                    <figcaption>A group photo of the members of The Optional Group</figcaption>
+                </figure>
+            </div>
         </div>
-        <p id="copyright">&copy; Copyright 2025 | The Optional Group | All Rights Reserved</p>
-    </footer>
+
+
+    </main>
+    <?php include('footer.inc') ?>
 </body>
 
 </html>

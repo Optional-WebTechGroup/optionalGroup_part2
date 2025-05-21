@@ -33,20 +33,7 @@
 </head>
 
 <body>
-    <header>
-        <a href="index.html"><img src="images/the_optional_group_logo.png" alt="The Optional Group Logo"
-                class="logo"></a>
-        <!-- ChatGPT GenAI Image Prompt: Create an image for a company logo for It company called The Optional Group. It’s a company which supplies remote it support and environmental impact. The group colours are blues, greens, and shades-->
-        <nav class="nav">
-            <ul class="nav_links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="jobs.html">Jobs</a></li>
-                <li><a href="apply.html">Apply</a></li>
-            </ul>
-        </nav>
-        <a id="cta" href="mailto:info@theoptionalgroup.com.au">Email Us</a>
-    </header>
+    <?php include('header.inc') ?>
 
     <main>
         <!-- title is sectioned to easily apply css -->
@@ -73,7 +60,7 @@
                             ecosystems that enable remote communities to thrive through innovation, while minimising
                             environmental impact. At The Optional Group, we believe technology should enhance the
                             quality of life without compromising the planet.</p>
-                        <a id="link_about_us" href="about.html" class="button">Find Out More!</a>
+                        <a id="link_about_us" href="about.php" class="button">Find Out More!</a>
                     </div>
                     <div class="column">
                         <img id="setup" src="images/setup.jpg" alt="cool setup over here">
@@ -146,14 +133,14 @@
                     <div class="column blue_section">
                         <h3>Want to find out about our positions?</h3>
                         <p>Click the button to find out more</p>
-                        <a href="jobs.html" id="job_button" class="button">Job Positions</a>
+                        <a href="jobs.php" id="job_button" class="button">Job Positions</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="column green_section">
                         <h3>How to Apply?</h3>
                         <p>You can apply by going to the Apply page</p>
-                        <a href="apply.html" id="apply_button" class="button">Apply Now!</a>
+                        <a href="apply.php" id="apply_button" class="button">Apply Now!</a>
                     </div>
                 </div>
             </section>
@@ -188,27 +175,7 @@
         </div>
     </main>
 
-    <footer>
-        <div id="footer_nav">
-            <a href="index.html"><img src="images/the_optional_group_logo.png" alt="The Optional Group Logo"
-                    class="logo"></a>
-            <!-- ChatGPT GenAI Image Prompt: Create an image for a company logo for It company called The Optional Group. It’s a company which supplies remote it support and environmental impact. The group colours are blues, greens, and shades-->
-            <ul id="footer_links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="jobs.html">Jobs</a></li>
-                <li><a href="apply.html">Apply</a></li>
-            </ul>
-        </div>
-        <div id="footer_row">
-            <a class="footer_link" href="https://nagooptional.atlassian.net/jira/software/projects/SCRUM/summary"
-                target="_blank">Jira
-                Project Link</a>
-            <a class="footer_link" href="https://github.com/Optional-WebTechGroup/OptionalGroupProject01"
-                target="_blank">Github Repo Link</a>
-        </div>
-        <p id="copyright">&copy; Copyright 2025 | The Optional Group | All Rights Reserved</p>
-    </footer>
+    <?php include('footer.inc') ?>
 </body>
 
 </html>
