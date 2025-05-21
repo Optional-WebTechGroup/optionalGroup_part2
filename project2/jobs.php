@@ -80,53 +80,57 @@
         </section>
 
         <br>
+</main>
 
-       
+   </body>
 
-
+</html>
  <!--- used ai to create parts fo the codes/refine it to mak it work as intended prompt was to make it work based on the sql provided.
 
 <?php
-
-// Database connection
-
+session_start();
 require_once 'settings.php';
 
 $conn = new mysqli($host, $user, $pwd, $sql_db);
-
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if the query returned any rows (i.e., if there are job listings available
-$sql = "SELECT * FROM `Jobs`";
+$sql = "SELECT * FROM Jobs";
 $result = $conn->query($sql);
-
-echo "<h1>Available Job Positions</h1>";
-
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        echo "<div style='border:1px solid #ccc; padding:15px; margin-bottom:20px;'>";
-        echo "<h2>" . htmlspecialchars($row['Name of position']) . "</h2>";
-        echo "<p><strong>Summary:</strong><br>" . nl2br(htmlspecialchars($row['Summary'])) . "</p>"; // Display the job summary with line breaks preserved and HTML-escaped content
-        echo "<p><strong>Essential Qualification:</strong><br>" . nl2br(htmlspecialchars($row['Essential Qualification'])) . "</p>";
-        echo "<p><strong>Preferred Qualifications:</strong><br>" . nl2br(htmlspecialchars($row['Preferred Qualifications'])) . "</p>";
-        echo "<p><strong>Salary & Benefits:</strong><br>" . nl2br(htmlspecialchars($row['Salary range/benefit'])) . "</p>";
-        echo "<p><strong>Reports To:</strong><br>" . nl2br(htmlspecialchars($row['Title to report to'])) . "</p>";  // Show the reporting manager or title
-        echo "<p><strong>Job Reference:</strong> " . htmlspecialchars($row['Job reference number']) . "</p>";
-        echo "</div>";
-    }
-} else {
-    echo "No job listings found.";   // If no job listings are found, display a message
-}
-
-$conn->close();
 ?>
 
-    </main>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Optional Group</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+<?php include('header.inc'); ?>
+
+<main>
+    <h1>Available Job Positions</h1>
+    <?php
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo "<div class='job-listing'>";
+            echo "<h2>" . htmlspecialchars($row['Name of position']) . "</h2>";
+            echo "<p><strong>Summary:</strong> " . nl2br(htmlspecialchars($row['Summary'])) . "</p>";
+            echo "<p><strong>Essential Qualification:</strong> " . nl2br(htmlspecialchars($row['Essential Qualification'])) . "</p>";
+            echo "<p><strong>Preferred Qualifications:</strong> " . nl2br(htmlspecialchars($row['Preferred Qualifications'])) . "</p>";
+            echo "<p><strong>Salary & Benefits:</strong> " . nl2br(htmlspecialchars($row['Salary range/benefit'])) . "</p>";
+            echo "<p><strong>Reports To:</strong> " . nl2br(htmlspecialchars($row['Title to report to'])) . "</p>";
+            echo "<p><strong>Job Reference:</strong> " . htmlspecialchars($row['Job reference number']) . "</p>";
+            echo "</div>";
+        }
+    } else {
+        echo "<p>No job listings found.</p>";
+    }
+    $conn->close();
+    ?>
+
      
    <?php include('footer.inc') ?>
-</body>
 
-</html>
