@@ -75,7 +75,7 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$database = "optional_2";
+$database = "optional_group_db";
 
 $conn = new mysqli($host, $user, $password, $database);
 
@@ -93,13 +93,13 @@ echo "<h1>Available Job Positions</h1>";
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         echo "<div style='border:1px solid #ccc; padding:15px; margin-bottom:20px;'>";
+        echo "<p><strong>Job Reference:</strong> " . htmlspecialchars($row['Job reference number']) . "</p>";
         echo "<h2>" . htmlspecialchars($row['Name of position']) . "</h2>";
         echo "<p><strong>Summary:</strong><br>" . nl2br(htmlspecialchars($row['Summary'])) . "</p>";
         echo "<p><strong>Essential Qualification:</strong><br>" . nl2br(htmlspecialchars($row['Essential Qualification'])) . "</p>";
         echo "<p><strong>Preferred Qualifications:</strong><br>" . nl2br(htmlspecialchars($row['Preferred Qualifications'])) . "</p>";
         echo "<p><strong>Salary & Benefits:</strong><br>" . nl2br(htmlspecialchars($row['Salary range/benefit'])) . "</p>";
         echo "<p><strong>Reports To:</strong><br>" . nl2br(htmlspecialchars($row['Title to report to'])) . "</p>";
-        echo "<p><strong>Job Reference:</strong> " . htmlspecialchars($row['Job reference number']) . "</p>";
         echo "</div>";
     }
 } else {
