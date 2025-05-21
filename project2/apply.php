@@ -1,6 +1,7 @@
 <?php
 require_once('settings.php');
 session_start();
+// store the errors in errors variable
 $errors = $_SESSION['errors'] ?? [];
 unset($_SESSION['errors']);
 ?>
@@ -45,12 +46,14 @@ if (isset($_SESSION['user_id'])) {
                 <select name="job_reference_number" id="job_reference_number" required>
                     <option value="">Please Select</option>
                     <?php 
+                        // retained the previous selected reference number
                         $selected_job_reference_number = $_POST['job_reference_number'] ?? '';
                         $conn = mysqli_connect($host, $username, $password, $database);
                         if (!$conn) {
                             header('Location: database_error.html');
                             exit();
                         }
+                        // get the job reference numbers from jobs
                         $sql = "SELECT job_reference_number FROM jobs ORDER BY job_reference_number ASC;";
                         $result = mysqli_query($conn, $sql);
                         if (!$result) {
@@ -61,12 +64,14 @@ if (isset($_SESSION['user_id'])) {
                         mysqli_free_result($result);
                         mysqli_close($conn);
                         $job_reference_numbers = array_column($rows, 'job_reference_number');
+                        // loop and add all the options, add selected to the selected job reference number
                         foreach ($job_reference_numbers as $job_reference_number) {
                             echo "<option value='$job_reference_number'" . ($selected_job_reference_number === $job_reference_number ? "selected" : "") . ">$job_reference_number</option>";
                         }
                     ?>
                 </select>
             </p>
+            <!-- outputs the error in job reference number -->
             <?php if((!empty($errors['job_reference_number']))): ?>
                 <span class="center error"><?php echo htmlspecialchars($errors['job_reference_number']); ?></span>
             <?php endif; ?>
@@ -79,14 +84,18 @@ if (isset($_SESSION['user_id'])) {
                 <div class="row">
                     <div class="question">
                         <label for="first_name">First name*</label>
+                        <!-- add the previous first name to value if it exists -->
                         <input type="text" name="first_name" id="first_name" required maxlength="20" value="<?php echo htmlspecialchars($_POST['first_name'] ?? ''); ?>">
+                        <!-- outputs the error for first name -->
                         <?php if((!empty($errors['first_name']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['first_name']); ?></span>
                         <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="last_name">Last name*</label>
+                        <!-- add the previous last name to value if it exists -->
                         <input type="text" name="last_name" id="last_name" required maxlength="20" value="<?php echo htmlspecialchars($_POST['last_name'] ?? ''); ?>">
+                        <!-- outputs the error for last name -->
                         <?php if((!empty($errors['last_name']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['last_name']); ?></span>
                         <?php endif; ?>
@@ -97,8 +106,10 @@ if (isset($_SESSION['user_id'])) {
                     <div class="question">
                         <!-- input for birthdate, follows the patter of DD/MM/YYYY -->
                         <label for="birthdate">Birthdate*</label>
+                       <!-- add the previous birthdate to value if it exists --> 
                         <input type="text" name="birthdate" id="birthdate" required placeholder="DD/MM/YYYY"
                             pattern="\d{2}/\d{2}/\d{4}" value="<?php echo htmlspecialchars($_POST['birthdate'] ?? ''); ?>">
+                        <!-- outputs the error for last name -->
                         <?php if((!empty($errors['birthdate']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['birthdate']); ?></span>
                         <?php endif; ?>
@@ -106,11 +117,13 @@ if (isset($_SESSION['user_id'])) {
 
                     <fieldset class="question">
                         <legend>Gender*</legend>
+                        <!-- add checked if it's previously checked -->
                         <p> <input type="radio" id="male" name="gender" value="male" <?php echo ($_POST['gender'] === 'male' ? 'checked' : '');?>>
                             <label for="male">Male</label>
                             <input type="radio" id="female" name="gender" value="female" <?php echo ($_POST['gender'] === 'female' ? 'checked' : '');?>>
                             <label for="female">Female</label>
                         </p>
+                        <!-- outputs the error for gender -->
                         <?php if((!empty($errors['gender']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['gender']); ?></span>
                         <?php endif; ?>
@@ -120,14 +133,18 @@ if (isset($_SESSION['user_id'])) {
                 <div class="row">
                     <div class="question">
                         <label for="street_address">Street Address*</label>
+                        <!-- add the previous street address to value if it exists --> 
                         <input type="text" name="street_address" id="street_address" required maxlength="40" value="<?php echo htmlspecialchars($_POST['street_address'] ?? ''); ?>">
+                        <!-- outputs the error for street address -->
                         <?php if((!empty($errors['street_address']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['street_address']); ?></span>
                         <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="suburb">Suburb/Town*</label>
+                        <!-- add the previous suburb to value if it exists -->
                         <input type="text" name="suburb" id="suburb" required maxlength="40" value="<?php echo htmlspecialchars($_POST['suburb'] ?? ''); ?>">
+                        <!-- outputs the error for suburb -->
                         <?php if((!empty($errors['suburb']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['suburb']); ?></span>
                         <?php endif; ?>
@@ -135,11 +152,10 @@ if (isset($_SESSION['user_id'])) {
                 </div>
 
                 <div class="row">
-                    <!-- dropdown for state and input for postcode that has the pattern for postcodes for australia -->
-                    <!-- can't make it only accept postcode based on the specific state as it requires javascript because it's a type of dynamic action -->
                     <p class="question"><label for="state">State*: </label>
                         <select name="state" id="state" required>
                             <option value="">Please Select</option>
+                            <!-- add selected if it's selected previously -->
                             <option value="ACT" <?php echo ($_POST['state'] === 'ACT') ? 'selected' : ''; ?>>Australian Capital Territory</option>
                             <option value="NSW" <?php echo ($_POST['state'] === 'NSW') ? 'selected' : ''; ?>>New South Wales</option>
                             <option value="NT" <?php echo ($_POST['state'] === 'NT') ? 'selected' : ''; ?>>Northern Territory</option>
@@ -149,14 +165,17 @@ if (isset($_SESSION['user_id'])) {
                             <option value="VIC" <?php echo ($_POST['state'] === 'VIC') ? 'selected' : ''; ?>>Victoria</option>
                             <option value="WA" <?php echo ($_POST['state'] === 'WA') ? 'selected' : ''; ?>>Western Australia</option>
                         </select>
+                        <!-- outputs the error for state -->
                         <?php if((!empty($errors['state']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['state']); ?></span>
                         <?php endif; ?>
                     </p>
                     <div class="question">
                         <label for="postcode">Postcode*</label>
+                        <!-- add the previous postcode to value if it exist -->
                         <input type="text" name="postcode" id="postcode" required minlength="4" maxlength="4"
                             pattern="0[289]\d{2}|[1-9]\d{3}" value="<?php echo htmlspecialchars($_POST['postcode'] ?? ''); ?>">
+                        <!-- outputs the error for postcode -->
                         <?php if((!empty($errors['postcode']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['postcode']); ?></span>
                         <?php endif; ?>
@@ -168,16 +187,20 @@ if (isset($_SESSION['user_id'])) {
                     <div class="question">
                         <!-- input for email address following the correct email address pattern -->
                         <label for="email_address">Email Address*</label>
+                        <!-- add the previous email address to value if it exists -->
                         <input type="text" name="email_address" id="email_address" required
                             pattern="[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+                        <!-- outputs the error for email -->
                         <?php if((!empty($errors['email_address']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['email_address']); ?></span>
                         <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="phone_number">Phone Number*</label>
+                        <!-- add the previous phone number to value if it exist -->
                         <input type="text" name="phone_number" id="phone_number" required minlength="8" maxlength="12"
                             pattern="[0-9 ]{8,12}" value="<?php echo htmlspecialchars($_POST['phone_number'] ?? ''); ?>">
+                        <!-- outputs the error for phone number -->
                         <?php if((!empty($errors['phone_number']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['phone_number']); ?></span>
                         <?php endif; ?>
@@ -188,6 +211,7 @@ if (isset($_SESSION['user_id'])) {
                     <div class="question">
                         <fieldset>
                             <legend>Required Technical Skills*</legend>
+                            <!-- add checked it it's previously checked -->
                             <?php $technical_skills = $_POST['technical_skills'] ?? []; ?>
                             <p>
                                 <input type="checkbox" name="technical_skills[]" id="python" value="python" <?php echo (in_array('python', $technical_skills) ? 'checked' : '')?>>
@@ -210,13 +234,16 @@ if (isset($_SESSION['user_id'])) {
                                 <label for="other_skills_checked">Other Skills</label> 
                             </p>
                         </fieldset>
+                        <!-- outputs the error for technical skills -->
                         <?php if((!empty($errors['technical_skills']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['technical_skills']); ?></span>
                         <?php endif; ?>
                     </div>
                     <div class="question">
                         <label for="other_skills">Other Skills:</label>
+                        <!-- adds the previous other skills to value if it exist -->
                         <textarea name="other_skills" id="other_skills" rows="5"><?php echo htmlspecialchars($_POST['other_skills'] ?? ''); ?></textarea>
+                            <!-- outputs the error for other skills -->
                         <?php if((!empty($errors['other_skills']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['other_skills']); ?></span>
                         <?php endif; ?>
@@ -230,7 +257,9 @@ if (isset($_SESSION['user_id'])) {
                 <div class="row">
                     <div class="question">
                         <label for="experience_title">Title</label>
+                        <!-- add previous experience title if it exist -->
                         <input type="text" name="experience_title" id="experience_title" value="<?php echo htmlspecialchars($_POST['experience_title'] ?? ''); ?>">
+                        <!-- output the error for experience title -->
                          <?php if((!empty($errors['experience_title']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['experience_title']); ?></span>
                         <?php endif; ?>
