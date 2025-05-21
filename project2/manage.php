@@ -18,15 +18,19 @@
     <main> 
 
         <?php 
-            // ChatGPT support, Prompt: 'is this how to correctly link databse file?' 20/0/5/2025 - edited from response
             require_once 'settings.php';
-            $conn = mysqli_connect($host,$username,$password,$database);
+            $conn = mysqli_connect($host, $username, $password, $database);
 
             if ($conn) {
                 $query = "SELECT * FROM eoi";
-                $result = mysqli_query($conn, $query); 
+                $result = mysqli_query($conn, $query);
+
+                if (!$result) {
+                    die("Query failed: " . mysqli_error($conn));
+                }
+
             } else {
-                die("No connection to db");
+                die("No connection to db: " . mysqli_connect_error());
             }
         ?>
         <h1>Manager Profile</h1>
