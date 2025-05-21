@@ -75,7 +75,7 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$database = "Optional_2";
+$database = "Project_2";
 
 $conn = new mysqli($host, $user, $password, $database);
 
