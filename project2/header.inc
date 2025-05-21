@@ -8,6 +8,7 @@
             <li><a href="about.php">About</a></li>
             <li><a href="jobs.php">Jobs</a></li>
             <li><a href="apply.php" class="active">Apply</a></li>
+            <li><a href="manage.php">Manage</a></li>
         </ul>
     </nav>
     <a id="cta" href="mailto:info@theoptionalgroup.com.au">Email Us</a>
