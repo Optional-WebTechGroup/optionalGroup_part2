@@ -18,17 +18,17 @@
 -->
 
 <?php
-session_start();
+//session_start();
 
-if (isset($_SESSION['user_id'])) {
+//if (isset($_SESSION['user_id'])) {
     // User is already logged in, redirect to dashboard
-    header("Location: index.php");
-    exit;
-} else {
+    // header("Location: index.php");
+    // exit;
+// } // else {
     // Not logged in, go to login page
-    header("Location: signup.php");
-    exit;
-}
+    // header("Location: signup.php");
+    // exit;
+//}
 ?>
 
 <!DOCTYPE html>
@@ -90,12 +90,9 @@ if (isset($_SESSION['user_id'])) {
 
 // Database connection
 
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "optional_group_db";
+require_once 'settings.php';
 
-$conn = new mysqli($host, $user, $password, $database);
+$conn = new mysqli($host, $user, $pwd, $sql_db);
 
 // Check connection
 if ($conn->connect_error) {
