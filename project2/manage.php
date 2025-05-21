@@ -61,11 +61,11 @@
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['EOI_reference']) && !empty(trim($_POST['EOI_reference']))) {
                 $eoi_reference = trim($_POST['EOI_reference']);
                 // Prepare a query to check if the EOI reference exists
-                $check_sql = "SELECT * FROM eoi WHERE job_reference_number = ?";
-                $stmt = $conn->prepare($check_sql);
-                $stmt->bind_param("s", $eoi_reference);
-                $stmt->execute();
-                $result = $stmt->get_result();
+                $check_sql = "SELECT * FROM eoi WHERE job_reference_number = ?"; //creates sql query 
+                $stmt = $conn->prepare($check_sql); //prepare sql for execution
+                $stmt->bind_param("s", $eoi_reference); //allocates eoi_reference to '?'
+                $stmt->execute(); 
+                $result = $stmt->get_result(); 
                 if (isset($_POST['search'])) { 
                     if ($result->num_rows > 0) {
                         echo "<p>Found record(s) for '$eoi_reference'</p>";
@@ -80,8 +80,8 @@
                 } elseif (isset($_POST['delete'])) { 
                     if ($result->num_rows > 0) {
                         $delete_sql = "DELETE FROM eoi WHERE job_reference_number = ?";
-                        $del_stmt = $conn->prepare($delete_sql);
-                        $del_stmt->bind_param("s", $eoi_reference);
+                        $del_stmt = $conn->prepare($delete_sql); //prepares sql 
+                        $del_stmt->bind_param("s", $eoi_reference); 
                         $del_stmt->execute();
                         echo "<p>Deleted all '$eoi_reference' EOIs</p>";
                     } else {
