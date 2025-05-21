@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
+// sanitize input: removes leading and traii
 function sanitize_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
@@ -21,24 +22,24 @@ function validate_date($date, $format='Y-m-d') {
 
 $errors = [];
 
+
+// loads the jobs reference numbers as an array from the database
 $conn = mysqli_connect($host, $username, $password, $database);
 if (!$conn) {
     header('Location: database_error.html');
     exit();
 }
-
 $sql = "SELECT job_reference_number FROM jobs ORDER BY job_reference_number ASC;";
 $result = mysqli_query($conn, $sql);
-
 if (!$result) {
    header('Location: database_error.html');
     exit(); 
 }
-
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 mysqli_free_result($result);
 mysqli_close($conn);
 
+// validataes the job reference number
 $job_reference_numbers = array_column($rows, 'job_reference_number');
 $job_reference_number = sanitize_input($_POST['job_reference_number'] ?? '');
 if (empty($job_reference_number)) {
@@ -49,6 +50,7 @@ if (empty($job_reference_number)) {
    $errors['job_reference_number'] = 'Jobs reference number must not exceed 5 characters.'; 
 }
 
+// validates the first name
 $first_name = sanitize_input($_POST['first_name'] ?? '');
 if (empty($first_name)) {
     $errors['first_name'] = "First name is required.";
@@ -56,6 +58,7 @@ if (empty($first_name)) {
    $errors['first_name'] = "First name must not exceed 20 characters."; 
 }
 
+// validates the last name
 $last_name = sanitize_input($_POST['last_name'] ?? '');
 if (empty($last_name)) {
     $errors['last_name'] = "Last name is required.";
@@ -63,6 +66,7 @@ if (empty($last_name)) {
    $errors['last_name'] = "Last name must not exceed 20 characters."; 
 }
 
+// vlaidates the birthdate
 $birthdate = sanitize_input($_POST['birthdate'] ?? '');
 if (empty($birthdate)) {
     $errors['birthdate'] = "Birthdate is required."; 
@@ -77,6 +81,7 @@ if (empty($birthdate)) {
     $errors['birthdate'] = "Date must be in the format DD/MM/YYYY."; 
 }
 
+// validates the gender
 $genders = ['male', 'female'];
 $gender = sanitize_input($_POST['gender'] ?? '');
 if (empty($gender)) {
@@ -85,6 +90,8 @@ if (empty($gender)) {
     $errors['gender'] = 'Invalid gender.';
 }
 
+
+// validates the street address
 $street_address = sanitize_input($_POST['street_address'] ?? '');
 if (empty($street_address)) {
     $errors['street_address'] = "Street address is required.";
@@ -92,6 +99,7 @@ if (empty($street_address)) {
    $errors['street_address'] = "Street address must not exceed 40 characters."; 
 }
 
+// validates the suburb 
 $suburb = sanitize_input($_POST['suburb'] ?? '');
 if (empty($suburb)) {
     $errors['suburb'] = "Suburb is required.";
@@ -99,6 +107,7 @@ if (empty($suburb)) {
    $errors['suburb'] = "Suburb must not exceed 40 characters."; 
 }
 
+// array with the key as the state and the value as the regex for the postcode
 $state_postcode_patterns = [
     'ACT' => '/^(02\d{2}|26(0\d|1[0-8])|29(0\d|1\d|20))$/', // 0200–0299, 2600–2618, 2900–2920
     'NSW' => '/^(1\d{3}|2[0-5]\d{2}|2619|26[2-9]\d|2[7-8]\d{2}|292\d|29[3-9]\d)$/', // 1000–1999, 2000–2599, 2619–2899, 2921–2999
@@ -110,6 +119,7 @@ $state_postcode_patterns = [
     'WA' => '/^(6[0-6]\d{2}|67[0-8]\d|679[0-7]|6[8-9]\d{2})$/', // 6000–6797, 6800–6999
 ];
 
+// validates the state
 $state = sanitize_input($_POST['state'] ?? '');
 if (empty($state)) {
     $errors['state'] = 'Please select a state.';
@@ -120,6 +130,7 @@ if (empty($state)) {
     $errors['state'] = 'State must not exceed 3 characters'; 
 }
 
+// validates the postcode based on the state
 $postcode = sanitize_input($_POST['postcode'] ?? '');
 if (!array_key_exists('state', $errors)) {
     if (empty($postcode)) {
@@ -137,6 +148,7 @@ if (!array_key_exists('state', $errors)) {
     $errors['postcode'] = "Invalid state.";   
 }
 
+// validates the email address
 $email_address = sanitize_input($_POST['email_address'] ?? '');
 if (empty($email_address)) {
     $errors['email_address'] = "Email address is required.";
@@ -146,6 +158,7 @@ if (empty($email_address)) {
    $errors['email_address'] = 'Email address must not exceed 100 characters.'; 
 }
 
+// validates phone number
 $phone_number = sanitize_input($_POST['phone_number'] ?? '');
 if (empty($phone_number)) {
     $errors['phone_number'] = "Phone number is required.";
@@ -155,13 +168,13 @@ if (empty($phone_number)) {
    $errors['phone_number'] = 'Phone number must not exceed 12 characters.'; 
 }
 
-
+// validates the required skills
 $required_technical_skills = ['python', 'assembly', 'java', 'networking', 'switching', 'routing', 'other_skills'];
 $skills = $_POST['technical_skills'] ?? [];
 if (empty($skills)) {
     $errors['technical_skills'] = "Technical skills is required.";
 } 
-
+// check if the skill is invalid
 foreach ($skills as $skill) {
     if (!in_array($skill, $required_technical_skills)) {
         $errors['technical_skills'] = 'Invalid technical skills.';
@@ -169,6 +182,7 @@ foreach ($skills as $skill) {
     }
 }
 
+// make string in the format "skill1,skill2,skill3"
 if (!array_key_exists('technical_skills', $errors)) {
     $technical_skills = implode(',', $skills);
     if (strlen($technical_skills) > 255) {
@@ -176,111 +190,132 @@ if (!array_key_exists('technical_skills', $errors)) {
     }
 }
 
+// validates other skills, required if other skills is checked
 $other_skills = sanitize_input($_POST['other_skills'] ?? '');
 $other_skills = empty($other_skills) ? null : $other_skills;
 if (empty($other_skills) && in_array('other_skills', $skills)) {
     $errors['other_skills'] = 'Other skills is required.';
 }
 
+// validates experience title
 $experience_title = sanitize_input($_POST['experience_title'] ?? '');
 $experience_title = empty($experience_title) ? null : $experience_title;
 if (!empty($experience_title) && strlen($experience_title) > 100) {
     $errors['experience_title'] = 'Title must not exceed 100 characters.';  
 }
 
+// validates experience company
 $experience_company = sanitize_input($_POST['experience_company'] ?? '');
 $experience_company = empty($experience_company) ? null : $experience_company;
 if (!empty($experience_company) && strlen($experience_company) > 100) {
     $errors['experience_company'] = 'Company must not exceed 100 characters.';  
 }
 
+// sets the experience description to null if empty
 $experience_description = sanitize_input($_POST['experience_description'] ?? '');
 $experience_description = empty($experience_description) ? null : $experience_description;
 
+// validates the experience from date
 $experience_from_date = sanitize_input($_POST['experience_from_date'] ?? '');
 $experience_from_date = empty($experience_from_date) ? null : $experience_from_date;
 if (!empty($experience_from_date) && !validate_date($experience_from_date)) {
     $errors['experience_from_date'] = 'Invalid date.';
 }
 
+// validates the experience to date
 $experience_to_date = sanitize_input($_POST['experience_to_date'] ?? '');
 $experience_to_date = empty($experience_to_date) ? null : $experience_to_date;
 if (!empty($experience_to_date) && !validate_date($experience_to_date)) {
     $errors['experience_to_date'] = 'Invalid date.';
 }
 
+// set the currently working to 1 if set else 0
 $currently_working = isset($_POST['currently_working']) ? 1 : 0;
 
+// validate the education institution
 $education_institution = sanitize_input($_POST['education_institution'] ?? '');
 $education_institution = empty($education_institution) ? null : $education_institution;
 if (!empty($education_institution) && strlen($education_institution) > 100) {
     $errors['education_institution'] = 'Institution must not exceed 100 characters.';  
 }
 
+// validate the education degree
 $education_degree = sanitize_input($_POST['education_degree'] ?? '');
 $education_degree = empty($education_degree) ? null : $education_degree;
 if (!empty($education_degree) && strlen($education_degree) > 100) {
     $errors['education_degree'] = 'Degree must not exceed 100 characters.';  
 }
 
+// validate the education major
 $education_major = sanitize_input($_POST['education_major'] ?? '');
 $education_major = empty($education_major) ? null : $education_major;
 if (!empty($education_major) && strlen($education_major) > 100) {
     $errors['education_major'] = 'Major must not exceed 100 characters.';  
 }
 
+// sets the education description to null if empty 
 $education_description = sanitize_input($_POST['education_description'] ?? '');
 $education_description = empty($education_description) ? null : $education_description;
 
+// validate the education from date
 $education_from_date = sanitize_input($_POST['education_from_date'] ?? '');
 $education_from_date = empty($education_from_date) ? null : $education_from_date;
 if (!empty($education_from_date) && !validate_date($education_from_date)) {
     $errors['education_from_date'] = 'Invalid date.';
 }
 
+// validate the education to date
 $education_to_date = sanitize_input($_POST['education_to_date'] ?? '');
 $education_to_date = empty($education_to_date) ? null : $education_to_date;
 if (!empty($education_to_date) && !validate_date($education_to_date)) {
     $errors['education_to_date'] = 'Invalid date.';
 }
 
+// set the currently attending to 1 if set else 0
 $currently_attending = isset($_POST['currently_attending']) ? 1 : 0;
 
+// validate if linkedin is a valid url
 $linkedin = sanitize_input($_POST['linkedin'] ?? '');
 $linkedin = empty($linkedin) ? null : $linkedin;
 if (!empty($linkedin) && !filter_var($linkedin, FILTER_VALIDATE_URL)) {
     $errors['linkedin'] = 'Invalid url.';
 }
 
+// validate if twitter is a valid url
 $twitter = sanitize_input($_POST['twitter'] ?? '');
 $twitter = empty($twitter) ? null : $twitter;
 if (!empty($twitter) && !filter_var($twitter, FILTER_VALIDATE_URL)) {
     $errors['twitter'] = 'Invalid url.';
 }
 
+// validate if github is a valid url
 $github = sanitize_input($_POST['github'] ?? '');
 $github = empty($github) ? null : $github;
 if (!empty($github) && !filter_var($github, FILTER_VALIDATE_URL)) {
     $errors['github'] = 'Invalid url.';
 }
 
+// validate if personal website is a valid url
 $personal_website = sanitize_input($_POST['personal_website'] ?? '');
 $personal_website = empty($personal_website) ? null : $personal_website;
 if (!empty($personal_website) && !filter_var($personal_website, FILTER_VALIDATE_URL)) {
     $errors['personal_website'] = 'Invalid url.';
 }
 
+// validates resume
 if (isset($_FILES['resume'])) {
     if ($_FILES['resume']['error'] === UPLOAD_ERR_OK) {
         $file_tmp_path = $_FILES['resume']['tmp_name'];
         $file_name = $_FILES['resume']['name'];
         $file_size = $_FILES['resume']['size'];
         $file_type = $_FILES['resume']['type'];
-
+        
+        // check if size if greter then 2MB
         if ($file_size > 2 * 1024 * 1024) {
             $errors['resume'] = "File too large."; 
         }
-
+        
+        // check if in allowed extensions
         $allowed_extensions = ['pdf', 'docx', 'doc'];
         $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
         if (!in_array($file_extension, $allowed_extensions)) {
@@ -289,7 +324,7 @@ if (isset($_FILES['resume'])) {
 
         $upload_folder = 'resumes/';
         if (!empty($first_name) && !empty($last_name) && empty($errors)) {
-            $resume_file_name = $first_name . '_' . $last_name . '_' . time() . '.' . $file_extension;
+            $resume_file_name = $first_name . '_' . $last_name . '_' . time() . '.' . $file_extension; // uses time() to make it unique
             $destination = $upload_folder . $resume_file_name;
             // Move file from temp location to destination
             // Might cause an error on your device if you don't have write permission for resumes folder
@@ -297,7 +332,7 @@ if (isset($_FILES['resume'])) {
                 $errors['resume'] = 'Upload Error';
             }
         } 
-
+        // ask to reupload resume if there are errors in other sections
         if (!empty($errors) && empty($errors['resume'] ?? '')) {
             $errors['resume'] = "Please reupload your resume."; 
         }
@@ -306,11 +341,14 @@ if (isset($_FILES['resume'])) {
     } 
 }
 
+// sets message for us to null if empty
 $message_for_us = sanitize_input($_POST['message_for_us'] ?? '');
 $message_for_us = empty($message_for_us) ? null : $message_for_us;
 ?>
 
+<!-- sends the form data back to apply.php if there's an error so that it will retain the previously inputted data -->
 <?php if (!empty($errors)): ?>
+    <!-- sets the session error to errors -->
     <?php $_SESSION['errors'] = $errors; ?>
     <form action="apply.php" method="post">
         <input type="hidden" name="job_reference_number" value="<?php echo htmlspecialchars($job_reference_number); ?>">
@@ -352,6 +390,7 @@ $message_for_us = empty($message_for_us) ? null : $message_for_us;
         <input type="hidden" name="message_for_us" value="<?php echo htmlspecialchars($message_for_us); ?>"> 
     </form>
     <script>
+    //  auto submit forms
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('form').submit();
     });
@@ -366,7 +405,7 @@ if (empty($errors)) {
         header('Location: database_error.html');
         exit(); 
     }
-
+    // creates table if it doesn't exits
     $query = "CREATE TABLE IF NOT EXISTS eoi (
   eoi_number INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   job_reference_number VARCHAR(5) NOT NULL,
@@ -410,6 +449,7 @@ if (empty($errors)) {
         exit();
     }
 
+    // preparing the insert sql query
    $stmt = $conn->prepare("INSERT INTO eoi (
   job_reference_number, first_name, last_name, birthdate, gender, street_address, suburb, state, postcode,
   email_address, phone_number, technical_skills, other_skills, experience_title, experience_company,
@@ -418,6 +458,7 @@ if (empty($errors)) {
   education_to_date, currently_attending, linkedin, twitter, github, personal_website, resume,
   message_for_us
   ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+  // bind the parameter to prepared query
     $stmt->bind_param("ssssssssssssssssssissssssissssss",
     $job_reference_number, $first_name, $last_name, $sql_birthdate, $gender, $street_address, $suburb, $state, $postcode,
     $email_address, $phone_number, $technical_skills, $other_skills, $experience_title, $experience_company,
@@ -425,15 +466,18 @@ if (empty($errors)) {
     $education_institution, $education_degree, $education_major, $education_description, $education_from_date,
     $education_to_date, $currently_attending, $linkedin, $twitter, $github, $personal_website, $resume_file_name,
     $message_for_us); 
+    // executes and check if there's an error
     if (!$stmt->execute()) {
         header('Location: database_error.html');
         exit(); 
     } 
+    // gets the id of the last insert
     $eoi_number = $conn->insert_id;
     mysqli_close($conn);
 }
 ?>
 
+<!-- successful application page -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
