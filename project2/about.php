@@ -19,13 +19,9 @@
 <?php
 session_start();
 
-if (isset($_SESSION['user_id'])) {
-    // User is already logged in, redirect to dashboard
-    header("Location: index.php");
-    exit;
-} else {
-    // Not logged in, go to login page
-    header("Location: signup.php");
+// If the user is NOT logged in, send them to signup
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
     exit;
 }
 ?>
@@ -149,10 +145,10 @@ if (isset($_SESSION['user_id'])) {
                     <dd> contributions: jobs.html Page Manager, CSS contributor, job description table</dd>
 
                     <dt> Nikolas Popovic </dt>
-                    <dd> contributions: index.html Page Manager, CSS contributor, manage.php</dd>
+                    <dd> contributions: index.html Page Manager, CSS contributor, settings.php, modularisation</dd>
 
                     <dt> Oliver Scott </dt>
-                    <dd> contributions: About.html Page Manager, CSS contributor, settings.php, modularisation</dd>
+                    <dd> contributions: About.html Page Manager, CSS contributor, manage.php</dd>
                 </dl>
             </section>
         </div>
