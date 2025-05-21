@@ -1,3 +1,4 @@
+ <?php $current_page = basename($_SERVER['PHP_SELF']); ?>
  <header>
     <a href="index.html"><img src="images/the_optional_group_logo.png" alt="The Optional Group Logo"
             class="logo"></a>
