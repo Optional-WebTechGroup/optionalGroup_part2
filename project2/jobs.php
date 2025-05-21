@@ -17,6 +17,19 @@
 ============================================================
 -->
 
+<?php
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+    // User is already logged in, redirect to dashboard
+    header("Location: index.php");
+    exit;
+} else {
+    // Not logged in, go to login page
+    header("Location: signup.php");
+    exit;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
