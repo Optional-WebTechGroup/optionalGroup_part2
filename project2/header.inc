@@ -1,6 +1,6 @@
  <?php $current_page = basename($_SERVER['PHP_SELF']); ?>
  <header>
-    <a href="index.html"><img src="images/the_optional_group_logo.png" alt="The Optional Group Logo"
+    <a href="index.php"><img src="images/the_optional_group_logo.png" alt="The Optional Group Logo"
             class="logo"></a>
     <!-- ChatGPT GenAI Image Prompt: Create an image for a company logo for It company called The Optional Group. It’s a company which supplies remote it support and environmental impact. The group colours are blues, greens, and shades-->
     <nav class="nav">
@@ -12,4 +12,5 @@
         </ul>
     </nav>
     <a id="cta" href="mailto:info@theoptionalgroup.com.au">Email Us</a>
+    <a id = "logout" href="logout.php" style="text-decoration:none;">Logout</a>
 </header>

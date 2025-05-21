@@ -3,20 +3,12 @@ require_once('settings.php');
 session_start();
 $errors = $_SESSION['errors'] ?? [];
 unset($_SESSION['errors']);
-?>
 
-<?php
-session_start();
-
-if (isset($_SESSION['user_id'])) {
-    // User is already logged in, redirect to dashboard
-    header("Location: index.php");
-    exit;
-} else {
-    // Not logged in, go to login page
-    header("Location: signup.php");
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +38,7 @@ if (isset($_SESSION['user_id'])) {
                     <option value="">Please Select</option>
                     <?php 
                         $selected_job_reference_number = $_POST['job_reference_number'] ?? '';
-                        $conn = mysqli_connect($host, $username, $password, $database);
+                        $conn = mysqli_connect($host, $user, $pwd, $sql_db);
                         if (!$conn) {
                             header('Location: database_error.html');
                             exit();

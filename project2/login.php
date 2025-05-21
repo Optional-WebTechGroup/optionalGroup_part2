@@ -1,15 +1,21 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 require_once("settings.php");
 session_start();
 
 // Establish database connection
 $conn = mysqli_connect($host, $user, $pwd, $sql_db);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 
 // Check connection
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
+}
+
+if (isset($_SESSION['username'])) {
+    header("Location: index.php");
+    exit;
 }
 
 // Only process POST requests
