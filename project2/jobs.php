@@ -115,8 +115,8 @@ $conn->close();
 ?>
 
     </main>
-    
-    <?php include('footer.inc') ?>
+     
+   <?php include('footer.inc') ?>
 </body>
 
 </html>
