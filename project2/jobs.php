@@ -60,7 +60,7 @@
                 <aside class="column green_section">
                     <h3>How to Apply?</h3>
                     <p>Remember the job's reference number, then click the button below</p>
-                    <a href="apply.html" id="apply_button" class="button">Apply Now!</a>
+                    <a href="apply.php" id="apply_button" class="button">Apply Now!</a>
                 </aside>
             </div>
             <!-- used ai to create job description, the prompt was used ai to create description, prompot was create a company description for this company The Optional Group, this is the brief description setting up networks for remote communties and places with like advanced technology and green impact and things-->
