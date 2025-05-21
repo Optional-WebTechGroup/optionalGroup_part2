@@ -18,15 +18,19 @@
     <main> 
 
         <?php 
+            // ChatGPT support, Prompt: 'is this how to correctly link databse file?' 20/0/5/2025 - edited from response
+            require_once 'settings.php';
+            $conn = mysqli_connect($host,$username,$password,$database);
 
-            $fileName = 'optional_group_db.sql';
-            $fileExists = file_exists($fileName);
-            if (!$fileExists) {
-                echo "<p>Error: Database cannot be found. Please try again later. Sorry for the inconvenience!</p>";
-            } else { 
+            if ($conn) {
+                $query = "SELECT * FROM eoi";
+                $result = mysqli_query($conn, $query); 
+            } else {
+                die("No connection to db");
+            }
         ?>
         <h1>Manager Profile</h1>
-        <br><br>
+        <br><br>    
         <form method="post" action="">
             <section id="jobRef">
                 <label for="JobReference">EOI: Job Reference Number</label>
@@ -46,9 +50,6 @@
                 <input type="submit" value="Find Applicant">
             </section>
         </form>
-        <?php 
-            } 
-        ?>    
 
         <?php 
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['EOI_reference']) && !empty(trim($_POST['EOI_reference']))) {
