@@ -18,15 +18,23 @@
     <main> 
 
         <?php 
+            require_once 'settings.php';
+            $conn = mysqli_connect($host, $username, $password, $database);
 
-            $fileName = 'optional_group_db.sql';
-            $fileExists = file_exists($fileName);
-            if (!$fileExists) {
-                echo "<p>Error: Database cannot be found. Please try again later. Sorry for the inconvenience!</p>";
-            } else { 
+            if ($conn) {
+                $query = "SELECT * FROM eoi";
+                $result = mysqli_query($conn, $query);
+
+                if (!$result) {
+                    die("Query failed: " . mysqli_error($conn));
+                }
+
+            } else {
+                die("No connection to db: " . mysqli_connect_error());
+            }
         ?>
         <h1>Manager Profile</h1>
-        <br><br>
+        <br><br>    
         <form method="post" action="">
             <section id="jobRef">
                 <label for="JobReference">EOI: Job Reference Number</label>
@@ -36,7 +44,9 @@
                 <input  type="submit" name="delete" value="Delete EOI References">
             </section>
         </form>
-        <input type="submit" id="searchAll" value="Search All">
+        <form method="post" action="">
+            <input type="submit" name="searchAll" value="Search All">
+        </form>
         <br> <br>
         <form method="post" action="">
             <section id="applicantSort">
@@ -46,28 +56,69 @@
                 <input type="submit" value="Find Applicant">
             </section>
         </form>
-        <?php 
-            } 
-        ?>    
 
-        <?php 
+        <?php //ChatGPT prompt: please check my code and give me feedback on how to get it working, 21/05/25 - code supplied edited
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['EOI_reference']) && !empty(trim($_POST['EOI_reference']))) {
-                //$eoi_reference = trim($_POST['EOI_reference'] ?? '');
+                $eoi_reference = trim($_POST['EOI_reference']);
+                // Prepare a query to check if the EOI reference exists
+                $check_sql = "SELECT * FROM eoi WHERE job_reference_number = ?";
+                $stmt = $conn->prepare($check_sql);
+                $stmt->bind_param("s", $eoi_reference);
+                $stmt->execute();
+                $result = $stmt->get_result();
                 if (isset($_POST['search'])) { 
-                    //if $eoi_reference is in database
-                        //SELECT * FROM Jobs WHERE $eoi_reference;
-                        //echo "<p>Found '$eoi_reference'</p>"
-                    // if $eoi_reference not in database
-                        // echo "<p>No data found for '$eoi_reference'</p>"
+                    if ($result->num_rows > 0) {
+                        echo "<p>Found record(s) for '$eoi_reference'</p>";
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<div class='eoi-record'>";
+                            echo "<p> [{$row['status']}] [{$row['eoi_number']}]. [{$row['job_reference_number']}]: {$row['first_name']} {$row['last_name']}, D.O.B: {$row['birthdate']}, Gender: {$row['gender']}, Address: {$row['street_address']} {$row['suburb']} {$row['state']} {$row['postcode']}, Contact: em: {$row['email_address']}, ph: {$row['phone_number']}, li: {$row['linkedin']}, tw: {$row['twitter']}, gh: {$row['github']}, web: {$row['personal_website']}, Skills and Experience: {$row['technical_skills']}, {$row['other_skills']}, {$row['experience_title']}, {$row['experience_company']}, {$row['experience_description']}, {$row['experience_from_date']}, {$row['experience_to_date']}, Work status: {$row['currently_working']}, Education: {$row['education_institution']}, {$row['education_degree']}, {$row['education_major']}, {$row['education_description']}, {$row['education_from_date']}, {$row['education_to_date']}, {$row['currently_attending']}, Resume: {$row['resume']}, Message: {$row['message_for_us']} </p>";
+                            echo "</div>";
+                        }
+                    } else {
+                        echo "<p>No data found for '$eoi_reference'</p>";
+                    }
                 } elseif (isset($_POST['delete'])) { 
-                    //if $eoi_reference is in database
-                        //DELETE * FROM Jobs WHERE $eoi_reference;
-                        //echo "<p>Deleted all '$eoi_reference' EOIs</p>"
-                    // if $eoi_reference not in database
-                        // echo "<p>No data found for '$eoi_reference'</p>"
-                } //if nothing then don't react
+                    if ($result->num_rows > 0) {
+                        $delete_sql = "DELETE FROM eoi WHERE job_reference_number = ?";
+                        $del_stmt = $conn->prepare($delete_sql);
+                        $del_stmt->bind_param("s", $eoi_reference);
+                        $del_stmt->execute();
+                        echo "<p>Deleted all '$eoi_reference' EOIs</p>";
+                    } else {
+                        echo "<p>No data found for '$eoi_reference'</p>";
+                    }
+                }
+                $stmt->close();
+                $conn->close();
+            }     
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['searchAll'])) {
+                require_once 'settings.php';
+                $conn = mysqli_connect($host, $username, $password, $database);
+
+                if (!$conn) {
+                    die("Connection failed: " . mysqli_connect_error());
+                }
+
+                $query = "SELECT * FROM eoi";
+                $result = mysqli_query($conn, $query);
+
+                if ($result && mysqli_num_rows($result) > 0) {
+                    echo "<p>Found " . mysqli_num_rows($result) . " EOI record(s):</p><br>";
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<div class='eoi-record'>";
+                        echo "<p> [{$row['status']}] [{$row['eoi_number']}]. [{$row['job_reference_number']}]: {$row['first_name']} {$row['last_name']}, D.O.B: {$row['birthdate']}, Gender: {$row['gender']}, Address: {$row['street_address']} {$row['suburb']} {$row['state']} {$row['postcode']}, Contact: em: {$row['email_address']}, ph: {$row['phone_number']}, li: {$row['linkedin']}, tw: {$row['twitter']}, gh: {$row['github']}, web: {$row['personal_website']}, Skills and Experience: {$row['technical_skills']}, {$row['other_skills']}, {$row['experience_title']}, {$row['experience_company']}, {$row['experience_description']}, {$row['experience_from_date']}, {$row['experience_to_date']}, Work status: {$row['currently_working']}, Education: {$row['education_institution']}, {$row['education_degree']}, {$row['education_major']}, {$row['education_description']}, {$row['education_from_date']}, {$row['education_to_date']}, {$row['currently_attending']}, Resume: {$row['resume']}, Message: {$row['message_for_us']} </p>";
+                        echo "</div>";
+                    }
+                } else {
+                    echo "<p>No EOI records found.</p>";
+                }
+
+                mysqli_close($conn);
             }
+
         ?>
+
         <br> <br>
         <section id="results"> 
             <h2>Query Results:</h2>
