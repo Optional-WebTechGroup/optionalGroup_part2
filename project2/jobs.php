@@ -81,100 +81,47 @@
 
         <br>
 
-        <section id="admin">
-            <h2>Network Administrator:</h2>
-            <!-- used the weblink provided for the layout of how to make a job decription + michealpage for examples -->
-            <!-- Job Responsibilities -->
-            <h3>Job Summary/Responsibilities:</h3>
-            <p>As a network administrator, you will develop, maintain and improve our computer networks within the
-                business to help
-                it operate smoothly. you will also control user management, system maintenance, and manage the
-                network
-                infrastructure.</p>
-            <h3>Qualifications:</h3>
-            <h4>Essential skills needed for role:</h4>
-            <ul>
-                <li>knowledge in cisco units
-                    <ul>
-                        <li>networking</li>
-                        <li>swicthing</li>
-                        <li>routing</li>
-                    </ul>
-                </li>
-                <li>assembly, python and java knowledge </li>
-                <li>being able to manage and organize large sets of data</li>
-                <li>good time management</li>
-            </ul>
-            <h4>Preferred skills:</h4>
-            <ul>
-                <li>years of experience
-                    <ol>
-                        <li>6 years (ideal)</li>
-                        <li>4 years (also ideal)</li>
-                        <li>2 years (minimum)</li>
-                    </ol>
-                </li>
-                <li>great communication skills</li>
-                <li>ability to adapt when needed</li>
-                <li>understanding of cloud networking concepts and services</li>
-            </ul>
-            <h3>Salary range and Benefits:</h3>
-            <p>Salary when hired will be: $90,000 to $110,000, if promoted to senior Network
-                Administrator then salary will change to $135,000.</p>
-            <p>As a network administrator, you benefit from high demand in the IT industry, opportunities for
-                career advancement, and the chance to
-                work with cutting-edge technologies, while also developing valuable problem-solving and
-                communication skills.</p>
-            <h3>Title to report to:</h3>
-            <p>If hired you will report to the senior Network Administrator.</p>
-            <!-- Job Reference -->
-            <h4>Job reference number:</h4>
-            <p>PXUB6</p>
-        </section>
+<?php
 
-        <section id="Eco">
-            <!-- Job Posting 2: Eco-Tech Sales Executive -->
-            <h2>Eco-Tech Sales Executive:</h2>
-            <!-- used the weblink provided for the layout of how to make a job decription + michealpage for examples -->
-            <h3>Job Summary/Responsibilities:</h3>
-            <p>As a Eco-Tech Sales Executiveselling you will be selling environmentally friendly or sustainable
-                technology
-                solutions, requiring strong sales skills, product knowledge, and an understanding of the
-                environmental market.</p>
-            <h3>Qualifications:</h3>
-            <h4>Essential skills needed for role:</h4>
-            <ul>
-                <li>great communication skills</li>
-                <li>knowledge in sales </li>
-                <li>technical expertise - can explain technical concepts in a clear and understandable manner to
-                    clients.</li>
-                <li>is well organized/good time management skills</li>
-            </ul>
-            <h4>Preferred skills:</h4>
-            <ul>
-                <li>years of experience
-                    <ol>
-                        <li>6 years (ideal)</li>
-                        <li>4 years (also ideal)</li>
-                        <li>2 to 3 years (minimum)</li>
-                    </ol>
-                </li>
-                <li>industry knowledge</li>
-                <li>great leadership skills (in case of promotion)</li>
-                <li>great negotiation skills</li>
-            </ul>
-            <!-- Salary & Benefits -->
-            <h3>Salary range and Benefits:</h3>
-            <p>Salary when hired will be: $75,000 to $95,000 annually</p>
-            <p>As a eco-tech sales executive you will obtain the following benefits,a competitive salary,
-                potentially
-                including bonuses and commissions, a company vehicle, and opportunities for career growth
-                within a dynamic and fast-paced industry </p>
-            <h3>Title to report to:</h3>
-            <p>you will report to the senior eco-tech sales executive/manager of your division</p>
-            <h4>Job reference number:</h4>
-            <p>5KC3U</p>
-        </section>
+// Database connection
+
+$host = "localhost";
+$user = "your_username";
+$password = "your_password";
+$database = "Optional_2";
+
+$conn = new mysqli($host, $user, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Query jobs
+$sql = "SELECT * FROM `Jobs`";
+$result = $conn->query($sql);
+
+echo "<h1>Available Job Positions</h1>";
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        echo "<div style='border:1px solid #ccc; padding:15px; margin-bottom:20px;'>";
+        echo "<h2>" . htmlspecialchars($row['Name of position']) . "</h2>";
+        echo "<p><strong>Summary:</strong><br>" . nl2br(htmlspecialchars($row['Summary'])) . "</p>";
+        echo "<p><strong>Essential Qualification:</strong><br>" . nl2br(htmlspecialchars($row['Essential Qualification'])) . "</p>";
+        echo "<p><strong>Preferred Qualifications:</strong><br>" . nl2br(htmlspecialchars($row['Preferred Qualifications'])) . "</p>";
+        echo "<p><strong>Salary & Benefits:</strong><br>" . nl2br(htmlspecialchars($row['Salary range/benefit'])) . "</p>";
+        echo "<p><strong>Reports To:</strong><br>" . nl2br(htmlspecialchars($row['Title to report to'])) . "</p>";
+        echo "<p><strong>Job Reference:</strong> " . htmlspecialchars($row['Job reference number']) . "</p>";
+        echo "</div>";
+    }
+} else {
+    echo "No job listings found.";
+}
+
+$conn->close();
+?>
+
     </main>
     <footer>
         <div id="footer_nav">
