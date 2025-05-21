@@ -70,7 +70,9 @@
                     if ($result->num_rows > 0) {
                         echo "<p>Found record(s) for '$eoi_reference'</p>";
                         while ($row = $result->fetch_assoc()) {
-                            echo "<pre>" . print_r($row, true) . "</pre>";
+                            echo "<div class='eoi-record'>";
+                            echo "<p> [{$row['status']}] [{$row['eoi_number']}]. [{$row['job_reference_number']}]: {$row['first_name']} {$row['last_name']}, D.O.B: {$row['birthdate']}, Gender: {$row['gender']}, Address: {$row['street_address']} {$row['suburb']} {$row['state']} {$row['postcode']}, Contact: em: {$row['email_address']}, ph: {$row['phone_number']}, li: {$row['linkedin']}, tw: {$row['twitter']}, gh: {$row['github']}, web: {$row['personal_website']}, Skills and Experience: {$row['technical_skills']}, {$row['other_skills']}, {$row['experience_title']}, {$row['experience_company']}, {$row['experience_description']}, {$row['experience_from_date']}, {$row['experience_to_date']}, Work status: {$row['currently_working']}, Education: {$row['education_institution']}, {$row['education_degree']}, {$row['education_major']}, {$row['education_description']}, {$row['education_from_date']}, {$row['education_to_date']}, {$row['currently_attending']}, Resume: {$row['resume']}, Message: {$row['message_for_us']} </p>";
+                            echo "</div>";
                         }
                     } else {
                         echo "<p>No data found for '$eoi_reference'</p>";
@@ -104,7 +106,9 @@
                 if ($result && mysqli_num_rows($result) > 0) {
                     echo "<p>Found " . mysqli_num_rows($result) . " EOI record(s):</p><br>";
                     while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<pre>" . print_r($row, true) . "</pre>";
+                        echo "<div class='eoi-record'>";
+                        echo "<p> [{$row['status']}] [{$row['eoi_number']}]. [{$row['job_reference_number']}]: {$row['first_name']} {$row['last_name']}, D.O.B: {$row['birthdate']}, Gender: {$row['gender']}, Address: {$row['street_address']} {$row['suburb']} {$row['state']} {$row['postcode']}, Contact: em: {$row['email_address']}, ph: {$row['phone_number']}, li: {$row['linkedin']}, tw: {$row['twitter']}, gh: {$row['github']}, web: {$row['personal_website']}, Skills and Experience: {$row['technical_skills']}, {$row['other_skills']}, {$row['experience_title']}, {$row['experience_company']}, {$row['experience_description']}, {$row['experience_from_date']}, {$row['experience_to_date']}, Work status: {$row['currently_working']}, Education: {$row['education_institution']}, {$row['education_degree']}, {$row['education_major']}, {$row['education_description']}, {$row['education_from_date']}, {$row['education_to_date']}, {$row['currently_attending']}, Resume: {$row['resume']}, Message: {$row['message_for_us']} </p>";
+                        echo "</div>";
                     }
                 } else {
                     echo "<p>No EOI records found.</p>";
