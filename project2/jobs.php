@@ -73,8 +73,8 @@
 // Database connection
 
 $host = "localhost";
-$user = "your_username";
-$password = "your_password";
+$user = "root";
+$password = "";
 $database = "Optional_2";
 
 $conn = new mysqli($host, $user, $password, $database);
