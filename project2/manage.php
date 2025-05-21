@@ -46,7 +46,8 @@
         </form>
         <br>
         <form method="post" action="">
-            <input type="submit" id="searchAll" value="Search All">
+            <input type="submit" id="searchAll" value="Search All"> 
+            <input type="submit" id="clear" value="Clear">
         </form>
         <br> <br>
         <form method="post" action="">
@@ -54,7 +55,7 @@
                 <label for="ApplicantSurname">Find Applicant (Surname)</label>
                 <br>
                 <input type="text" name="Applicant" id="Applicant" required maxlength="20">
-                <input type="submit" value="Find Applicant">
+                <input type="submit" name= "find_applicant" value="Find Applicant">
             </section>
         </form>
 
@@ -106,11 +107,11 @@
                 $result = mysqli_query($conn, $query);
 
                 if ($result && mysqli_num_rows($result) > 0) {
-                    echo "<p>Found " . mysqli_num_rows($result) . " EOI record(s):</p><br>";
+                    $resultsOutput .= "<p>Found " . mysqli_num_rows($result) . " EOI record(s):</p><br>";
                     while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<div class='eoi-record'>";
-                        echo "<p> [{$row['status']}] [{$row['eoi_number']}]. [{$row['job_reference_number']}]: {$row['first_name']} {$row['last_name']}, D.O.B: {$row['birthdate']}, Gender: {$row['gender']}, Address: {$row['street_address']} {$row['suburb']} {$row['state']} {$row['postcode']}, Contact: em: {$row['email_address']}, ph: {$row['phone_number']}, li: {$row['linkedin']}, tw: {$row['twitter']}, gh: {$row['github']}, web: {$row['personal_website']}, Skills and Experience: {$row['technical_skills']}, {$row['other_skills']}, {$row['experience_title']}, {$row['experience_company']}, {$row['experience_description']}, {$row['experience_from_date']}, {$row['experience_to_date']}, Work status: {$row['currently_working']}, Education: {$row['education_institution']}, {$row['education_degree']}, {$row['education_major']}, {$row['education_description']}, {$row['education_from_date']}, {$row['education_to_date']}, {$row['currently_attending']}, Resume: {$row['resume']}, Message: {$row['message_for_us']} </p>";
-                        echo "</div>";
+                        $resultsOutput .= "<div class='eoi-record'>";
+                        $resultsOutput .= "<p> [{$row['status']}] [{$row['eoi_number']}]. [{$row['job_reference_number']}]: {$row['first_name']} {$row['last_name']}, D.O.B: {$row['birthdate']}, Gender: {$row['gender']}, Address: {$row['street_address']} {$row['suburb']} {$row['state']} {$row['postcode']}, Contact: em: {$row['email_address']}, ph: {$row['phone_number']}, li: {$row['linkedin']}, tw: {$row['twitter']}, gh: {$row['github']}, web: {$row['personal_website']}, Skills and Experience: {$row['technical_skills']}, {$row['other_skills']}, {$row['experience_title']}, {$row['experience_company']}, {$row['experience_description']}, {$row['experience_from_date']}, {$row['experience_to_date']}, Work status: {$row['currently_working']}, Education: {$row['education_institution']}, {$row['education_degree']}, {$row['education_major']}, {$row['education_description']}, {$row['education_from_date']}, {$row['education_to_date']}, {$row['currently_attending']}, Resume: {$row['resume']}, Message: {$row['message_for_us']} </p>";
+                        $resultsOutput .= "</div>";
                     }
                 } else {
                     echo "<p>No EOI records found.</p>";
@@ -119,6 +120,31 @@
                 mysqli_close($conn);
             }
 
+            if (isset($_POST['clear'])) { 
+                $resultsOutput .= "<p>No results currently</p>";
+            } 
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Applicant']) && !empty(trim($_POST['Applicant']))) {
+                $Applicant = trim($_POST['Applicant']);
+                $check_sql = "SELECT * FROM eoi WHERE last_name = ?"; //creates sql query 
+                $stmt = $conn->prepare($check_sql); //prepare sql for execution
+                $stmt->bind_param("s", $Applicant); //allocates eoi_reference to '?'
+                $stmt->execute(); 
+                $result = $stmt->get_result(); 
+                $resultsOutput = "";
+                if (isset($_POST['find_applicant'])) { 
+                    if ($result->num_rows > 0) {
+                        $resultsOutput .= "<p>Found record(s) for '$Applicant'</p><br>";
+                        while ($row = $result->fetch_assoc()) {
+                            $resultsOutput .= "<div class='eoi-record'>";
+                            $resultsOutput .= "<p> [{$row['status']}] [{$row['eoi_number']}]. [{$row['job_reference_number']}]: {$row['first_name']} {$row['last_name']}, D.O.B: {$row['birthdate']}, Gender: {$row['gender']}, Address: {$row['street_address']} {$row['suburb']} {$row['state']} {$row['postcode']}, Contact: em: {$row['email_address']}, ph: {$row['phone_number']}, li: {$row['linkedin']}, tw: {$row['twitter']}, gh: {$row['github']}, web: {$row['personal_website']}, Skills and Experience: {$row['technical_skills']}, {$row['other_skills']}, {$row['experience_title']}, {$row['experience_company']}, {$row['experience_description']}, {$row['experience_from_date']}, {$row['experience_to_date']}, Work status: {$row['currently_working']}, Education: {$row['education_institution']}, {$row['education_degree']}, {$row['education_major']}, {$row['education_description']}, {$row['education_from_date']}, {$row['education_to_date']}, {$row['currently_attending']}, Resume: {$row['resume']}, Message: {$row['message_for_us']} </p>";
+                            $resultsOutput .= "</div>";
+                        }
+                    } else {
+                         $resultsOutput .= "<p>No data found for '$Applicant'</p>";
+                    }
+            } 
+        }
         ?>
 
         <br> <br>
