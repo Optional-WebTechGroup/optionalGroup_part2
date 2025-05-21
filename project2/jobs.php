@@ -93,13 +93,14 @@ echo "<h1>Available Job Positions</h1>";
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
      echo "<div style='border:1px solid #ccc; padding:15px; margin-bottom:20px;'>";
-     echo "<p><strong>Job Reference:</strong> " . (isset($row['Job reference number']) ? htmlspecialchars($row['Job reference number']) : 'N/A') . "</p>";
-     echo "<h2>" . (isset($row['Name of position']) ? htmlspecialchars($row['Name of position']) : 'Untitled') . "</h2>";
-     echo "<p><strong>Summary:</strong><br>" . nl2br(isset($row['Summary']) ? htmlspecialchars($row['Summary']) : 'N/A') . "</p>";
-     echo "<p><strong>Essential Qualification:</strong><br>" . nl2br(isset($row['Essential Qualification']) ? htmlspecialchars($row['Essential Qualification']) : 'N/A') . "</p>";
-     echo "<p><strong>Preferred Qualifications:</strong><br>" . nl2br(isset($row['Preferred Qualifications']) ? htmlspecialchars($row['Preferred Qualifications']) : 'N/A') . "</p>";
-     echo "<p><strong>Salary & Benefits:</strong><br>" . nl2br(isset($row['Salary range/benefit']) ? htmlspecialchars($row['Salary range/benefit']) : 'N/A') . "</p>";
-     echo "<p><strong>Reports To:</strong><br>" . nl2br(isset($row['Title to report to']) ? htmlspecialchars($row['Title to report to']) : 'N/A') . "</p>";
+     echo "<p><strong>Job Reference:</strong> " . htmlspecialchars($row['job_ref']) . "</p>";
+     echo "<h2>" . htmlspecialchars($row['position_name']) . "</h2>";
+     echo "<p><strong>Summary:</strong><br>" . nl2br(htmlspecialchars($row['summary'])) . "</p>";
+     echo "<p><strong>Essential Qualification:</strong><br>" . nl2br(htmlspecialchars($row['essential_qual'])) . "</p>";
+     echo "<p><strong>Preferred Qualifications:</strong><br>" . nl2br(htmlspecialchars($row['preferred_qual'])) . "</p>";
+     echo "<p><strong>Salary & Benefits:</strong><br>" . nl2br(htmlspecialchars($row['salary_benefits'])) . "</p>";
+     echo "<p><strong>Reports To:</strong><br>" . nl2br(htmlspecialchars($row['reports_to'])) . "</p>";
+
         echo "</div>";
     }
 } else {
