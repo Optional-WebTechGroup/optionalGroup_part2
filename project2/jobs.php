@@ -88,7 +88,23 @@ if ($conn->connect_error) {
 $sql = "SELECT * FROM `Jobs`";
 $result = $conn->query($sql);
 
+echo "<h1>Available Job Positions</h1>";
 
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        echo "<div style='border:1px solid #ccc; padding:15px; margin-bottom:20px;'>";
+        echo "<h2>" . htmlspecialchars($row['Name of position']) . "</h2>";
+        echo "<p><strong>Summary:</strong><br>" . nl2br(htmlspecialchars($row['Summary'])) . "</p>";
+        echo "<p><strong>Essential Qualification:</strong><br>" . nl2br(htmlspecialchars($row['Essential Qualification'])) . "</p>";
+        echo "<p><strong>Preferred Qualifications:</strong><br>" . nl2br(htmlspecialchars($row['Preferred Qualifications'])) . "</p>";
+        echo "<p><strong>Salary & Benefits:</strong><br>" . nl2br(htmlspecialchars($row['Salary range/benefit'])) . "</p>";
+        echo "<p><strong>Reports To:</strong><br>" . nl2br(htmlspecialchars($row['Title to report to'])) . "</p>";
+        echo "<p><strong>Job Reference:</strong> " . htmlspecialchars($row['Job reference number']) . "</p>";
+        echo "</div>";
+    }
+} else {
+    echo "No job listings found.";
+}
 
 $conn->close();
 ?>
