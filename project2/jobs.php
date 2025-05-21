@@ -21,10 +21,10 @@
 session_start();
 
 // If the user is NOT logged in, send them to signup
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit;
-}
+//if (!isset($_SESSION['username'])) {
+   // header("Location: login.php");
+    //exit;
+//}
 ?>
 
 <!DOCTYPE html>
@@ -42,29 +42,36 @@ if (!isset($_SESSION['username'])) {
     <title>The Optional Group</title>
 </head>
 
+<?php
+
+require_once 'settings.php';
+
+// Connect to database
+$conn = new mysqli($host, $user, $pwd, $sql_db);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch job listings
+$sql = "SELECT * FROM Jobs";
+$result = $conn->query($sql);
+?>
+
 <body>
-    <?php include('header.inc') ?>
+    <?php include('header.inc'); ?>
 
     <main id="jobs_main">
         <h1>Find your <span class="text_gradient">Dream Job</span></h1>
+
         <section>
             <div class="row">
                 <div class="column">
                     <h3>The Optional Group Description:</h3>
-                    <p>The Optional Group is a forward-thinking technology company dedicated to bridging the digital
-                        divide
-                        by
-                        setting up advanced, sustainable networks for remote communities and off-grid locations. By
-                        combining
-                        cutting-edge technology with green, eco-friendly practices, we empower underserved areas with
-                        reliable,
-                        high-speed internet access and smart solutions that promote environmental sustainability. Our
-                        mission
-                        is to create interconnected, self-sufficient ecosystems that enable remote communities to thrive
-                        through
-                        innovation, while minimising environmental impact. At The Optional Group, we believe technology
-                        should
-                        enhance the quality of life without compromising the planet.</p>
+                    <p>The Optional Group is a forward-thinking technology company dedicated to bridging the digital divide
+                        by setting up advanced, sustainable networks for remote communities and off-grid locations. We
+                        combine cutting-edge technology with eco-friendly practices to empower underserved areas with
+                        reliable, high-speed internet access. Our mission is to enable these communities to thrive through
+                        innovation—while minimizing environmental impact.</p>
                 </div>
                 <aside class="column green_section">
                     <h3>How to Apply?</h3>
@@ -72,61 +79,58 @@ if (!isset($_SESSION['username'])) {
                     <a href="apply.php" id="apply_button" class="button">Apply Now!</a>
                 </aside>
             </div>
-            <!-- used ai to create job description, the prompt was used ai to create description, prompot was create a company description for this company The Optional Group, this is the brief description setting up networks for remote communties and places with like advanced technology and green impact and things-->
         </section>
 
-        <br>
-</main>
+    <section>
+<!-- used ai ot create the boxes to seperate the two job descriptions, used the following prompt this echo made the box adjust it to match the new working code (used original echo since it had two boxes already) 
+    <div class="job-container">
+    <?php
+   echo "<h1>Available Job Positions</h1>";
 
-   </body>
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        echo "<div style='border: 2px solid #4CAF50; background-color: #eafbea; padding: 20px; margin-bottom: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);'>";
+        
+        echo "<h2 style='color: #2e7d32; margin-bottom: 20px;'>" . htmlspecialchars($row['Name of position']) . "</h2>";
 
-</html>
- <!--- used ai to create parts fo the codes/refine it to mak it work as intended prompt was to make it work based on the sql provided.
+        echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
+                <strong>Summary:</strong><br>" . nl2br(htmlspecialchars($row['Summary'])) . "
+              </div>";
 
-<?php
-session_start();
-require_once 'settings.php';
+        echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
+                <strong>Essential Qualification:</strong><br>" . nl2br(htmlspecialchars($row['Essential Qualification'])) . "
+              </div>";
 
-$conn = new mysqli($host, $user, $pwd, $sql_db);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+        echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
+                <strong>Preferred Qualifications:</strong><br>" . nl2br(htmlspecialchars($row['Preferred Qualifications'])) . "
+              </div>";
+
+        echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
+                <strong>Salary & Benefits:</strong><br>" . nl2br(htmlspecialchars($row['Salary range/benefit'])) . "
+              </div>";
+
+        echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
+                <strong>Reports To:</strong><br>" . nl2br(htmlspecialchars($row['Title to report to'])) . "
+              </div>";
+
+        echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px;'>
+                <strong>Job Reference:</strong> " . htmlspecialchars($row['Job reference number']) . "
+              </div>";
+
+        echo "</div>";
+    }
+} else {
+    echo "<p>No job listings found.</p>";
 }
 
-$sql = "SELECT * FROM Jobs";
-$result = $conn->query($sql);
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>The Optional Group</title>
-    <link rel="stylesheet" href="styles/styles.css">
-</head>
-<body>
-<?php include('header.inc'); ?>
-
-<main>
-    <h1>Available Job Positions</h1>
-    <?php
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            echo "<div class='job-listing'>";
-            echo "<h2>" . htmlspecialchars($row['Name of position']) . "</h2>";
-            echo "<p><strong>Summary:</strong> " . nl2br(htmlspecialchars($row['Summary'])) . "</p>";
-            echo "<p><strong>Essential Qualification:</strong> " . nl2br(htmlspecialchars($row['Essential Qualification'])) . "</p>";
-            echo "<p><strong>Preferred Qualifications:</strong> " . nl2br(htmlspecialchars($row['Preferred Qualifications'])) . "</p>";
-            echo "<p><strong>Salary & Benefits:</strong> " . nl2br(htmlspecialchars($row['Salary range/benefit'])) . "</p>";
-            echo "<p><strong>Reports To:</strong> " . nl2br(htmlspecialchars($row['Title to report to'])) . "</p>";
-            echo "<p><strong>Job Reference:</strong> " . htmlspecialchars($row['Job reference number']) . "</p>";
-            echo "</div>";
-        }
-    } else {
-        echo "<p>No job listings found.</p>";
-    }
-    $conn->close();
     ?>
+    </div>
+</section>
 
-     
-   <?php include('footer.inc') ?>
 
+    </main>
+
+    <?php include('footer.inc'); ?>
+</body>
+
+</html>
