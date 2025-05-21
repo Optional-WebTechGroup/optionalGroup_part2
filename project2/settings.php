@@ -1,6 +1,6 @@
 <?php
 $host = "localhost";
-$user = "root";
-$pwd = "";
-$sql_db = "optional_group_db";
+$username = "root";
+$password = "";
+$database = "optional_group_db";
 ?>
