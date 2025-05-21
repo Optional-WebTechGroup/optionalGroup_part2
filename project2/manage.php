@@ -44,8 +44,9 @@
                 <input  type="submit" name="delete" value="Delete EOI References">
             </section>
         </form>
+        <br>
         <form method="post" action="">
-            <input type="submit" name="searchAll" value="Search All">
+            <input type="submit" id="searchAll" value="Search All">
         </form>
         <br> <br>
         <form method="post" action="">
@@ -66,16 +67,17 @@
                 $stmt->bind_param("s", $eoi_reference); //allocates eoi_reference to '?'
                 $stmt->execute(); 
                 $result = $stmt->get_result(); 
+                $resultsOutput = "";
                 if (isset($_POST['search'])) { 
                     if ($result->num_rows > 0) {
-                        echo "<p>Found record(s) for '$eoi_reference'</p>";
+                        $resultsOutput .= "<p>Found record(s) for '$eoi_reference'</p><br>";
                         while ($row = $result->fetch_assoc()) {
-                            echo "<div class='eoi-record'>";
-                            echo "<p> [{$row['status']}] [{$row['eoi_number']}]. [{$row['job_reference_number']}]: {$row['first_name']} {$row['last_name']}, D.O.B: {$row['birthdate']}, Gender: {$row['gender']}, Address: {$row['street_address']} {$row['suburb']} {$row['state']} {$row['postcode']}, Contact: em: {$row['email_address']}, ph: {$row['phone_number']}, li: {$row['linkedin']}, tw: {$row['twitter']}, gh: {$row['github']}, web: {$row['personal_website']}, Skills and Experience: {$row['technical_skills']}, {$row['other_skills']}, {$row['experience_title']}, {$row['experience_company']}, {$row['experience_description']}, {$row['experience_from_date']}, {$row['experience_to_date']}, Work status: {$row['currently_working']}, Education: {$row['education_institution']}, {$row['education_degree']}, {$row['education_major']}, {$row['education_description']}, {$row['education_from_date']}, {$row['education_to_date']}, {$row['currently_attending']}, Resume: {$row['resume']}, Message: {$row['message_for_us']} </p>";
-                            echo "</div>";
+                            $resultsOutput .= "<div class='eoi-record'>";
+                            $resultsOutput .= "<p> [{$row['status']}] [{$row['eoi_number']}]. [{$row['job_reference_number']}]: {$row['first_name']} {$row['last_name']}, D.O.B: {$row['birthdate']}, Gender: {$row['gender']}, Address: {$row['street_address']} {$row['suburb']} {$row['state']} {$row['postcode']}, Contact: em: {$row['email_address']}, ph: {$row['phone_number']}, li: {$row['linkedin']}, tw: {$row['twitter']}, gh: {$row['github']}, web: {$row['personal_website']}, Skills and Experience: {$row['technical_skills']}, {$row['other_skills']}, {$row['experience_title']}, {$row['experience_company']}, {$row['experience_description']}, {$row['experience_from_date']}, {$row['experience_to_date']}, Work status: {$row['currently_working']}, Education: {$row['education_institution']}, {$row['education_degree']}, {$row['education_major']}, {$row['education_description']}, {$row['education_from_date']}, {$row['education_to_date']}, {$row['currently_attending']}, Resume: {$row['resume']}, Message: {$row['message_for_us']} </p>";
+                            $resultsOutput .= "</div>";
                         }
                     } else {
-                        echo "<p>No data found for '$eoi_reference'</p>";
+                         $resultsOutput .= "<p>No data found for '$eoi_reference'</p>";
                     }
                 } elseif (isset($_POST['delete'])) { 
                     if ($result->num_rows > 0) {
@@ -123,7 +125,13 @@
         <section id="results"> 
             <h2>Query Results:</h2>
             <br> 
-            <p> No results currently </p> <!-- test content -->
+            <?php 
+                if (!empty($resultsOutput)) {
+                    echo $resultsOutput;
+                } else {
+                    echo "<p>No results currently</p>";
+                }
+            ?>
         </section> 
 
     </main>
