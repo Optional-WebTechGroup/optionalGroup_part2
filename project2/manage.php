@@ -58,6 +58,28 @@
                 <input type="submit" name= "find_applicant" value="Find Applicant">
             </section>
         </form>
+        <br> <br>
+        <form method="post" action="">
+            <section id="statusChange">
+                <label for="eoiNumber_text">Enter EOI Number</label>
+                <br>
+                <input type="text" name="eoiNumber_text" id="eoiNumber_text" required maxlength="20">
+                <br>
+
+                <input type="radio" id="New" name="status" value="New">
+                <label for="New">New</label>
+
+                <input type="radio" id="Current" name="status" value="Current">
+                <label for="Current">Current</label>
+
+                <input type="radio" id="Final" name="status" value="Final">
+                <label for="Final">Final</label>
+
+                <br>
+                <input type="submit" name="eoiNumber_submit" value="Submit">
+            </section>
+        </form>
+
 
         <?php //ChatGPT prompt: please check my code and give me feedback on how to get it working, 21/05/25 - code supplied edited
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['EOI_reference']) && !empty(trim($_POST['EOI_reference']))) {
