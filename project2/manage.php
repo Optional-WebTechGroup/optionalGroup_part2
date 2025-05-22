@@ -19,7 +19,7 @@
 
         <?php 
             require_once 'settings.php';
-            $conn = mysqli_connect($host, $username, $password, $database);
+            $conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
             if ($conn) {
                 $query = "SELECT * FROM eoi";
