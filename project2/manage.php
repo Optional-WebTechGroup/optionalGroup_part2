@@ -46,7 +46,7 @@
         </form>
         <br>
         <form method="post" action="">
-            <input type="submit" id="searchAll" value="Search All"> 
+            <input type="submit" id="searchAll" name="searchAll"value="Search All"> 
             <input type="submit" id="clear" value="Clear">
         </form>
         <br> <br>
@@ -82,6 +82,7 @@
 
 
         <?php //ChatGPT prompt: please check my code and give me feedback on how to get it working, 21/05/25 - code supplied edited
+            $resultsOutput = "";
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['EOI_reference']) && !empty(trim($_POST['EOI_reference']))) {
                 $eoi_reference = trim($_POST['EOI_reference']);
                 // Prepare a query to check if the EOI reference exists
@@ -90,7 +91,6 @@
                 $stmt->bind_param("s", $eoi_reference); //allocates eoi_reference to '?'
                 $stmt->execute(); 
                 $result = $stmt->get_result(); 
-                $resultsOutput = "";
                 if (isset($_POST['search'])) { 
                     if ($result->num_rows > 0) {
                         $resultsOutput .= "<p>Found record(s) for '$eoi_reference'</p><br>";
@@ -119,7 +119,7 @@
 
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['searchAll'])) {
                 require_once 'settings.php';
-                $conn = mysqli_connect($host, $username, $password, $database);
+                $conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
                 if (!$conn) {
                     die("Connection failed: " . mysqli_connect_error());
@@ -153,7 +153,6 @@
                 $stmt->bind_param("s", $Applicant); //allocates eoi_reference to '?'
                 $stmt->execute(); 
                 $result = $stmt->get_result(); 
-                $resultsOutput = "";
                 if (isset($_POST['find_applicant'])) { 
                     if ($result->num_rows > 0) {
                         $resultsOutput .= "<p>Found record(s) for '$Applicant'</p><br>";
@@ -165,8 +164,55 @@
                     } else {
                          $resultsOutput .= "<p>No data found for '$Applicant'</p>";
                     }
-            } 
-        }
+                } 
+            }
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST['eoiNumber_text']) && !empty(trim($_POST['eoiNumber_text']))) {
+                    $eoiNumber = trim($_POST['eoiNumber_text']);
+
+                    if (isset($_POST['status'])) {
+                        $newStatus = $_POST['status'];
+
+                        require_once("settings.php");
+                        $conn = mysqli_connect($host, $user, $pwd, $sql_db);
+
+                        if (!$conn) {
+                            die("Database connection failed: " . mysqli_connect_error());
+                        }
+
+                        // Check if eoi_number exists
+                        $check_sql = "SELECT eoi_number FROM eoi WHERE eoi_number = ?";
+                        $check_stmt = $conn->prepare($check_sql);
+                        $check_stmt->bind_param("s", $eoiNumber);
+                        $check_stmt->execute();
+                        $check_result = $check_stmt->get_result();
+
+                        if ($check_result->num_rows > 0) {
+                            // Proceed to update
+                            $query = "UPDATE eoi SET status = ? WHERE eoi_number = ?";
+                            $stmt = $conn->prepare($query);
+                            $stmt->bind_param("ss", $newStatus, $eoiNumber);
+
+                            if ($stmt->execute()) {
+                                $resultsOutput .= "<p>Status updated to '$newStatus' for EOI Number: $eoiNumber</p>";
+                            } else {
+                                $resultsOutput .= "<p>Error updating status.</p>";
+                            }
+
+                            $stmt->close();
+                        } else {
+                            $resultsOutput .= "<p>Error: EOI Number '$eoiNumber' does not exist.</p>";
+                        }
+
+                        $check_stmt->close();
+                        $conn->close();
+                    } else {
+                        $resultsOutput .= "<p>Please select a status.</p>"; 
+                    }
+                }
+            }
+
         ?>
 
         <br> <br>
