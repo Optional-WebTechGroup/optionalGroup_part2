@@ -148,6 +148,13 @@ header {
   background-color: var(--hightlight_color);
 }
 
+#logout {
+  padding: 9px 25px;
+  border: none;
+  border-radius: 50px;
+  background-color: var(--hightlight_color);
+}
+
 .center_content {
   min-height: 100vh;
   display: flex;
@@ -163,6 +170,10 @@ header {
 }
 
 #cta:hover {
+  opacity: 0.8;
+}
+
+#logout:hover {
   opacity: 0.8;
 }
 
@@ -715,6 +726,12 @@ textarea {
   }
 
   #cta {
+    font-size: 18px;
+    margin-top: 10px;
+    padding: 5px 50px;
+  }
+
+  #logout {
     font-size: 18px;
     margin-top: 10px;
     padding: 5px 50px;

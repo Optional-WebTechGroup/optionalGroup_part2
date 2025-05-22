@@ -16,6 +16,15 @@
 ============================================================
 -->
 
+<?php
+session_start();
+
+// If the user is NOT logged in, send them to signup
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -136,10 +145,10 @@
                     <dd> contributions: jobs.html Page Manager, CSS contributor, job description table</dd>
 
                     <dt> Nikolas Popovic </dt>
-                    <dd> contributions: index.html Page Manager, CSS contributor, manage.php</dd>
+                    <dd> contributions: index.html Page Manager, CSS contributor, settings.php, modularisation</dd>
 
                     <dt> Oliver Scott </dt>
-                    <dd> contributions: About.html Page Manager, CSS contributor, settings.php, modularisation</dd>
+                    <dd> contributions: About.html Page Manager, CSS contributor, manage.php</dd>
                 </dl>
             </section>
         </div>

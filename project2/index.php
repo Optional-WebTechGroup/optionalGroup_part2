@@ -15,7 +15,15 @@
     - What needs to be done: [Date]: [Change description]
 ============================================================
 -->
+<?php
+session_start();
 
+// If the user is NOT logged in, send them to signup
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
