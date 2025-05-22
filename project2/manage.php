@@ -181,23 +181,38 @@
                             die("Database connection failed: " . mysqli_connect_error());
                         }
 
-                        $query = "UPDATE eoi SET status = ? WHERE eoi_number = ?";
-                        $stmt = $conn->prepare($query);
-                        $stmt->bind_param("ss", $newStatus, $eoiNumber);
+                        // Check if eoi_number exists
+                        $check_sql = "SELECT eoi_number FROM eoi WHERE eoi_number = ?";
+                        $check_stmt = $conn->prepare($check_sql);
+                        $check_stmt->bind_param("s", $eoiNumber);
+                        $check_stmt->execute();
+                        $check_result = $check_stmt->get_result();
 
-                        if ($stmt->execute()) {
-                            $resultsOutput .= "<p>Status updated to '$newStatus' for EOI Number: $eoiNumber</p>";
+                        if ($check_result->num_rows > 0) {
+                            // Proceed to update
+                            $query = "UPDATE eoi SET status = ? WHERE eoi_number = ?";
+                            $stmt = $conn->prepare($query);
+                            $stmt->bind_param("ss", $newStatus, $eoiNumber);
+
+                            if ($stmt->execute()) {
+                                $resultsOutput .= "<p>Status updated to '$newStatus' for EOI Number: $eoiNumber</p>";
+                            } else {
+                                $resultsOutput .= "<p>Error updating status.</p>";
+                            }
+
+                            $stmt->close();
                         } else {
-                            $resultsOutput .= "<p>Error updating status.</p>";
+                            $resultsOutput .= "<p>Error: EOI Number '$eoiNumber' does not exist.</p>";
                         }
 
-                        $stmt->close();
+                        $check_stmt->close();
                         $conn->close();
                     } else {
                         $resultsOutput .= "<p>Please select a status.</p>"; 
                     }
                 }
             }
+
         ?>
 
         <br> <br>
