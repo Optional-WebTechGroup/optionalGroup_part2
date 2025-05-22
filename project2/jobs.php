@@ -1,3 +1,32 @@
+<!-- 
+============================================================
+  File Name: jobs.html
+  Description: [Brief description of the file's purpose and functionality]
+  Author: The Optional Group
+  Page Manager: Giuliano Zuccara
+  Created On: 3/28/2025
+  Last Updated: 3/28/2025
+  Version: 0.0.1
+  ============================================================
+  Project: Project Part 1
+  Dependencies: styles.css
+  Changelog:
+    - Latest Chnage: [Date]: [Change description]
+    - What needs to be done: [Date]: [Change description]
+
+============================================================
+-->
+
+<?php
+session_start();
+
+// If the user is NOT logged in, send them to signup
+if (!isset($_SESSION['username'])) {
+   header("Location: login.php");
+    exit;
+}
+?>
+
 <?php
 session_start();
 // Database settings
