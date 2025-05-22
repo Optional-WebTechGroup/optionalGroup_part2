@@ -28,7 +28,7 @@ if (!isset($_SESSION['username'])) {
 ?>
 
 <?php
-session_start();
+
 // Database settings
 require_once 'settings.php';
 
