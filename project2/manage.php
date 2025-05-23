@@ -13,7 +13,40 @@
 </head>
 <body>
     
-	<?php include_once 'header.inc'; ?>
+	<?php 
+        session_start();
+        require_once 'settings.php';
+        if (!isset($_SESSION['username'])) {
+            header("Location: login.php");
+            exit;
+        }  
+        $conn = mysqli_connect($host, $user, $pwd, $sql_db);
+        if(!$conn) {
+            die("Database connection failed: ".mysqli_connect_error());
+        } 
+        // Check if user exists and get their status
+        $username = $_SESSION['username'];
+        $query = "SELECT status FROM users WHERE username = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            if ($row['status'] == '0') {
+                include_once 'header_manager.inc';
+            } else {
+                header("Location: index.php");
+                exit;
+            }
+        } else {
+            echo "<p>Error: User not found or issue with users table.</p>";
+        }
+
+        $stmt->close();
+        $conn->close();    
+    ?>
     
     <main> 
 
@@ -177,7 +210,7 @@
                         require_once("settings.php");
                         $conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
-                        if (!$conn) {
+                        if (!$conn) { 
                             die("Database connection failed: " . mysqli_connect_error());
                         }
 

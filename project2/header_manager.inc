@@ -11,5 +11,5 @@
             <li><a href="manage.php">Manage</a></li>
         </ul>
     </nav>
-    <a id="cta" href="mailto:info@theoptionalgroup.com.au">Email Us</a>
+    <a id = "logout" href="logout.php" style="text-decoration:none;">Logout</a>
 </header>
