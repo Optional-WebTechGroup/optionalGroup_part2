@@ -328,6 +328,8 @@ if (isset($_FILES['resume'])) {
             $destination = $upload_folder . $resume_file_name;
             // Move file from temp location to destination
             // Might cause an error on your device if you don't have write permission for resumes folder
+            // mac: chmod a+w project2/resumes
+            // windows: icacls "project2\resumes" /grant Everyone:(W)
             if (!move_uploaded_file($file_tmp_path, $destination)) {
                 $errors['resume'] = 'Upload Error';
             }
