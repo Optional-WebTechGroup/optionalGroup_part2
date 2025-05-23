@@ -16,33 +16,6 @@
 
 ============================================================
 -->
-
-<?php
-session_start();
-
-// If the user is NOT logged in, send them to signup
-if (!isset($_SESSION['username'])) {
-   header("Location: login.php");
-    exit;
-}
-?>
-
-<?php
-
-// Database settings
-require_once 'settings.php';
-
-// Connect to database
-$conn = new mysqli($host, $user, $pwd, $sql_db);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Fetch job listings
-$sql = "SELECT * FROM Jobs";
-$result = $conn->query($sql);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,7 +30,45 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-    <?php include('header.inc'); ?>
+    <?php
+        session_start();
+        // Database settings
+        require_once 'settings.php';
+
+        // Connect to database
+        $conn = new mysqli($host, $user, $pwd, $sql_db);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        // Redirect if user is not logged in
+        if (!isset($_SESSION['username'])) {
+            header("Location: login.php");
+            exit;
+        }
+    // Check if user exists and get their status
+        $username = $_SESSION['username'];
+        $query = "SELECT status FROM users WHERE username = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            if ($row['status'] == '0') {
+                include_once 'header_manager.inc';
+            } else {
+                include_once 'header.inc';
+            }
+        } else {
+            echo "<p>Error: User not found or issue with users table.</p>";
+        }
+
+        $stmt->close();
+        // Fetch job listings
+        $sql = "SELECT * FROM Jobs";
+        $result = $conn->query($sql);
+        $conn->close();  
+    ?>
 
     <main id="jobs_main">
         <h1>Find your <span class="text_gradient">Dream Job</span></h1>

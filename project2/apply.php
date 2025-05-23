@@ -1,17 +1,3 @@
-<?php
-require_once('settings.php');
-session_start();
-// store the errors in errors variable
-$errors = $_SESSION['errors'] ?? [];
-unset($_SESSION['errors']);
-
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit;
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,7 +14,38 @@ if (!isset($_SESSION['username'])) {
 </head>
 
 <body>
-    <?php include("header.inc"); ?>
+    <?php
+        session_start();
+        require_once 'settings.php';
+        if (!isset($_SESSION['username'])) {
+            header("Location: login.php");
+            exit;
+        }
+        $conn = mysqli_connect($host, $user, $pwd, $sql_db);
+        if(!$conn) {
+            die("Database connection failed: ".mysqli_connect_error());
+        } 
+        // Check if user exists and get their status
+        $username = $_SESSION['username'];
+        $query = "SELECT status FROM users WHERE username = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            if ($row['status'] == '0') {
+                include_once 'header_manager.inc';
+            } else {
+                include_once 'header.inc';
+            }
+        } else {
+            echo "<p>Error: User not found or issue with users table.</p>";
+        }
+
+        $stmt->close();
+        $conn->close();  
+    ?>
 
     <main id="apply_main">
         <!-- title section with the reference dropdown below -->
