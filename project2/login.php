@@ -14,6 +14,7 @@
 </head>
 <body>
     <?php
+        $resultsOutput = "";
         require_once("settings.php");
         session_start();
 
@@ -40,7 +41,7 @@
 
             // Basic validation
             if (empty($user) || empty($pwd)) {
-                echo "Username and password are required.";
+                $resultsOutput .= "Username and password are required.";
                 exit;
             }
 
@@ -64,15 +65,15 @@
                         header("Location: index.php");
                         exit;
                     } else {
-                        echo "Incorrect username or password.";
+                        $resultsOutput .= "Incorrect username or password.";
                     }
                 } else {
-                    echo "Incorrect username or password.";
+                    $resultsOutput .= "Incorrect username or password.";
                 }
 
                 $stmt->close();
             } else {
-                echo "Error preparing login statement: " . $conn->error;
+                $resultsOutput .= "Error preparing login statement: " . $conn->error;
             }
         }
 
@@ -94,6 +95,18 @@
                 <input type="submit" value="Login">
             </section>
         </form>
+        <br> <br>
+        <section id="loginPageResults"> 
+        <br> 
+        <?php 
+            if (!empty($resultsOutput)) {
+                echo $resultsOutput;
+                echo "<br>";
+            } else {
+                echo "<br><br>";
+            }
+        ?>
+        </section> 
     </main>
     <?php include('footer.inc') ?>
 </body>

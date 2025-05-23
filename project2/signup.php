@@ -14,6 +14,7 @@
 </head>
 <body>
     <?php
+        $resultsOutput = "";
         require_once("settings.php");
 
         // Establish database connection
@@ -32,7 +33,7 @@
 
             // Basic validation
             if (empty($user) || empty($pwd)) {
-                echo "Username and password are required.";
+                $resultsOutput .= "Username and password are required.";
                 exit;
             }
 
@@ -47,14 +48,14 @@
                 $stmt->bind_param("ssi", $user, $hashed_password, $status);
 
                 if ($stmt->execute()) {
-                    echo "Signup successful. You can now <a href='login.php'>login</a>.";
+                    $resultsOutput .= "Signup successful. You can now <a href='login.php'>login</a>.";
                 } else {
-                        echo "Signup failed: " . $stmt->error;
+                        $resultsOutput .= "Signup failed: " . $stmt->error;
                 }
 
                 $stmt->close();
             } else {
-                echo "Error preparing the statement: " . $conn->error;
+                $resultsOutput .= "Error preparing the statement: " . $conn->error;
             }
         }
 
@@ -75,6 +76,17 @@
                 <input type="submit" value="Sign Up">
             </section>
         </form>
+        <section id="singupPageResults"> 
+        <br> 
+        <?php 
+            if (!empty($resultsOutput)) {
+                echo $resultsOutput;
+                echo "<br>";
+            } else {
+                echo "<br><br>";
+            }
+        ?>
+        </section> 
     </main>
     <?php include('footer.inc') ?>
 </body>
