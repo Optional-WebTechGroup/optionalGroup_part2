@@ -25,10 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = password_hash($pwd, PASSWORD_DEFAULT);
 
     // Prepare SQL statement
-    $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+    $stmt = $conn->prepare("INSERT INTO users (username, password, status) VALUES (?, ?, ?)");
 
     if ($stmt) {
-        $stmt->bind_param("ss", $user, $hashed_password);
+        $status = 1;
+        $stmt->bind_param("ssi", $user, $hashed_password, $status);
 
         if ($stmt->execute()) {
             echo "Signup successful. You can now <a href='login.php'>login</a>.";
