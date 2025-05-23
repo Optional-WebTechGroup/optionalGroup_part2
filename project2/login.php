@@ -84,13 +84,15 @@
     <main>
         <h1>Login</h1>
         <form action="login.php" method="post">
-            <label>Username:</label><br>
-            <input type="text" name="username" required><br>
+            <section id="loginPage">
+                <label>Username:</label><br>
+                <input type="text" name="username" required><br>
 
-            <label>Password:</label><br>
-            <input type="password" name="password" required><br>
+                <label>Password:</label><br>
+                <input type="password" name="password" required><br>
 
-            <input type="submit" value="Login">
+                <input type="submit" value="Login">
+            </section>
         </form>
     </main>
     <?php include('footer.inc') ?>
