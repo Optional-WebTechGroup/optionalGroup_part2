@@ -14,7 +14,7 @@
         <a class="footer_link" href="https://nagooptional.atlassian.net/jira/software/projects/SCRUM/summary"
             target="_blank">Jira
             Project Link</a>
-        <a class="footer_link" href="https://github.com/Optional-WebTechGroup/OptionalGroupProject01"
+        <a class="footer_link" href="https://github.com/Optional-WebTechGroup/optionalGroup_part2"
             target="_blank">Github Repo Link</a>
     </div>
     <p id="copyright">&copy; Copyright 2025 | The Optional Group | All Rights Reserved</p>
