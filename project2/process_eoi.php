@@ -24,7 +24,7 @@ $errors = [];
 
 
 // loads the jobs reference numbers as an array from the database
-$conn = mysqli_connect($host, $username, $password, $database);
+$conn = mysqli_connect($host, $user, $pwd, $sql_db);
 if (!$conn) {
     header('Location: database_error.html');
     exit();
@@ -399,7 +399,7 @@ $message_for_us = empty($message_for_us) ? null : $message_for_us;
 
 <?php
 if (empty($errors)) {
-    $conn = mysqli_connect($host, $username, $password, $database);
+    $conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
     if (!$conn) {
         header('Location: database_error.html');

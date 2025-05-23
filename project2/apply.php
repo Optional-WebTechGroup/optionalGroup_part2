@@ -1,3 +1,9 @@
+<?php 
+session_start();
+$errors = $_SESSION['errors'] ?? [];
+unset($_SESSION['errors']);
+require_once 'settings.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,8 +21,6 @@
 
 <body>
     <?php
-        session_start();
-        require_once 'settings.php';
         if (!isset($_SESSION['username'])) {
             header("Location: login.php");
             exit;
