@@ -65,7 +65,7 @@
 
         $stmt->close();
         // Fetch job listings
-        $sql = "SELECT * FROM Jobs";
+        $sql = "SELECT * FROM jobs";
         $result = $conn->query($sql);
         $conn->close();  
     ?>
@@ -104,30 +104,30 @@
                 while ($row = $result->fetch_assoc()) {
                     echo "<div style='border: 2px solid #4CAF50; background-color: #eafbea; padding: 20px; margin-bottom: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);'>";
                     
-                    echo "<h2 style='color:rgb(3, 3, 3); margin-bottom: 20px;'>" . htmlspecialchars($row['Name of position']) . "</h2>";
+                    echo "<h2 style='color:rgb(3, 3, 3); margin-bottom: 20px;'>" . htmlspecialchars($row['position_name']) . "</h2>";
 
                     echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
-                            <strong>Summary:</strong><br>" . nl2br(htmlspecialchars($row['Summary'])) . "
+                            <strong>Summary:</strong><br>" . nl2br(htmlspecialchars($row['summary'])) . "
                           </div>";
 
                     echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
-                            <strong>Essential Qualification:</strong><br>" . nl2br(htmlspecialchars($row['Essential Qualification'])) . "
+                            <strong>Essential Qualification:</strong><br>" . nl2br(htmlspecialchars($row['essential_qualifications'])) . "
                           </div>";
 
                     echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
-                            <strong>Preferred Qualifications:</strong><br>" . nl2br(htmlspecialchars($row['Preferred Qualifications'])) . "
+                            <strong>Preferred Qualifications:</strong><br>" . nl2br(htmlspecialchars($row['preferred_qualifications'])) . "
                           </div>";
 
                     echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
-                            <strong>Salary & Benefits:</strong><br>" . nl2br(htmlspecialchars($row['Salary range/benefit'])) . "
+                            <strong>Salary & Benefits:</strong><br>" . nl2br(htmlspecialchars($row['salary_and_benefits'])) . "
                           </div>";
 
                     echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
-                            <strong>Reports To:</strong><br>" . nl2br(htmlspecialchars($row['Title to report to'])) . "
+                            <strong>Reports To:</strong><br>" . nl2br(htmlspecialchars($row['title_to_report_to'])) . "
                           </div>";
 
                     echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px;'>
-                            <strong>Job Reference:</strong> " . htmlspecialchars($row['Job reference number']) . "
+                            <strong>Job Reference:</strong> " . htmlspecialchars($row['job_reference_number']) . "
                           </div>";
 
                     echo "</div>";
