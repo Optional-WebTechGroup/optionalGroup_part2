@@ -26,14 +26,14 @@ $errors = [];
 // loads the jobs reference numbers as an array from the database
 $conn = mysqli_connect($host, $user, $pwd, $sql_db);
 if (!$conn) {
-    header('Location: database_error.html');
+    header('Location: error.html')
     exit();
 }
 $sql = "SELECT job_reference_number FROM jobs ORDER BY job_reference_number ASC;";
 $result = mysqli_query($conn, $sql);
 if (!$result) {
-   header('Location: database_error.html');
-    exit(); 
+    header('Location: error.html')
+    exit();
 }
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 mysqli_free_result($result);
@@ -404,8 +404,8 @@ if (empty($errors)) {
     $conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
     if (!$conn) {
-        header('Location: database_error.html');
-        exit(); 
+        header('Location: error.html')
+        exit();
     }
     // creates table if it doesn't exits
     $query = "CREATE TABLE IF NOT EXISTS eoi (
@@ -447,7 +447,7 @@ if (empty($errors)) {
 );";
 
     if (!mysqli_query($conn, $query)) {
-        header('Location: database_error.html');
+        header('Location: error.html')
         exit();
     }
 
@@ -470,8 +470,8 @@ if (empty($errors)) {
     $message_for_us); 
     // executes and check if there's an error
     if (!$stmt->execute()) {
-        header('Location: database_error.html');
-        exit(); 
+        header('Location: error.html')
+        exit();
     } 
     // gets the id of the last insert
     $eoi_number = $conn->insert_id;
