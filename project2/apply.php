@@ -46,7 +46,7 @@ require_once 'settings.php';
                 include_once 'header.inc';
             }
         } else {
-            header('Location: error.html')
+            header('Location: error.html');
             exit();
         }
 
