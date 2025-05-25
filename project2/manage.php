@@ -22,9 +22,8 @@
         }  
         $conn = mysqli_connect($host, $user, $pwd, $sql_db);
         if(!$conn) {
-            header('Location: error.html');
-        exit();
-        }
+            die("Database connection failed: ".mysqli_connect_error());
+        } 
         // Check if user exists and get their status
         $username = $_SESSION['username'];
         $query = "SELECT status FROM users WHERE username = ?";
@@ -42,8 +41,7 @@
                 exit;
             }
         } else {
-            header('Location: error.html');
-        exit();
+            echo "<p>Error: User not found or issue with users table.</p>";
         }
 
         $stmt->close();
