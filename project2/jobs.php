@@ -47,10 +47,10 @@
             exit;
         }
     // Check if user exists and get their status
-        $username = $_SESSION['username'];
+        $user = $_SESSION['username'];
         $query = "SELECT status FROM users WHERE username = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("s", $username);
+        $stmt->bind_param("s", $user);
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result && $result->num_rows === 1) {
