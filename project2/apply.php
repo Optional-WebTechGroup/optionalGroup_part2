@@ -46,7 +46,7 @@ require_once 'settings.php';
                 include_once 'header.inc';
             }
         } else {
-            header('Location: error.html')
+            header('Location: error.html');
             exit();
         }
 
@@ -66,14 +66,14 @@ require_once 'settings.php';
                         $selected_job_reference_number = $_POST['job_reference_number'] ?? '';
                         $conn = mysqli_connect($host, $user, $pwd, $sql_db);
                         if (!$conn) {
-                            header('Location: error.html')
+                            header('Location: error.html');
                             exit();
                         }
                         // get the job reference numbers from jobs
                         $sql = "SELECT job_reference_number FROM jobs ORDER BY job_reference_number ASC;";
                         $result = mysqli_query($conn, $sql);
                         if (!$result) {
-                            header('Location: error.html')
+                            header('Location: error.html');
                             exit();
                         }
                         $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
