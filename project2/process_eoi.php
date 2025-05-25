@@ -24,16 +24,16 @@ $errors = [];
 
 
 // loads the jobs reference numbers as an array from the database
-$conn = mysqli_connect($host, $username, $password, $database);
+$conn = mysqli_connect($host, $user, $pwd, $sql_db);
 if (!$conn) {
-    header('Location: database_error.html');
+    header('Location: error.html')
     exit();
 }
 $sql = "SELECT job_reference_number FROM jobs ORDER BY job_reference_number ASC;";
 $result = mysqli_query($conn, $sql);
 if (!$result) {
-   header('Location: database_error.html');
-    exit(); 
+    header('Location: error.html')
+    exit();
 }
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 mysqli_free_result($result);
@@ -328,6 +328,8 @@ if (isset($_FILES['resume'])) {
             $destination = $upload_folder . $resume_file_name;
             // Move file from temp location to destination
             // Might cause an error on your device if you don't have write permission for resumes folder
+            // mac: chmod a+w project2/resumes
+            // windows: icacls "project2\resumes" /grant Everyone:(W)
             if (!move_uploaded_file($file_tmp_path, $destination)) {
                 $errors['resume'] = 'Upload Error';
             }
@@ -399,11 +401,11 @@ $message_for_us = empty($message_for_us) ? null : $message_for_us;
 
 <?php
 if (empty($errors)) {
-    $conn = mysqli_connect($host, $username, $password, $database);
+    $conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
     if (!$conn) {
-        header('Location: database_error.html');
-        exit(); 
+        header('Location: error.html')
+        exit();
     }
     // creates table if it doesn't exits
     $query = "CREATE TABLE IF NOT EXISTS eoi (
@@ -445,7 +447,7 @@ if (empty($errors)) {
 );";
 
     if (!mysqli_query($conn, $query)) {
-        header('Location: database_error.html');
+        header('Location: error.html')
         exit();
     }
 
@@ -468,8 +470,8 @@ if (empty($errors)) {
     $message_for_us); 
     // executes and check if there's an error
     if (!$stmt->execute()) {
-        header('Location: database_error.html');
-        exit(); 
+        header('Location: error.html')
+        exit();
     } 
     // gets the id of the last insert
     $eoi_number = $conn->insert_id;

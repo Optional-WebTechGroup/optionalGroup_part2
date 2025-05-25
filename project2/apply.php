@@ -1,3 +1,9 @@
+<?php 
+session_start();
+$errors = $_SESSION['errors'] ?? [];
+unset($_SESSION['errors']);
+require_once 'settings.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,15 +21,15 @@
 
 <body>
     <?php
-        session_start();
-        require_once 'settings.php';
         if (!isset($_SESSION['username'])) {
             header("Location: login.php");
-            exit;
+            exit();
         }
         $conn = mysqli_connect($host, $user, $pwd, $sql_db);
         if(!$conn) {
             die("Database connection failed: ".mysqli_connect_error());
+            header('Location: error.html');
+            exit();
         } 
         // Check if user exists and get their status
         $username = $_SESSION['username'];
@@ -40,7 +46,8 @@
                 include_once 'header.inc';
             }
         } else {
-            echo "<p>Error: User not found or issue with users table.</p>";
+            header('Location: error.html')
+            exit();
         }
 
         $stmt->close();
@@ -59,15 +66,15 @@
                         $selected_job_reference_number = $_POST['job_reference_number'] ?? '';
                         $conn = mysqli_connect($host, $user, $pwd, $sql_db);
                         if (!$conn) {
-                            header('Location: database_error.html');
+                            header('Location: error.html')
                             exit();
                         }
                         // get the job reference numbers from jobs
                         $sql = "SELECT job_reference_number FROM jobs ORDER BY job_reference_number ASC;";
                         $result = mysqli_query($conn, $sql);
                         if (!$result) {
-                            header('Location: database_error.html');
-                            exit(); 
+                            header('Location: error.html')
+                            exit();
                         }
                         $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         mysqli_free_result($result);
