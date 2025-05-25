@@ -77,7 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     } else {
                         // If login fails increments timer
                         $_SESSION['login_attempts']++;
-                        $resultsOutput .= "Incorrect username or password.";
                         // Checks if login attempts is less than or equal to 3
                         if ($_SESSION['login_attempts'] >= 3) {
                             // Locks user out for set time
