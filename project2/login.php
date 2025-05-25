@@ -37,11 +37,11 @@ if (!isset($_SESSION['lockout_time'])) {
     $_SESSION['lockout_time'] = null;
 }
 
-// Only process POST requests
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = trim($_POST['username'] ?? '');
     $pwd = trim($_POST['password'] ?? '');
 
+    // Basic Validation
     if (empty($user) || empty($pwd)) {
         $resultsOutput .= "Username and password are required.";
     } else {
@@ -75,18 +75,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         header("Location: index.php");
                         exit;
                     } else {
+                        // If login fails increments timer
                         $_SESSION['login_attempts']++;
                         $resultsOutput .= "Incorrect username or password.";
+                        // Checks if login attempts is less than or equal to 3
                         if ($_SESSION['login_attempts'] >= 3) {
-                            $_SESSION['lockout_time'] = time() + 10; // Lock for 5 minutes
+                            // Locks user out for set time
+                            $_SESSION['lockout_time'] = time() + 10; 
                             $resultsOutput .= "Too many failed attempts. Account locked for 10 seconds.";
                         } else {
                             $resultsOutput .= "Incorrect username or password.";
                         }
                     }
                 } else {
+                    // If login fails increments timer
                     $_SESSION['login_attempts']++;
+                    // Checks if login attempts is less than or equal to 3
                     if ($_SESSION['login_attempts'] >= 3) {
+                        // Locks user out for set time
                         $_SESSION['lockout_time'] = time() + 10;
                         $resultsOutput .= "Too many failed attempts. Account locked for 10 seconds.";
                     } else {
