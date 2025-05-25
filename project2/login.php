@@ -20,13 +20,11 @@
 
         // Establish database connection
         $conn = mysqli_connect($host, $user, $pwd, $sql_db);
-        if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
 
         // Check connection
         if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
+            header('Location: error.html');
+        exit();
         }
 
         if (isset($_SESSION['username'])) {

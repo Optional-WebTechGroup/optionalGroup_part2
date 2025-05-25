@@ -787,12 +787,12 @@ textarea {
 }
 
 .eoi-record {
-    background-color: #f5f9ff;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-    font-family: Arial, sans-serif;
-    font-size: 0.95rem;
-    line-height: 1.6;
+  background-color: #f5f9ff;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
