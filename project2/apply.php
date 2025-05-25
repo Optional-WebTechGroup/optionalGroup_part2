@@ -27,7 +27,7 @@ require_once 'settings.php';
         }
         $conn = mysqli_connect($host, $user, $pwd, $sql_db);
         if(!$conn) {
-            header('Location: error.html')
+            header('Location: error.html');
             exit();
         } 
         // Check if user exists and get their status
