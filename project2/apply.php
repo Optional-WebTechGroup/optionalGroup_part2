@@ -66,7 +66,7 @@ require_once 'settings.php';
                         $selected_job_reference_number = $_POST['job_reference_number'] ?? '';
                         $conn = mysqli_connect($host, $user, $pwd, $sql_db);
                         if (!$conn) {
-                            header('Location: error.html')
+                            header('Location: error.html');
                             exit();
                         }
                         // get the job reference numbers from jobs
