@@ -24,6 +24,7 @@
         if(!$conn) {
             header('Location: error.html');
         exit();
+        }
         // Check if user exists and get their status
         $username = $_SESSION['username'];
         $query = "SELECT status FROM users WHERE username = ?";
