@@ -126,17 +126,18 @@
 
                     <fieldset class="question">
                         <legend>Gender*</legend>
-                        <!-- add checked if it's previously checked -->
-                        <p> <input type="radio" id="male" name="gender" value="male" <?php echo ($_POST['gender'] === 'male' ? 'checked' : '');?>>
+                        <?php $gender = $_POST['gender'] ?? ''; ?>
+                        <p>
+                            <input type="radio" id="male" name="gender" value="male" <?php echo ($gender === 'male' ? 'checked' : ''); ?>>
                             <label for="male">Male</label>
-                            <input type="radio" id="female" name="gender" value="female" <?php echo ($_POST['gender'] === 'female' ? 'checked' : '');?>>
+                            <input type="radio" id="female" name="gender" value="female" <?php echo ($gender === 'female' ? 'checked' : ''); ?>>
                             <label for="female">Female</label>
                         </p>
-                        <!-- outputs the error for gender -->
-                        <?php if((!empty($errors['gender']))): ?>
+                        <?php if (!empty($errors['gender'])): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['gender']); ?></span>
                         <?php endif; ?>
                     </fieldset>
+
                 </div>
 
                 <div class="row">
@@ -162,17 +163,18 @@
 
                 <div class="row">
                     <p class="question"><label for="state">State*: </label>
+                        <?php $state = $_POST['state'] ?? ''; ?>
                         <select name="state" id="state" required>
-                            <option value="">Please Select</option>
+                            <option value="" disabled <?php echo ($state === '') ? 'selected' : ''; ?>>Please Select</option>
                             <!-- add selected if it's selected previously -->
-                            <option value="ACT" <?php echo ($_POST['state'] === 'ACT') ? 'selected' : ''; ?>>Australian Capital Territory</option>
-                            <option value="NSW" <?php echo ($_POST['state'] === 'NSW') ? 'selected' : ''; ?>>New South Wales</option>
-                            <option value="NT" <?php echo ($_POST['state'] === 'NT') ? 'selected' : ''; ?>>Northern Territory</option>
-                            <option value="QLD" <?php echo ($_POST['state'] === 'QLD') ? 'selected' : ''; ?>>Queensland</option>
-                            <option value="SA" <?php echo ($_POST['state'] === 'SA') ? 'selected' : ''; ?>>South Australia</option>
-                            <option value="TAS" <?php echo ($_POST['state'] === 'TAS') ? 'selected' : ''; ?>>Tasmania</option>
-                            <option value="VIC" <?php echo ($_POST['state'] === 'VIC') ? 'selected' : ''; ?>>Victoria</option>
-                            <option value="WA" <?php echo ($_POST['state'] === 'WA') ? 'selected' : ''; ?>>Western Australia</option>
+                            <option value="ACT" <?php echo ($state === 'ACT' ? 'selected' : ''); ?>>Australian Capital Territory</option>
+                            <option value="NSW" <?php echo ($state === 'NSW' ? 'selected' : ''); ?>>New South Wales</option>
+                            <option value="NT" <?php echo ($state === 'NT' ? 'selected' : ''); ?>>Northern Territory</option>
+                            <option value="QLD" <?php echo ($state === 'QLD' ? 'selected' : ''); ?>>Queensland</option>
+                            <option value="SA" <?php echo ($state === 'SA' ? 'selected' : ''); ?>>South Australia</option>
+                            <option value="TAS" <?php echo ($state === 'TAS' ? 'selected' : ''); ?>>Tasmania</option>
+                            <option value="VIC" <?php echo ($state === 'VIC' ? 'selected' : ''); ?>>Victoria</option>
+                            <option value="WA" <?php echo ($state === 'WA' ? 'selected' : ''); ?>>Western Australia</option>
                         </select>
                         <!-- outputs the error for state -->
                         <?php if((!empty($errors['state']))): ?>
