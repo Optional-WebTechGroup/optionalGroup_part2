@@ -282,8 +282,10 @@ require_once 'settings.php';
                         <?php endif; ?>
                     </div>
                     <div class="question">
+                        <!-- add previous experience company if it exist -->
                         <label for="experience_company">Company</label>
                         <input type="text" name="experience_company" id="experience_company" value="<?php echo htmlspecialchars($_POST['experience_company'] ?? ''); ?>">
+                        <!-- output the error for experience company -->
                         <?php if((!empty($errors['experience_company']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['experience_company']); ?></span>
                         <?php endif; ?>
@@ -291,22 +293,27 @@ require_once 'settings.php';
                 </div>
                 <div class="row">
                     <div class="question">
+                        <!-- add previous experience description if it exist -->
                         <label for="experience_description">Description</label>
                         <textarea name="experience_description" id="experience_description" rows="5"><?php echo htmlspecialchars($_POST['experience_description'] ?? ''); ?></textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
+                        <!-- add previous experience from date if it exist -->
                         <label for="experience_from_date">From</label>
                         <input type="date" name="experience_from_date" id="experience_from_date" value="<?php echo htmlspecialchars($_POST['experience_from_date'] ?? ''); ?>">
+                        <!-- output the error for experience from date -->
                         <?php if((!empty($errors['experience_from_date']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['experience_from_date']); ?></span>
                         <?php endif; ?>
                     </div>
                     <div class="question">
+                        <!-- add previous experience to date if it exist -->
                         <label for="experience_to_date">To</label>
                         <input type="date" name="experience_to_date" id="experience_to_date" value="<?php echo htmlspecialchars($_POST['experience_to_date'] ?? ''); ?>">
                         <?php echo htmlspecialchars($_POST['experience_to_date'] ?? ''); ?>
+                        <!-- output the error for experience to date -->
                         <?php if((!empty($errors['experience_to_date']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['experience_to_date']); ?></span>
                         <?php endif; ?>
@@ -314,6 +321,7 @@ require_once 'settings.php';
                 </div>
                 <div class="row">
                     <div class="question">
+                        <!-- add checked if currently working was previously checked -->
                         <p><input type="checkbox" name="currently_working" id="currently_working"
                                 value="currently_working" <?php echo (isset($_POST['currently_working'])) ? 'checked' : ''?>>
                             <label for="currently_working">I currently work here</label>
@@ -327,8 +335,10 @@ require_once 'settings.php';
                 <h2>Education</h2>
                 <div class="row">
                     <div class="question">
+                        <!-- add previous education institution if it exist -->
                         <label for="education_institution">Institution</label>
                         <input type="text" name="education_institution" id="education_institution" value="<?php echo htmlspecialchars($_POST['education_institution'] ?? ''); ?>">
+                        <!-- output the error for education institution -->
                          <?php if((!empty($errors['education_insitution']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['education_institution']); ?></span>
                         <?php endif; ?>
@@ -336,15 +346,19 @@ require_once 'settings.php';
                 </div>
                 <div class="row">
                     <div class="question">
+                        <!-- add previous education degree if it exist -->
                         <label for="education_degree">Degree</label>
                         <input type="text" name="education_degree" id="education_degree" value="<?php echo htmlspecialchars($_POST['education_degree'] ?? ''); ?>">
+                         <!-- output the error for education degree -->
                         <?php if((!empty($errors['education_degree']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['education_degree']); ?></span>
                         <?php endif; ?>
                     </div>
                     <div class="question">
+                        <!-- add previous education major if it exist -->
                         <label for="education_major">Major</label>
                         <input type="text" name="education_major" id="education_major" value="<?php echo htmlspecialchars($_POST['education_major'] ?? ''); ?>">
+                         <!-- output the error for education major -->
                         <?php if((!empty($errors['education_major']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['education_major']); ?></span>
                         <?php endif; ?>
@@ -352,21 +366,26 @@ require_once 'settings.php';
                 </div>
                 <div class="row">
                     <div class="question">
+                        <!-- add previous education description if it exist -->
                         <label for="education_description">Description</label>
                         <textarea name="education_description" id="education_description" rows="5"><?php echo htmlspecialchars($_POST['education_description'] ?? ''); ?></textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="question">
+                        <!-- add previous education from date if it exist -->
                         <label for="education_from_date">From</label>
                         <input type="date" name="education_from_date" id="education_from_date" value="<?php echo htmlspecialchars($_POST['education_from_date'] ?? ''); ?>">
+                         <!-- output the error for education from date -->
                         <?php if((!empty($errors['education_from_date']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['education_from_date']); ?></span>
                         <?php endif; ?>
                     </div>
                     <div class="question">
+                        <!-- add previous education to date if it exist -->
                         <label for="education_to_date">To</label>
                         <input type="date" name="education_to_date" id="education_to_date" value="<?php echo htmlspecialchars($_POST['education_to_date'] ?? ''); ?>">
+                         <!-- output the error for education to date -->
                         <?php if((!empty($errors['education_to_date']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['education_to_date']); ?></span>
                         <?php endif; ?>
@@ -374,6 +393,7 @@ require_once 'settings.php';
                 </div>
                 <div class="row">
                     <div class="question">
+                        <!-- add checked if currently attending was previously checked -->
                         <p><input type="checkbox" name="currently_attending" id="currently_attending"
                                 value="currently_attending" <?php echo (isset($_POST['currently_attending'])) ? 'checked' : ''?>>
                             <label for="currently_attending">I currently attend</label>
@@ -387,15 +407,19 @@ require_once 'settings.php';
                 <h2>Your Profiles</h2>
                 <div class="row">
                     <div class="question">
+                        <!-- add previous linkedin url if it exist -->
                         <label for="linkedin">LinkedIn</label>
                         <input type="url" name="linkedin" id="linkedin" value="<?php echo htmlspecialchars($_POST['linkedin'] ?? ''); ?>">
+                         <!-- output the error for linkedin -->
                         <?php if((!empty($errors['linkedin']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['linkedin']); ?></span>
                         <?php endif; ?>
                     </div>
                     <div class="question">
+                        <!-- add previous twitter url if it exist -->
                         <label for="twitter">X (Twitter)</label>
                         <input type="url" name="twitter" id="twitter" value="<?php echo htmlspecialchars($_POST['twitter'] ?? ''); ?>">
+                         <!-- output the error for twitter -->
                         <?php if((!empty($errors['twitter']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['twitter']); ?></span>
                         <?php endif; ?>
@@ -403,14 +427,18 @@ require_once 'settings.php';
                 </div>
                 <div class="row">
                     <div class="question">
+                        <!-- add previous github url if it exist -->
                         <label for="github">Github</label>
                         <input type="url" name="github" id="github" value="<?php echo htmlspecialchars($_POST['github'] ?? ''); ?>">
+                         <!-- output the error for github -->
                         <?php if((!empty($errors['github']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['github']); ?></span>
                         <?php endif; ?>
                     </div>
                     <div class="question">
+                        <!-- add previous personal website url if it exist -->
                         <label for="personal_website">Personal Website</label>
+                         <!-- output the error for personal website -->
                         <input type="url" name="personal_website" id="personal_website" value="<?php echo htmlspecialchars($_POST['personal_website'] ?? ''); ?>">
                         <?php if((!empty($errors['personal_website']))): ?>
                             <span class="error"><?php echo htmlspecialchars($errors['personal_website']); ?></span>
@@ -428,6 +456,7 @@ require_once 'settings.php';
                             Upload your resume here <span>only accepts .pdf .docx .doc (2 MB limit) </span>
                             <input type="file" accept=".pdf,.docx,.doc" name="resume" id="resume">
                         </label>
+                         <!-- output the error for resume -->
                         <?php if((!empty($errors['resume']))): ?>
                             <span class="center error"><?php echo htmlspecialchars($errors['resume']); ?></span>
                         <?php endif; ?> 
@@ -440,6 +469,7 @@ require_once 'settings.php';
                 <h2>Message to the Hiring Team</h2>
                 <div class="row">
                     <div class="question">
+                        <!-- add previous message for us if it exist -->
                         <label for="message_for_us">Let us know about your interest in working here</label>
                         <textarea name="message_for_us" id="message_for_us" rows="10"><?php echo htmlspecialchars($_POST['message_for_us'] ?? ''); ?></textarea>
                     </div>
