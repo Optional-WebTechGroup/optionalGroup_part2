@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 20, 2025 at 07:32 PM
+-- Generation Time: May 23, 2025 at 12:46 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -79,24 +79,27 @@ INSERT INTO `eoi` (`eoi_number`, `job_reference_number`, `first_name`, `last_nam
 -- Table structure for table `jobs`
 --
 
-CREATE TABLE `Jobs` (
-  `Name of position` varchar(2000) NOT NULL,
-  `Summary` varchar(2000) NOT NULL,
-  `Essential Qualification` varchar(2000) NOT NULL,
-  `Preferred Qualifications` varchar(2000) NOT NULL,
-  `Salary range/benefit` varchar(2000) NOT NULL,
-  `Title to report to` varchar(2000) NOT NULL,
-  `Job reference number` varchar(2000) NOT NULL
+CREATE TABLE `jobs` (
+  `job_reference_number` varchar(5) NOT NULL,
+  `position_name` varchar(2000) NOT NULL,
+  `summary` varchar(2000) NOT NULL,
+  `essential_qualifications` varchar(2000) NOT NULL,
+  `preferred_qualifications` varchar(2000) NOT NULL,
+  `salary_and_benefits` varchar(2000) NOT NULL,
+  `title_to_report_to` varchar(2000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `jobs`
 --
 
-INSERT INTO `Jobs` (`Name of position`, `Summary`, `Essential Qualification`, `Preferred Qualifications`, `Salary range/benefit`, `Title to report to`, `Job reference number`) VALUES
-('Network Administrator:', 'Job Summary/Responsibilities:\r\nAs a network administrator, you will develop, maintain and improve our computer networks within the business to help it operate smoothly. you will also control user management, system maintenance, and manage the network infrastructure.\r\n\r\n', 'Essential skills for role:\r\n - knowledge in cisco units\r\n    - networking\r\n    - switching\r\n    - routing\r\n- assembly, python and java knowledge\r\n- being able to manage and organize large sets of data\r\n- good time management', 'Preferred skills for the role:\r\n- years of experience\r\n    1. 6 years (ideal)\r\n    2. 4 years (also ideal)\r\n    3. 2 years (minimum)\r\n- great communication skills\r\n- ability to adapt when needed\r\n- Understanding of cloud networking concepts and services', 'Salary range and Benefits:\r\nSalary when hired will be: $90,000 to $110,000, if promoted to senior Network Administrator then salary will change to $135,000.\r\n\r\nAs a network administrator, you benefit from high demand in the IT industry, opportunities for career advancement, and the chance to work with cutting-edge technologies, while also developing valuable problem-solving and communication skills.', 'Title to report to:\r\nIf hired you will report to the senior Network Administrator.', 'Job reference number:\r\nPXUB6'),
-('Eco-Tech Sales Executive:', 'Job Summary/Responsibilities:\r\nAs a Eco-Tech Sales Executiveselling you will be selling environmentally friendly or sustainable technology solutions, requiring strong sales skills, product knowledge, and an understanding of the environmental market.\r\n\r\n', 'Essential skills for role:\r\n- great communication skills\r\n- knowledge in sales\r\n- technical expertise - can explain technical concepts in a clear and understandable manner to clients.\r\n- is well organized/good time management skills', 'Preferred skills for role:\r\n- years of experience\r\n   1. 6 years (ideal)\r\n   2. 4 years (also ideal)\r\n   3. 2 to 3 years (minimum)\r\n- industry knowledge\r\n- great leadership skills (in case of promotion)\r\ngreat negotiation skills', 'Salary range and Benefits:\r\nSalary when hired will be: $75,000 to $95,000 annually\r\n\r\nAs a eco-tech sales executive you will obtain the following benefits,a competitive salary, potentially including bonuses and commissions, a company vehicle, and opportunities for career growth within a dynamic and fast-paced industry', 'Title to report to:\r\nyou will report to the senior eco-tech sales executive/manager of your division', 'Job reference number:\r\n5KC3U');
+INSERT INTO `jobs` (`job_reference_number`, `position_name`, `summary`, `essential_qualifications`, `preferred_qualifications`, `salary_and_benefits`, `title_to_report_to`) VALUES
+('5KC3U', 'Eco-Tech Sales Executive', 'As a Eco-Tech Sales Executiveselling you will be selling environmentally friendly or sustainable technology solutions, requiring strong sales skills, product knowledge, and an understanding of the environmental market.', '- great communication skills\r\n- knowledge in sales\r\n- technical expertise\r\n- can explain technical concepts in a clear and understandable manner to clients.\r\n- is well organized/good time management skills', 'Years of experience\r\n   1. 6 years (ideal)\r\n   2. 4 years (also ideal)\r\n   3. 2 to 3 years (minimum)\r\n- industry knowledge\r\n- great leadership skills (in case of promotion)\r\n- great negotiation skills', 'Salary when hired will be: $75,000 to $95,000 annually\r\n\r\nAs a eco-tech sales executive you will obtain the following benefits,a competitive salary, potentially including bonuses and commissions, a company vehicle, and opportunities for career growth within a dynamic and fast-paced industry', 'You will report to the senior eco-tech sales executive/manager of your division'),
+('PXUB6', 'Network Administrator', 'As a network administrator, you will develop, maintain and improve our computer networks within the business to help it operate smoothly. You will also control user management, system maintenance, and manage the network infrastructure.', '- knowledge in cisco units\r\n- networking\r\n- switching\r\n- routing\r\n- assembly, python and java knowledge\r\n- being able to manage and organize large sets of data\r\n- good time management', 'Years of experience\r\n    1. 6 years (ideal)\r\n    2. 4 years (also ideal)\r\n    3. 2 years (minimum)\r\n- great communication skills\r\n- ability to adapt when needed\r\n- understanding of cloud networking concepts and services', 'Salary when hired will be: $90,000 to $110,000, if promoted to senior Network Administrator then salary will change to $135,000.\r\n\r\nAs a network administrator, you benefit from high demand in the IT industry, opportunities for career advancement, and the chance to work with cutting-edge technologies, while also developing valuable problem-solving and communication skills.', 'If hired you will report to the senior Network Administrator.');
 
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -112,9 +115,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `status`) VALUES
-(7, 'admin', '$2y$10$WhVq3foxyFX07JYaCVaSDuY4x9r5HszH3Ic3uju6vXH3jWCY3JcOi', 0),
-(8, 'Nikolas', '$2y$10$vDdF7g51NOhwnz93fQ62xOeyP0n2zLK6SiWoS3871YwjkNCFjlqee', 0),
-(9, 'test', '$2y$10$i/qCUufxK1Rg.HtyZ8cU0.OXUcHknnZ.caROEW7Cl7avC2JJez.3K', 0);
+(1, 'admin', '$2y$10$WhVq3foxyFX07JYaCVaSDuY4x9r5HszH3Ic3uju6vXH3jWCY3JcOi', 0),
+(2, 'Nikolas', '$2y$10$vDdF7g51NOhwnz93fQ62xOeyP0n2zLK6SiWoS3871YwjkNCFjlqee', 0),
+(3, 'test', '$2y$10$i/qCUufxK1Rg.HtyZ8cU0.OXUcHknnZ.caROEW7Cl7avC2JJez.3K', 0);
 
 --
 -- Indexes for dumped tables
@@ -134,26 +137,6 @@ ALTER TABLE `jobs`
   ADD PRIMARY KEY (`job_reference_number`);
 
 --
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `eoi`
---
-ALTER TABLE `eoi`
-  MODIFY `eoi_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `eoi`
---
-ALTER TABLE `eoi`
-  ADD CONSTRAINT `eoi_ibfk_1` FOREIGN KEY (`job_reference_number`) REFERENCES `jobs` (`job_reference_number`);
-COMMIT;
-
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -164,10 +147,26 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `eoi`
+--
+ALTER TABLE `eoi`
+  MODIFY `eoi_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `eoi`
+--
+ALTER TABLE `eoi`
+  ADD CONSTRAINT `eoi_ibfk_1` FOREIGN KEY (`job_reference_number`) REFERENCES `jobs` (`job_reference_number`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
