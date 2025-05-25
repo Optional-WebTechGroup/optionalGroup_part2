@@ -73,7 +73,7 @@ require_once 'settings.php';
                         $sql = "SELECT job_reference_number FROM jobs ORDER BY job_reference_number ASC;";
                         $result = mysqli_query($conn, $sql);
                         if (!$result) {
-                            header('Location: error.html')
+                            header('Location: error.html');
                             exit();
                         }
                         $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
