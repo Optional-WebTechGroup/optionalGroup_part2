@@ -155,6 +155,34 @@ header {
   background-color: var(--hightlight_color);
 }
 
+#loginPageBtn {
+  padding: 9px 25px;
+  border: none;
+  border-radius: 50px;
+  background-color: var(--hightlight_color);
+}
+
+#signupPageBtn {
+  padding: 9px 25px;
+  border: none;
+  border-radius: 50px;
+  background-color: var(--hightlight_color);
+}
+
+#loginPage {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#signupPage {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .center_content {
   min-height: 100vh;
   display: flex;
@@ -163,6 +191,10 @@ header {
   align-items: center;
   text-align: center;
   font-size: 1.2em;
+}
+
+#loginPageBtn {
+
 }
 
 .active {
@@ -174,6 +206,14 @@ header {
 }
 
 #logout:hover {
+  opacity: 0.8;
+}
+
+#loginPageBtn:hover {
+  opacity: 0.8;
+}
+
+#signupPageBtn:hover {
   opacity: 0.8;
 }
 
@@ -763,6 +803,18 @@ textarea {
   }
 
   #logout {
+    font-size: 18px;
+    margin-top: 10px;
+    padding: 5px 50px;
+  }
+
+  #loginPageBtn {
+    font-size: 18px;
+    margin-top: 10px;
+    padding: 5px 50px;
+  }
+
+  #signupPageBtn {
     font-size: 18px;
     margin-top: 10px;
     padding: 5px 50px;
