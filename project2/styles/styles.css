@@ -27,6 +27,16 @@
   padding: 0;
 }
 
+html,
+body {
+  height: 100%;
+}
+
+main {
+  flex: 1 0 auto;
+  /* Expands to fill available space */
+}
+
 .error {
   color: red;
   font-size: 0.75em;
@@ -37,6 +47,10 @@
 body {
   background-color: #eaedf1;
   color: #15181c;
+  min-height: 100vh;
+  /* or 100dvh for better mobile support */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Styling for unordered lists */

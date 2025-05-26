@@ -81,7 +81,7 @@
         <br> 
         <?php 
             if (!empty($resultsOutput)) {
-                echo $resultsOutput;
+                echo "<p class='center'>$resultsOutput</p>";
                 echo "<br>";
             } else {
                 echo "<br><br>";

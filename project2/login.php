@@ -112,7 +112,7 @@ include('header_login.inc');
 ?>
 
     <main>
-        <h1>Login</h1><br></br>
+            <h1>Login</h1><br></br>
         <form action="login.php" method="post">
             <section id="loginPage">
                 <label>Username:</label>
@@ -129,7 +129,7 @@ include('header_login.inc');
         <br> 
         <?php 
             if (!empty($resultsOutput)) {
-                echo $resultsOutput;
+                echo "<p class='center'>$resultsOutput</p>";
                 echo "<br>";
             } else {
                 echo "<br><br>";
