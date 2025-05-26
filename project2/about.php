@@ -169,7 +169,7 @@
                     <dd> contributions: index.html Page Manager, CSS contributor, settings.php, login.php, signup.php and logout.php modularisation, Database</dd>
 
                     <dt> Oliver Scott </dt>
-                    <dd> contributions: About.html Page Manager, CSS contributor, manage.php, php validation, Database</dd>
+                    <dd> contributions: About.html Page Manager, CSS contributor, manage.php, php validation, signup.php and logout.php (designer), Database</dd>
                 </dl>
             </section>
         </div>
