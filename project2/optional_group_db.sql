@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 23, 2025 at 12:46 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: May 26, 2025 at 02:33 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -117,7 +117,11 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `username`, `password`, `status`) VALUES
 (1, 'admin', '$2y$10$WhVq3foxyFX07JYaCVaSDuY4x9r5HszH3Ic3uju6vXH3jWCY3JcOi', 0),
 (2, 'Nikolas', '$2y$10$vDdF7g51NOhwnz93fQ62xOeyP0n2zLK6SiWoS3871YwjkNCFjlqee', 0),
-(3, 'test', '$2y$10$i/qCUufxK1Rg.HtyZ8cU0.OXUcHknnZ.caROEW7Cl7avC2JJez.3K', 0);
+(3, 'test', '$2y$10$i/qCUufxK1Rg.HtyZ8cU0.OXUcHknnZ.caROEW7Cl7avC2JJez.3K', 0),
+(5, 'user', '$2y$10$ECcctAPdU.gIN6EbUkoot.w2bsi8ktkgm2Jwp46QhiLeVPApKxAb2', 1),
+(9, 'admin', '$2y$10$wXM6Fw4Er8GTUrcDjQvy8eutwNbG4YFaHUowslw.zKKc.sBpQM45y', 0),
+(10, 'admin', '$2y$10$c0kJ4sJbdl4EESX8IkZsx.7OKJcIfTxFGJ/fEclsmB9DzcobQ.uri', 0),
+(11, 'new', '$2y$10$9/UfkBUPPZ8pEuG441h1rO25XxX3NLwM/9zjaRrf05FeLxdYmwPhK', 1);
 
 --
 -- Indexes for dumped tables
@@ -156,7 +160,7 @@ ALTER TABLE `eoi`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
