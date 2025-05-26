@@ -114,7 +114,7 @@
         </form>
 
 
-        <?php //ChatGPT prompt: please check my code and give me feedback on how to get it working, 21/05/25 - code supplied edited
+        <?php //ChatGPT prompt: please check my code and give me feedback on how to get it working, 21/05/25 - code supplied edited (refered to how to get data entries sql command based on button clicked)
             $resultsOutput = "";
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['EOI_reference']) && !empty(trim($_POST['EOI_reference']))) {
                 $eoi_reference = trim($_POST['EOI_reference']);
