@@ -14,12 +14,14 @@
 <body>
     
 	<?php 
+    //checks if login
         session_start();
         require_once 'settings.php';
         if (!isset($_SESSION['username'])) {
             header("Location: login.php");
             exit;
         }  
+        //connect to database
         $conn = mysqli_connect($host, $user, $pwd, $sql_db);
         if(!$conn) {
             die("Database connection failed: ".mysqli_connect_error());
@@ -32,7 +34,8 @@
         $stmt->execute();
         $result = $stmt->get_result();
 
-        if ($result && $result->num_rows === 1) {
+        //checks user status (boolean:0,1)
+        if ($result && $result->num_rows === 1) { //more then 1 row
             $row = $result->fetch_assoc();
             if ($row['status'] == '0') {
                 include_once 'header_manager.inc';
@@ -66,6 +69,7 @@
                 die("No connection to db: " . mysqli_connect_error());
             }
         ?>
+        <!-- Search and Delete EOI by Job Reference Number -->
         <h1>Manager Profile</h1>
         <br><br>    
         <form method="post" action="">
@@ -78,11 +82,13 @@
             </section>
         </form>
         <br>
+        <!-- Search All and Clear Results -->
         <form method="post" action="">
             <input type="submit" id="searchAll" name="searchAll"value="Search All"> 
             <input type="submit" id="clear" value="Clear">
         </form>
         <br> <br>
+        <!-- Find Applicant by Last Name -->
         <form method="post" action="">
             <section id="applicantSort">
                 <label for="ApplicantSurname">Find Applicant (Surname)</label>
@@ -92,6 +98,7 @@
             </section>
         </form>
         <br> <br>
+         <!-- Update EOI Status -->
         <form method="post" action="">
             <section id="statusChange">
                 <label for="eoiNumber_text">Enter EOI Number</label>
@@ -124,7 +131,7 @@
                 $stmt->bind_param("s", $eoi_reference); //allocates eoi_reference to '?'
                 $stmt->execute(); 
                 $result = $stmt->get_result(); 
-                if (isset($_POST['search'])) { 
+                if (isset($_POST['search'])) { //when 'search' is pressed
                     if ($result->num_rows > 0) {
                         $resultsOutput .= "<p>Found record(s) for '$eoi_reference'</p><br>";
                         while ($row = $result->fetch_assoc()) {
@@ -135,7 +142,7 @@
                     } else {
                          $resultsOutput .= "<p>No data found for '$eoi_reference'</p>";
                     }
-                } elseif (isset($_POST['delete'])) { 
+                } elseif (isset($_POST['delete'])) {  //when 'delete' is pressed
                     if ($result->num_rows > 0) {
                         $delete_sql = "DELETE FROM eoi WHERE job_reference_number = ?";
                         $del_stmt = $conn->prepare($delete_sql); //prepares sql 
@@ -186,7 +193,7 @@
                 $stmt->bind_param("s", $Applicant); //allocates eoi_reference to '?'
                 $stmt->execute(); 
                 $result = $stmt->get_result(); 
-                if (isset($_POST['find_applicant'])) { 
+                if (isset($_POST['find_applicant'])) {  //when 'find_applicant' is clicked
                     if ($result->num_rows > 0) {
                         $resultsOutput .= "<p>Found record(s) for '$Applicant'</p><br>";
                         while ($row = $result->fetch_assoc()) {
@@ -223,8 +230,8 @@
 
                         if ($check_result->num_rows > 0) {
                             // Proceed to update
-                            $query = "UPDATE eoi SET status = ? WHERE eoi_number = ?";
-                            $stmt = $conn->prepare($query);
+                            $query = "UPDATE eoi SET status = ? WHERE eoi_number = ?"; //creates sql query 
+                            $stmt = $conn->prepare($query); //prepare sql for execution
                             $stmt->bind_param("ss", $newStatus, $eoiNumber);
 
                             if ($stmt->execute()) {
