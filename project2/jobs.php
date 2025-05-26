@@ -103,31 +103,31 @@
             <?php
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo "<div class='job_div'>";
+                    echo "<div style='border: 2px solid #4CAF50; background-color: #eafbea; padding: 20px; margin-bottom: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);'>";
                     
-                    echo "<h2 class='job_div_h2'>" . htmlspecialchars($row['position_name']) . "</h2>";
+                    echo "<h2 style='color:rgb(3, 3, 3); margin-bottom: 20px;'>" . htmlspecialchars($row['position_name']) . "</h2>";
 
-                    echo "<div class='job_div_row'>
+                    echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
                             <strong>Summary:</strong><br>" . nl2br(htmlspecialchars($row['summary'])) . "
                           </div>";
 
-                    echo "<div class='job_div_row'>
+                    echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
                             <strong>Essential Qualification:</strong><br>" . nl2br(htmlspecialchars($row['essential_qualifications'])) . "
                           </div>";
 
-                    echo "<div class='job_div_row'>
+                    echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
                             <strong>Preferred Qualifications:</strong><br>" . nl2br(htmlspecialchars($row['preferred_qualifications'])) . "
                           </div>";
 
-                    echo "<div class='job_div_row'>
+                    echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
                             <strong>Salary & Benefits:</strong><br>" . nl2br(htmlspecialchars($row['salary_and_benefits'])) . "
                           </div>";
 
-                    echo "<div class='job_div_row'>
+                    echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 12px;'>
                             <strong>Reports To:</strong><br>" . nl2br(htmlspecialchars($row['title_to_report_to'])) . "
                           </div>";
 
-                    echo "<div class='job_div_end_row'>
+                    echo "<div style='background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px;'>
                             <strong>Job Reference:</strong> " . htmlspecialchars($row['job_reference_number']) . "
                           </div>";
 
