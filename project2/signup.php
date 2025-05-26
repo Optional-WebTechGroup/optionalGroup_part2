@@ -22,7 +22,8 @@
 
         // Check connection
         if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
+            header('Location: error.html');
+        exit();
         }
 
         // Only process POST requests
@@ -64,16 +65,16 @@
     ?>
 
     <main>
-        <h1>Sign Up</h1>
+        <h1>Sign Up</h1><br></br>
         <form action="signup.php" method="post">
             <section id="signupPage">
                 <label>Username:</label>
-                <input type="text" name="username" required><br>
+                <input type="text" name="username" required><br></br>
 
                 <label>Password:</label>
-                <input type="password" name="password" required><br>
+                <input type="password" name="password" required><br></br>
 
-                <input type="submit" value="Sign Up">
+                <input id= "signupPageBtn" type="submit" value="Sign Up">
             </section>
         </form>
         <section id="singupPageResults"> 

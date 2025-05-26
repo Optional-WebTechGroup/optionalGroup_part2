@@ -13,62 +13,90 @@
     <title>The Optional Group</title>
 </head>
 <body>
-    <?php
-        $resultsOutput = "";
-        require_once("settings.php");
-        session_start();
+<?php
+$resultsOutput = "";
+require_once("settings.php");
+session_start();
 
-        // Establish database connection
-        $conn = mysqli_connect($host, $user, $pwd, $sql_db);
-        if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
+$conn = mysqli_connect($host, $user, $pwd, $sql_db);
+if (!$conn) {
+    header('Location: error.html');
+    exit();
+}
 
-        // Check connection
-        if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
+if (isset($_SESSION['username'])) {
+    header("Location: index.php");
+    exit;
+}
 
-        if (isset($_SESSION['username'])) {
-            header("Location: index.php");
-            exit;
-        }
+// Initialize session variables if not set
+if (!isset($_SESSION['login_attempts'])) {
+    $_SESSION['login_attempts'] = 0;
+}
+if (!isset($_SESSION['lockout_time'])) {
+    $_SESSION['lockout_time'] = null;
+}
 
-        // Only process POST requests
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $user = trim($_POST['username'] ?? '');
-            $pwd = trim($_POST['password'] ?? '');
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $user = trim($_POST['username'] ?? '');
+    $pwd = trim($_POST['password'] ?? '');
 
-            // Basic validation
-            if (empty($user) || empty($pwd)) {
-                $resultsOutput .= "Username and password are required.";
-                exit;
+    // Basic Validation
+    if (empty($user) || empty($pwd)) {
+        $resultsOutput .= "Username and password are required.";
+    } else {
+        // Check if user is currently locked out
+        if ($_SESSION['lockout_time'] && time() < $_SESSION['lockout_time']) {
+            $remaining = $_SESSION['lockout_time'] - time();
+            $minutes = floor($remaining / 60);
+            $seconds = $remaining % 60;
+            $resultsOutput .= "Too many failed attempts. Try again in {$minutes} minute(s) and {$seconds} second(s).";
+        } else {
+            // Reset lockout if time has passed
+            if ($_SESSION['lockout_time'] && time() >= $_SESSION['lockout_time']) {
+                $_SESSION['login_attempts'] = 0;
+                $_SESSION['lockout_time'] = null;
             }
 
-            // Fetch user record from database
             $stmt = $conn->prepare("SELECT password FROM users WHERE username = ?");
             if ($stmt) {
                 $stmt->bind_param("s", $user);
                 $stmt->execute();
                 $stmt->store_result();
 
-                // Check if user exists
                 if ($stmt->num_rows === 1) {
                     $stmt->bind_result($stored_hashed_password);
                     $stmt->fetch();
 
-                    // Verify entered password against stored hash
                     if (password_verify($pwd, $stored_hashed_password)) {
                         $_SESSION['username'] = $user;
-
-                        // Redirect to home page after successful login
+                        $_SESSION['login_attempts'] = 0;
+                        $_SESSION['lockout_time'] = null;
                         header("Location: index.php");
                         exit;
                     } else {
-                        $resultsOutput .= "Incorrect username or password.";
+                        // If login fails increments timer
+                        $_SESSION['login_attempts']++;
+                        // Checks if login attempts is less than or equal to 3
+                        if ($_SESSION['login_attempts'] >= 3) {
+                            // Locks user out for set time
+                            $_SESSION['lockout_time'] = time() + 10; 
+                            $resultsOutput .= "Too many failed attempts. Account locked for 10 seconds.";
+                        } else {
+                            $resultsOutput .= "Incorrect username or password.";
+                        }
                     }
                 } else {
-                    $resultsOutput .= "Incorrect username or password.";
+                    // If login fails increments timer
+                    $_SESSION['login_attempts']++;
+                    // Checks if login attempts is less than or equal to 3
+                    if ($_SESSION['login_attempts'] >= 3) {
+                        // Locks user out for set time
+                        $_SESSION['lockout_time'] = time() + 10;
+                        $resultsOutput .= "Too many failed attempts. Account locked for 10 seconds.";
+                    } else {
+                        $resultsOutput .= "Incorrect username or password.";
+                    }
                 }
 
                 $stmt->close();
@@ -76,23 +104,24 @@
                 $resultsOutput .= "Error preparing login statement: " . $conn->error;
             }
         }
+    }
+}
 
-        $conn->close();
-
-        include('header_login.inc') 
-    ?>
+$conn->close();
+include('header_login.inc');
+?>
 
     <main>
-        <h1>Login</h1>
+        <h1>Login</h1><br></br>
         <form action="login.php" method="post">
             <section id="loginPage">
-                <label>Username:</label><br>
-                <input type="text" name="username" required><br>
+                <label>Username:</label>
+                <input type="text" name="username" required><br></br>
 
-                <label>Password:</label><br>
-                <input type="password" name="password" required><br>
+                <label>Password:</label>
+                <input type="password" name="password" required><br></br>
 
-                <input type="submit" value="Login">
+                <input id= "loginPageBtn" type="submit" value="Login">
             </section>
         </form>
         <br> <br>
