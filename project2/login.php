@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($user) || empty($pwd)) {
         $resultsOutput .= "Username and password are required.";
     } else {
-        // Check if user is currently locked out
+        // ChatGPT Prompt: How do I implement time in php code? 24/05/2025. Code Supplied: "time()"
         if ($_SESSION['lockout_time'] && time() < $_SESSION['lockout_time']) {
             $remaining = $_SESSION['lockout_time'] - time();
             $minutes = floor($remaining / 60);
